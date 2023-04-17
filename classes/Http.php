@@ -25,6 +25,7 @@ class Http {
         $menu[] = array('URL' => "inicio#SEDE", 'DONDE' => 'View/Sede/SedeTabla.php', 'NOMBRE' => 'SEDE');
         $menu[] = array('URL' => "inicio#REGIONAL", 'DONDE' => 'View/Regional/RegionalTabla.php', 'NOMBRE' => 'REGIONAL');
         $menu[] = array('URL' => "inicio#USUARIOS", 'DONDE' => 'View/Persona/PersonaTabla.php', 'NOMBRE' => 'USUARIOS');
+        $menu[] = array('URL' => "inicio#CARGO", 'DONDE' => 'View/Cargo/CargoTabla.php', 'NOMBRE' => 'CARGO');
         
         return json_encode($menu);
     }
