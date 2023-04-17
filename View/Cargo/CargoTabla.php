@@ -38,19 +38,19 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA") {
         $filtro .= " ( codigocargo like '%" . strtoupper($bucarPalabraClave) . "%' or  nombrecargo like '%" . strtoupper($bucarPalabraClave) . "%' )";
     }
 
-    // obj para llenar las tablas
-    $cargo = Cargo::datosobjetos($filtro, $pagina, 20);
+   // obj para llenar las tablas
+    $cargo = Cargo::datosobjetos($filtro , $pagina, 20);
     // numero de paginas para la paginacion
     $numeroPaginas = ceil(Cargo::count($filtro)[0][0] / 20);
-    // ecrypt codifica lo que enviamos por javascript   
+    // ecrypt codifica lo que enviamos por javascript    
     $var_add = Http::encryptIt("id=1&llave_Primaria=&user={$_SESSION["user"]}&accion=ADICIONAR");
     $var_ayu = Http::encryptIt("id=4&llave_Primaria=&user={$_SESSION["user"]}&accion=AYUDA");
-    
-    ?> 
-    <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
-        <button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `View/Cargo/CargoModales.php`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>USUARIO</button>
-        <button type='button' id='button' class="ele" title='Ayuda'  onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `View/Cargo/CargoModales.php`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
-    </div>
+
+?> 
+     <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
+        <button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `View/Regional/RegionalModales.php`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>REGIONAL</button>
+        <button type='button' id='button' class="ele" title='Ayuda'  onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `View/Regional/RegionalModales.php`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
+    </div>  
     <!-- Inicio de html tablas -->
     <table id="tableIntD" class="tableIntT sombra tableIntTa">
         <tr>
