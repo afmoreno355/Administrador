@@ -1,0 +1,93 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 12/04/2022, 09:02:27 PM
+    Author     : FELIPE
+*/
+:root
+{
+    --color-h2 :  #fc7323 ;
+    --color-h3 :  #667eea ;
+}
+main{
+    width: 100%;
+    height: auto;
+}
+.conteiner{
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.conteiner h2
+{
+    color: var(--color-h3);
+    font-weight: bold;
+    font-size: 2rem;
+}
+.conteiner h3
+{
+    color: var(--color-h2);
+    font-size: 1rem;
+}
+.presentacion
+{
+    text-align: center;
+    padding-top: 0px; 
+}
+.presentacion .Image
+{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover; 
+    object-position: top; 
+}
+.presentacion input[type="button"]
+{
+    min-width: 250px;
+    width: auto;
+    padding: 15px;
+    border: 0;
+    border-radius: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: large;
+    color: #ffffff;
+    margin-top: 10px;
+}
+.presentacion input[name="1"]
+{
+    background-color: #1d4ed8;
+}
+.presentacion input[name="2"]
+{
+    background-color: #34d399;
+}
+.presentacion input[name="3"]
+{
+    background-color: #9ca3af;
+}
+.presentacion input[name="1"]:hover,
+.presentacion input[name="1"]:active {
+    color: #fff;
+    background-color: #0a3385;
+    border-color: #0a3385;
+}
+.presentacion input[name="2"]:hover,
+.presentacion input[name="2"]:active {
+    color: #fff;
+    background-color: #108981;
+    border-color: #108981;
+}
+.presentacion input[name="3"]:hover,
+.presentacion input[name="3"]:active {
+     color: #fff;
+    background-color: #6b7280;
+    border-color: #6b7280;
+}

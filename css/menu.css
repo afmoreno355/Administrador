@@ -1,0 +1,83 @@
+.menu{
+        position: fixed ; 
+        width:  100%;
+        background: #39a900; 
+        min-height: 45px;
+        height: auto;
+        color: white;
+        top: 0px;
+        z-index: 10;
+        transition: 1s;
+        overflow: hidden;
+        font-size: 0.9rem;
+} 
+.menu nav{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+}
+.menu nav a{
+        width: 200px;
+        text-decoration: none;
+        cursor: pointer;
+        padding: 6px;
+        height: 27px;
+        margin-top: 1px;
+        font-weight: bolder;
+        background: transparent; 
+        color: white;
+}
+.menu nav a:hover{
+      border-bottom: 5px solid white;
+}
+
+.menu nav a.color {
+    background: rgba( 245, 176, 65 , 1); 
+    border-bottom: 5px solid white;
+}
+@media (max-width : 1050px){
+    .menuI{
+        display: none;
+        z-index: 1000;
+        position: fixed ; 
+        top: -1px;
+        margin-left: 5%;
+        color: white;
+        font-size: 2em ;
+        transition: 2s;
+        margin-top: 5px;
+        cursor: pointer;
+        display: block;
+    }
+    .menu{
+        background: transparent; 
+        height: 40px;
+        min-height: 40px;
+    }
+    .menu nav{
+        width: 100%;
+        transform: translateY(-115%);
+        display: block;
+        height: auto;
+        margin-top: 0px; 
+        justify-content: center;
+        text-align: left;
+        align-content: center;
+        background: #39a900; 
+    }
+    .menu nav a{
+        height: 50px;
+        display: block;
+        width: 80%;
+        margin-left: 15%;
+        margin-top: 0px;
+    }
+    .menu nav a:hover{
+        border-bottom: none;
+    }
+    .aUltima{
+        border-bottom: 2px solid white;
+    }
+}

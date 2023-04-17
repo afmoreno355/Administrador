@@ -1,0 +1,144 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 3/12/2020, 05:03:07 PM
+    Author     : FELIP
+*/
+
+.tableIntT {    
+    position: relative;
+    max-width: 100%;   
+    margin-bottom: 20px;
+    border-collapse: collapse;    
+    background: white;
+    font-size: 0.8em;
+    text-transform: uppercase;
+}
+.sombra{    
+    border-radius: 4px;
+    box-shadow: 2px 10px 15px #666; 
+}
+.tableIntTa tr:hover td{
+    background: rgba(214, 212, 204, 0.6);
+    color: black;
+}
+.noHover:hover {
+    background: none;
+    color:black;
+}
+.tableIntT th, .tableIntT td{
+    text-align: center;      
+    border-left: none;
+    border-right: none;
+    padding: 5px;
+}
+.tableIntT th{
+   border-bottom: 1px solid #F4D03F ;  
+}
+.tableIntT td{
+    font-stretch: extra-condensed;
+}
+.tableIntT .pag{
+    position: relative; 
+    font-size: 2.4em;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 65px;
+    height: 35px;
+    margin-top: -20px;
+    font-weight: bold;
+
+}
+.contenido_modal .tableIntTa tr{
+    border-bottom: 2px solid #F4D03F;
+}
+.tableIntT button{
+    background: transparent;
+    border:none;
+    font-weight: bold;
+    font-size: 2.4em;
+}
+.tableIntT input[type='button']{
+    color: white;
+    outline:none;
+    width: 100px;
+    height: 40px;
+    margin-top: 10px;
+    font-size: 0.8em;
+    border:none;
+    border-radius: 4px;
+}
+
+.tableIntT input[name='1']{
+    background: rgba(22, 160, 133 );
+    cursor: pointer;
+}
+.tableIntT input[name='2']{
+    margin-left: 5px;
+    background: rgba(52, 152, 219);  
+    cursor: pointer;
+}
+.tableIntT input[name='3']{
+    margin-left: 5px;
+    background: #39a900;  
+    cursor: pointer;
+}
+.tableIntT .plus{
+    width: 80px;
+    height: 25px;
+    font-size: 1.5em;
+    background: rgba( 230, 126, 34);
+    color: white;
+    border-radius: 4px;      
+}
+.tableIntT i{
+    margin-left: 25px;
+    color: graytext;
+    font-size: 2.3em;
+    cursor: pointer;
+    transition: 0.1s;
+}
+.tableIntT i:hover{
+    font-size: 2.6em;
+    color: orange;
+}
+.diferente{
+    background: white;
+}
+.diferente td{
+    display:flex; 
+    flex-wrap: wrap; 
+    float: right;
+    padding: 10px; 
+    background: white;
+}
+.tableIntTa input[type='button']{
+    width: 70px;
+    height: 25px;
+    padding: 0px;
+    font-size: 0.65em;
+    cursor: pointer;
+}
+@media(max-width:1280px){
+    .sombra{
+        border-radius: 4px;
+        box-shadow: 0px 0px 0px white;
+    }
+}
+@media(max-width:810px){
+    .noDisplay{
+        display: none
+    }
+}
+.c{
+    margin-top: 0px;
+    font-size: 0.8em;
+}
+
+
+
+

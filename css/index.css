@@ -1,0 +1,173 @@
+body
+{
+    background: rgba(222, 220, 218, 0.5) ;
+    margin: 0 ;
+    padding: 0 ;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+html,body{
+    background-image: url('http://dfp.senaedu.edu.co/modulos_gestion/img/fondo/fondosena.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+}
+.cont_index
+{
+    position:relative;
+    min-width: 1300px;
+    max-width: auto;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    text-align: center ;
+}
+.cont_fecha
+{
+    min-width: 1300px;
+    max-width: auto;
+    background: white;
+    height: 30px; 
+    text-align: center;     
+}
+.cont_fecha label
+{
+    margin-left: 600px;
+    margin-top: 0px; 
+}
+.cont_poli
+{
+    width: 430px;
+    background: white;
+    height: 120px;   
+    clip-path: polygon(0%  0%, 100% 0%, 90% 100%, 0% 100%);
+    text-align: right;           
+}
+.cont_poli img
+{
+    width: 100px;
+    height: 100px;
+    margin-right: 50px;
+}
+.cont_titulo
+{
+    position: relative;
+    margin-left: -150px;
+    margin-top: -80px;
+    color: rgb(110, 109, 108);
+}
+.cont_titulo img
+{
+    position: absolute;
+    margin-left: 170px;
+    margin-top: -65px;
+    height: 55px;
+    width: 270px;
+}
+.cont_log
+{
+    min-width: 100%;
+    height: auto;
+    background: transparent;
+    margin-top: 50px;
+    justify-content: center;
+    align-content: center;
+    text-align: center ;
+}	
+.cont_log .cont_log_sec	, .cont_log .cont_red	
+{
+    width: 70%;
+    background: white;
+    margin-left: 15%;
+    border: 1px solid rgb(110, 109, 108, 0.4);
+    border-radius: 10px;          
+    justify-content: center;
+    align-content: center;
+    text-align: center ;     
+}
+.cont_log_sec
+{
+    height: 320px;   
+    justify-content: center;
+    align-content: center;
+    text-align: center ;  
+}
+.cont_log_sec fieldset
+{
+    width: 220px;
+    border: none;      
+    border-top: 1px solid black;    
+    display: inline-block;      
+}	
+.cont_log_sec legend
+{
+    font-style: italic;
+    font-weight: bold;
+}
+.cont_log_sec table label
+{
+    font-size: 0.8rem
+}
+.cont_log_sec table a
+{
+   cursor: pointer;
+}
+.cont_red
+{
+    margin-top: 10px;
+    height: 180px;
+}
+.footer
+{
+    min-width: 1300px;
+    max-width: auto;
+    background: white;
+    min-height: 200px; 
+    height: auto;
+    justify-content: center;
+    align-content: center;
+    text-align: center ;  
+    background: #39a900;
+    margin-bottom: 0px;
+}
+@media(max-width:1300px)
+{ 
+    .footer
+    {
+        margin-top: 500px;
+    }
+}
+.footer footer
+{
+    width: 70%;
+    min-height: 200px; 
+    height: auto;
+    display: inline-flex;
+}
+.footer footer div
+{
+    width: 49%;
+    color: white;
+    font-size: 0.9rem;
+    text-align: left;
+    text-decoration: none
+}
+.footer footer div a
+{
+    color: white;
+    text-decoration: none;
+}
+.footer footer div img
+{
+    margin-left: 120px;
+    margin-top: 25px;
+}
+input[ type = 'button']
+{
+    background:rgb(95, 94, 93 );
+    border-radius: 5px;
+    color: white;
+}

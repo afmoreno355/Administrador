@@ -1,0 +1,48 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 8/09/2020, 07:16:02 PM
+    Author     : FELIP
+*/
+.botonMenu{
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.botonMenu  button{
+       margin: 10px;
+       padding: 3px;
+       width: 145px;
+       height: 80px;
+       border: none;
+       border-radius: 5px;
+       box-shadow: 0.5px 0.5px 5px #666;    
+       font-size: 0.4em;
+       background: rgb(104, 109, 112);
+       color: white;
+    }
+    .botonMenu  i{
+        font-size: 4em;
+    }
+    .botonMenu button:hover{
+        background: rgba( 245, 176, 65 , 1);  
+       
+    }
+    .botonMenu button img{
+      width: 45px;
+      height: 40px;
+    }
+    
+    .botonMenu button.color{
+       background: rgba( 245, 176, 65 , 1); 
+    }
+    
+    .rotate{
+        transform: rotate(180deg);
+    }

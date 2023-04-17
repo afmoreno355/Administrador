@@ -1,0 +1,142 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25/04/2020, 12:45:37 PM
+    Author     : FELIP
+*/
+
+.formularioDiv{
+    position: absolute;
+    background: white;
+    width: 90%;
+    margin-left: 5%;
+    height: auto;
+    margin-top: 20px;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 6px 6px 15px #666; 
+}
+.table{
+    overflow: scroll;    
+    width: 100%;
+    height: auto;
+}
+.titulos, table{
+    background: #39a900;
+    width: 96%;
+    border-radius: 10px;
+    margin-left: 2%;
+    min-height: 40px;
+    height: auto;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    align-content: center;
+}
+table{
+    background-color: transparent;
+}
+.titulos label{  
+    margin-top: 50px;
+    margin: auto;
+    font-size: 1.7em;  
+    color: white;
+}
+
+.content{
+    width: 90%;
+    height: auto;
+    margin-left: 5%;
+    margin-top: -70px;
+}
+.content p{
+    margin-top: 50px;
+    font-size: 1.5em;
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: 50px;
+    text-align: justify;
+}
+.content label{
+    width: 100px;
+    padding: 10px;
+    margin-left: 5%
+}
+.content title{
+    cursor: pointer;
+}
+.content input{
+    width: 300px;
+    margin-left: 2%
+}
+.content input[type='radio']{
+    width: 10px;
+    margin-left: 2%
+}
+.content div{
+    margin-top: 20px;
+    width: 100%;
+}
+.content div pre{
+    width: 100%;
+    font-size: 1em;  
+    height: auto;
+}
+.content div pre input,.content div pre select{
+    text-align: right;
+    margin: 0px;
+}
+.content .content_largo{
+    text-align: left;
+    width: 25%;
+    height: 23px;
+}
+
+.modales input[name="accionU"]{
+	font-weight: 1000px;
+        outline:none;
+        margin-top: 15px;
+        background: rgba(22, 160, 133 ); 
+   }
+
+   .modales input[name="limpiarU"]{
+       font-weight: 1000px;
+       outline:none;
+       margin-top: 15px;
+       background: rgba(52, 152, 219);  
+   }
+
+    .modales input[type="button"], .modales input[type="reset"]{
+       font-weight: 1000px;
+       outline:none;   	  
+       border:none;
+       width: 100px;
+       float: right;
+       margin-left: 10px;
+       height: 35px; 
+       border-radius: 4px;
+       color: white;
+       outline:none;
+       font-size: 0.8em;
+       margin-bottom: 20px;
+    }
+   
+   .modales input[type='button']:hover{
+             background-color: transparent;
+             color:rgba( 230, 126, 34 );
+             cursor: pointer;
+    }
+    
+   .modales input[type='reset']:hover{
+             background-color: transparent;
+             color:rgba( 230, 126, 34 );
+             cursor: pointer;
+    }
+   
+  

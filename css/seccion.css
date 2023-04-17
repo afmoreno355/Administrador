@@ -1,0 +1,86 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25/04/2020, 07:17:33 PM
+    Author     : FELIP
+*/
+
+
+.conte_seccion
+{
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap; 
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    transition: 1s;
+}
+.conte_seccion section
+{
+    height: 400px;
+    width: 250px;
+    margin: 20px;    
+    border-radius: 10px;
+}
+
+.conte_seccion section img
+{
+   height: 200px;
+   width: 250px;
+   border-radius: 10px 10px 0px 0px;
+}
+
+.conte_seccion h3, .conte_seccion div
+{
+   height: 100px;
+   width: 250px;
+}
+
+.conte_seccion_icon section div i
+{
+    font-size: 2.5em;
+    color: #39a900; 
+}
+.conte_seccion_icon
+{
+    height: auto;
+    width: 100%;
+}
+.conte_seccion_icon section
+{
+    height: auto;
+    width: 95%;
+    margin-left: 5%;
+    margin-top: 40px;    
+    display: flex;
+    flex-wrap: wrap; 
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    transition: 1s;
+}
+.conte_seccion_icon section div
+{
+    width: 150px;
+    height: 150px;
+    margin: 20px;
+    transition: 1s;
+}
+
+.conte_seccion_icon section div p
+{
+    height: 40px;
+    font-size: 0.8em;
+    font-weight: bold
+}
+
+.conte_seccion_icon section div i
+{
+    font-size: 2.5em;
+    color: #39a900; 
+}

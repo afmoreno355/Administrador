@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 5/08/2022, 02:21:51 PM
+    Author     : FELIPE
+*/
+
+.contenedor_barra_estado
+{
+    width: 90%; 
+    height: 20px;
+    margin-left: 5%
+}
+.barra_estado
+{
+    width: 0%; 
+    height: 20px;
+    background: #F89028; 
+    border-radius: 10px;
+}
+.barra_azul 
+{
+    background: #FC2506 ; 
+}
+.barra_estado span
+{
+    color: #fff;
+    font-weight: bold;
+    line-height: 20px;
+}
