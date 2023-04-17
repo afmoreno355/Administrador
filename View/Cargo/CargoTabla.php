@@ -48,8 +48,8 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA") {
 
 ?> 
      <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
-        <button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `View/Regional/RegionalModales.php`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>REGIONAL</button>
-        <button type='button' id='button' class="ele" title='Ayuda'  onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `View/Regional/RegionalModales.php`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
+        <button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `View/Cargo/CargoModales.php`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>REGIONAL</button>
+        <button type='button' id='button' class="ele" title='Ayuda'  onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `View/Cargo/CargoModales.php`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
     </div>  
     <!-- Inicio de html tablas -->
     <table id="tableIntD" class="tableIntT sombra tableIntTa">
