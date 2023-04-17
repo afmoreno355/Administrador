@@ -14,6 +14,8 @@ if( !isset($_SESSION["user"]) )
     session_start();
 }
 
+//prueba de descarga de modificaciones
+
 date_default_timezone_set("America/Bogota");
 $fecha = date("YmdHis");
 $fecha_documento = date("Y-m-d H:i:s");
