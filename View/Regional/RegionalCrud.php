@@ -8,6 +8,7 @@
 require_once dirname(__FILE__) . "/../../autoload.php";
 //
 // Iniciamos sesion para tener las variables
+//prueba para guardar en repositorio
 if( !isset($_SESSION["user"]) )
 {
     session_start();
