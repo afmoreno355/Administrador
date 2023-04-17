@@ -37,7 +37,7 @@ class Select {
                 return ConectorBD::ejecutarQuery( $query , null ) ;
             break; 
             case 2 :
-                return ConectorBD::ejecutarQuery( $query , 'eagle_admin' ) ;
+                return ConectorBD::ejecutarQuery( $query , 'registro' ) ;
             break; 
             case 3 :
                 return array( array('1' , 'A DISTANCIA') ,
@@ -46,8 +46,8 @@ class Select {
                     ) ;
             break; 
             case 4 :
-                return array( array('s' , 'SI') ,
-                              array('n' , 'NO') 
+                return array( array('si' , 'SI') ,
+                              array('no' , 'NO') 
                     ) ;
             break; 
             case 5 :
