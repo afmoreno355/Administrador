@@ -9,7 +9,7 @@
 /**
  * Description of Cargo
  *
- * @author Cristian Avella 18/04/2023 prueba de descarga
+ * @author Cristian Avella
  */
 class Cargo {
     //put your code here
