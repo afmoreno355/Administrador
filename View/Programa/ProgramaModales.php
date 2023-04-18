@@ -68,7 +68,7 @@ if ($id == 1 && $permisos)
             <fieldset>
                 <legend title='NIVEL DE FORMACION'>NIVEL DE FORMACION</legend>
                 <select  required name='nivel_formacion' id="nivel_formacion">
-                    <?= Select::listaopciones( 1 , $programa->getNivel_formacion() , "select nivel_formacion , nivel_formacion from programas group by nivel_formacion ;" )?>
+                    <?= Select::listaopciones( 2 , $programa->getNivel_formacion() , "select nivel_formacion , nivel_formacion from programas group by nivel_formacion ;" )?>
                 </select>
             </fieldset>
         </div>
@@ -83,7 +83,7 @@ if ($id == 1 && $permisos)
                 <legend title='RED DE CONOCIMIENTO'>RED DE CONOCIMIENTO</legend>
                 <input list="red_conocimientos" value='<?= $programa->getRed_conocimiento() ?>' required name='red_conocimiento' id="red_conocimiento">
                 <datalist id="red_conocimientos">
-                    <?= Select::listaopciones( 2 , $programa->getRed_conocimiento() , "select id_red , concat( id_red , ' ' , red) from red_conocimiento ;" )?>
+                    <?= Select::listaopciones( 9 , $programa->getRed_conocimiento() , "select id_red , (id_red , red) from red_conocimiento ;" )?>
                 </datalist>
             </fieldset>
         </div>
@@ -91,7 +91,7 @@ if ($id == 1 && $permisos)
             <fieldset>
                 <legend title='LINEA TECNOLOGICA'>LINEA TECNOLOGICA</legend>
                 <select required name='linea_tecnologica' id="linea_tecnologica">
-                    <?= Select::listaopciones( 2 , $programa->getLinea_tecnologica() , "select id , concat( id , ' ' , nombre )  from  linea_tecnologica ;" )?>
+                    <?= Select::listaopciones( 9 , $programa->getLinea_tecnologica() , "select id , ( id , nombre )  from  linea_tecnologica ;" )?>
                 </select>
             </fieldset>
         </div>
@@ -99,31 +99,45 @@ if ($id == 1 && $permisos)
             <fieldset>
                 <legend title='SEGMENTO'>SEGMENTO</legend>
                 <select required name='segmento' id="segmento">
-                    <?= Select::listaopciones( 1 , $programa->getSegmento() , "select segmento , segmento from programas where segmento <> '' group by segmento ;" )?>
+                    <?= Select::listaopciones( 2 , $programa->getSegmento() , "select segmento , segmento from programas group by segmento ;" )?>
                 </select>
             </fieldset>
         </div>
-        <div>
-            <fieldset>
-                <legend title='MODALIDAD'>MODALIDAD</legend>
-                <select required name='modalidad' id='modalidad'>
-                    <?= Select::listaopciones( 1 , $programa->getModalidad() , "select modalidad , modalidad from programas where modalidad is not null and modalidad <> '' group by modalidad ;" )?>
-                </select>
-            </fieldset>
-        </div>
-        <div>
-            <fieldset>
-                <legend title='FIC'>FIC</legend>
-                <select required name='fic' id='fic'>
-                    <?= Select::listaopciones( 4 , $programa->getFic()  )?>
-                </select>
-            </fieldset>
-        </div>
+<?PHP 
+         if( $permisos->getIdTipo( )== 'AV' )
+         {
+?>
+            <input type="hidden" value="no"required name='fic' id='fic'>
+            <input type="hidden" value="VIRTUAL" required name='modalidad' id='modalidad'>
+<?PHP 
+         }
+         else
+         {
+?>
+            <div>
+                <fieldset>
+                    <legend title='MODALIDAD'>MODALIDAD</legend>
+                    <select required name='modalidad' id='modalidad'>
+                        <?= Select::listaopciones( 2 , $programa->getModalidad() , "select modalidad , modalidad from programas where modalidad is not null and modalidad <> '' group by modalidad ;" )?>
+                    </select>
+                </fieldset>
+            </div>
+            <div>
+                <fieldset>
+                    <legend title='FIC'>FIC</legend>
+                    <select required name='fic' id='fic'>
+                        <?= Select::listaopciones( 10 , $programa->getFic()  )?>
+                    </select>
+                </fieldset>
+            </div>
+<?PHP   
+         }
+?>
         <div>
             <fieldset>
                 <legend title='ACTIVO'>ACTIVO</legend>
                 <select required name='activo' id='activo'>
-                    <?= Select::listaopciones( 4 , $programa->getActivo()  )?>
+                    <?= Select::listaopciones( 10 , $programa->getActivo()  )?>
                 </select>
             </fieldset>
         </div>

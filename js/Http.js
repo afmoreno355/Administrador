@@ -36,6 +36,5 @@ function evaluar( id = '' )
     {
         document.getElementById(nombre).className += " color";
     }
-    document.querySelector('#sections').innerHTML = nombre.replace( '_' , ' ' ) ;
     idexistentesReCa('',`pagina=0${id}`,'tableIntT',donde, null, null);
 }

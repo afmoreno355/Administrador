@@ -8,13 +8,10 @@
 require_once dirname(__FILE__) . "/../../autoload.php";
 //
 // Iniciamos sesion para tener las variables
-//prueba para guardar en repositorio
 if( !isset($_SESSION["user"]) )
 {
     session_start();
 }
-
-//prueba de descarga de modificaciones
 
 date_default_timezone_set("America/Bogota");
 $fecha = date("YmdHis");

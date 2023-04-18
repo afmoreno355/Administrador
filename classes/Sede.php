@@ -17,7 +17,6 @@ class Sede {
     private $nombre;
     private $bd;
     private $imagen;
-    private $id_departamento;
     private $departamento;
     
     function __construct($campo, $valor) {
@@ -26,12 +25,8 @@ class Sede {
                 $this->objeto($campo);
             }else{
                 $cadenaSQL="select * from sede , departamento where departamento=id  AND $campo = $valor";
-                //print_r($cadenaSQL);
-                $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin');
-                if ( count($respuesta) > 0 )
-                {
-                    $this->objeto ($respuesta[0]);
-                }
+                $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, null);
+                if ($respuesta>0 || $valor!=null) $this->objeto ($respuesta[0]);
             }
         }
     }
@@ -41,18 +36,9 @@ class Sede {
         $this->nombre=$vector[1];
         $this->bd=$vector[2];
         $this->imagen=$vector[3];
-        $this->id_departamento=$vector[5];
         $this->departamento=$vector[6];
     }
     
-    public function getId_departamento() {
-        return $this->id_departamento;
-    }
-
-    public function setId_departamento($id_departamento): void {
-        $this->id_departamento = $id_departamento;
-    }
-
     function getDepartamento() {
         return $this->departamento;
     }
@@ -103,8 +89,7 @@ class Sede {
             $cadenaSQL.=" and $filtro";
         } 
         $cadenaSQL.=" order by codigosede asc offset $pagina limit $limit ";
-        //print_r($cadenaSQL);
-        return ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin');          
+        return ConectorBD::ejecutarQuery($cadenaSQL, null);          
     }
     
     public static function datosobjetos($filtro, $pagina, $limit){
@@ -122,7 +107,7 @@ class Sede {
         if($filtro!=''){
             $cadena.=" and $filtro";
         } 
-        return ConectorBD::ejecutarQuery($cadena, 'eagle_admin');        
+        return ConectorBD::ejecutarQuery($cadena, null);        
     }
     
     public static function listaopciones( $id , $select = '' ){ 
@@ -149,10 +134,10 @@ class Sede {
         switch ( $id )
         {
             case 1 :
-                return ConectorBD::ejecutarQuery("select codigosede,nombresede from sede ", 'eagle_admin');
+                return ConectorBD::ejecutarQuery("select codigosede,nombresede from sede ", null);
             break;    
             case 3 :
-                return ConectorBD::ejecutarQuery("select id , municipio from municipio ", 'eagle_admin');
+                return ConectorBD::ejecutarQuery("select id , municipio from municipio ", null);
             break; 
         }
     } 

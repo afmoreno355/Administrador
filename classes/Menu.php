@@ -26,7 +26,7 @@ class Menu {
                 $this->cargarObjetoDeVector($campo);
             } else {
                 $cadenaSQL = "select icono,id,nombre,pnombre from  menu  where $campo = $valor";
-                $resultado = ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin');
+                $resultado = ConectorBD::ejecutarQuery($cadenaSQL, null);
                 if ( !empty($resultado) && count($resultado) > 0) {
                     $this->cargarObjetoDeVector($resultado[0]);
                 }
@@ -85,7 +85,7 @@ class Menu {
         if ($pagina != null && $limit != null) {
             $cadenaSQL .= " offset $pagina limit $limit ";
         }
-        return ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin');
+        return ConectorBD::ejecutarQuery($cadenaSQL, null);
     }
 
     //convierte los array de datos en objetos enviando las posiciones al constructor 
