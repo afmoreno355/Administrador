@@ -8,7 +8,7 @@ session_start();
 session_unset();
 session_destroy();
 
-require_once dirname(__FILE__) . "/autoload.php";
+require_once dirname(__FILE__)  "/autoload.php";
 
 $avisoSesion = "";
 $aviso = "";
