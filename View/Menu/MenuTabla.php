@@ -23,7 +23,7 @@ $permisos = new Persona(" identificacion ", "'" . $_SESSION['user'] . "'");
 
 
 $ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), 'eagle');
-//print_r("Ju@nfelipe1324");
+//print_r($ingreso);
 
 
 if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
