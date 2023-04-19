@@ -26,7 +26,7 @@ class Menu {
                 $this->cargarObjetoDeVector($campo);
             } else {
                 $cadenaSQL = "select icono,id,nombre,pnombre from  menu  where $campo = $valor";
-                $resultado = ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin');
+                $resultado = ConectorBD::ejecutarQuery($cadenaSQL, null);
                 if ( !empty($resultado) && count($resultado) > 0) {
                     $this->cargarObjetoDeVector($resultado[0]);
                 }
@@ -41,6 +41,7 @@ class Menu {
         $this->nombre = $vector[2];
         $this->pnombre = $vector[3];
     }
+
 
     // get and set 
     function getIcono() {
@@ -85,7 +86,7 @@ class Menu {
         if ($pagina != null && $limit != null) {
             $cadenaSQL .= " offset $pagina limit $limit ";
         }
-        return ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin');
+        return ConectorBD::ejecutarQuery($cadenaSQL, null);
     }
 
     //convierte los array de datos en objetos enviando las posiciones al constructor 
@@ -98,4 +99,21 @@ class Menu {
         }
         return $listas;
     }
+
+    public static function count($filtro) {
+        $cadena = 'select count(*) from menu';
+        if ($filtro != null) {
+            $cadena.= " where " . $filtro;
+        }/** */
+        return ConectorBD::ejecutarQuery($cadena, null);
+    }/** */
+   /*public static function count($filtro) {
+        $cadena='select count(*) from menu , departamento where departamento=id '; 
+        if($filtro!=''){
+            $cadena.=" and $filtro";
+        } 
+        return ConectorBD::ejecutarQuery($cadena, null);        
+    }/***/
 }
+
+

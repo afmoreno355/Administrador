@@ -20,12 +20,12 @@ class Http {
     }
 
     public static function url() {
-        $menu[] = array('URL' => "inicio#MI_USUARIO", 'DONDE' => 'View/Usuario/UsuarioTabla.php', 'NOMBRE' => 'MI_USUARIO');
-        $menu[] = array('URL' => "inicio#PROGRAMA", 'DONDE' => 'View/Programa/ProgramaTabla.php', 'NOMBRE' => 'PROGRAMA');
-        $menu[] = array('URL' => "inicio#SEDE", 'DONDE' => 'View/Sede/SedeTabla.php', 'NOMBRE' => 'SEDE');
-        $menu[] = array('URL' => "inicio#REGIONAL", 'DONDE' => 'View/Regional/RegionalTabla.php', 'NOMBRE' => 'REGIONAL');
-        $menu[] = array('URL' => "inicio#USUARIOS", 'DONDE' => 'View/Persona/PersonaTabla.php', 'NOMBRE' => 'USUARIOS');
-        
+        $menu[] = array('URL' => "inicio#MI_USUARIO", 'DONDE' => 'View/Usuario/UsuarioTabla', 'NOMBRE' => 'MI_USUARIO');
+        $menu[] = array('URL' => "inicio#PROGRAMA", 'DONDE' => 'View/Programa/ProgramaTabla', 'NOMBRE' => 'PROGRAMA');
+        $menu[] = array('URL' => "inicio#SEDE", 'DONDE' => 'View/Sede/SedeTabla', 'NOMBRE' => 'SEDE');
+        $menu[] = array('URL' => "inicio#REGIONAL", 'DONDE' => 'View/Regional/RegionalTabla', 'NOMBRE' => 'REGIONAL');
+        $menu[] = array('URL' => "inicio#MENU", 'DONDE' => 'View/Menu/MenuTabla', 'NOMBRE' => 'MENU');
+
         return json_encode($menu);
     }
     
