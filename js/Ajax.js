@@ -77,7 +77,7 @@ function formFotoDoc( donde , formData, hacer = 'aviso') {
         {
             jsonRespuesta = JSON.parse(respuesta);
             //alert(jsonRespuesta["empresa"].toLowerCase());
-            if( jsonRespuesta["empresa"].toLowerCase() === 'sena sg-dfp' && window.location.toString().includes('admin_2') )
+            if( jsonRespuesta["empresa"].toLowerCase() === 'sena sg-dfp' && window.location.toString().includes('adminV2') )
             {
                 const user = jsonRespuesta["user"];
                 const empresa = jsonRespuesta["empresa"];
