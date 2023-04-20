@@ -125,38 +125,6 @@ class Sede {
         return ConectorBD::ejecutarQuery($cadena, 'eagle_admin');        
     }
     
-    public static function listaopciones( $id , $select = '' ){ 
-        $lista='';
-        $seleccion='';
-        $si = self::listas( $id );
-        for ($i = 0; $i < count($si); $i++) {
-            print_r($select);
-            print_r($si[$i][0]);
-            if( $si[$i][0]==$select && $select != '' )
-            {
-                $seleccion='selected';
-            }
-            else
-            {
-                $seleccion='';
-            }
-            $lista.="<option value='{$si[$i][0]}' $seleccion> {$si[$i][1]} </option>";
-        }
-    return $lista;
-    } 
-    
-    public static function listas( $id ){
-        switch ( $id )
-        {
-            case 1 :
-                return ConectorBD::ejecutarQuery("select codigosede,nombresede from sede ", 'eagle_admin');
-            break;    
-            case 3 :
-                return ConectorBD::ejecutarQuery("select id , municipio from municipio ", 'eagle_admin');
-            break; 
-        }
-    } 
-
 }
 
   

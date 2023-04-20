@@ -232,7 +232,7 @@ class Persona {
             $historico->setIdentificacion($_SESSION['user']);
             $historico->setTipo_historico("GRABAR");
             $historico->setHistorico($nuevo_query);
-            $historico->setTabla(" persona ");
+            $historico->setTabla("PERSONA");
             $historico->grabar();
             return true;
         } else {
@@ -251,7 +251,7 @@ class Persona {
             $historico->setIdentificacion($_SESSION['user']);
             $historico->setTipo_historico("MODIFICAR");
             $historico->setHistorico($nuevo_query);
-            $historico->setTabla(" persona ");
+            $historico->setTabla("PERSONA");
             $historico->grabar();
             return true;
         } else {
@@ -263,22 +263,6 @@ class Persona {
         $cadenaSQL = "update persona set identificacion ='{$this->id}',  nombres ='{$this->nombre}', apellidos ='{$this->apellido}', telefono ='{$this->tel}', "
                 . "correoinstitucional='{$this->correo}', celular ='{$this->celular}',codigodependencia='{$this->idsede}', idtipo ='{$this->idTipo}' where identificacion ='" . $id . "'";
         ConectorBD::ejecutarQuery($cadenaSQL, null);
-    }
-
-    public static function listaopciones($filtro, $tipo, $predeterminado) {
-        $persona = Persona::datosobjetos($filtro, null);
-        $lista = "<datalist id='" . $tipo . "'>";
-        for ($i = 0; $i < count($persona); $i++) {
-            $si = $persona[$i];
-            if (trim($predeterminado) == trim($si->getid())) {
-                $auxiliar = " selected='true' ";
-            } else {
-                $auxiliar = '';
-            }
-            $lista .= "<option value='{$si->getId()}' $auxiliar >{$si->getNombre()}" . " " . "{$si->getApellido()}</option>";
-        }
-        $lista .= "</datalist>";
-        return $lista;
     }
     
     public function modificarImagen() {

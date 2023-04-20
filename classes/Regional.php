@@ -85,45 +85,6 @@ class Regional {
         return ConectorBD::ejecutarQuery($cadena, 'eagle_admin');        
     }
     
-    public function estado( $modalidad ) {
-        if( $modalidad == 'presencial' )
-        {
-            $modalidad_cambio = " and id_modalidad in ('1' , '2') " ;
-        }
-        elseif( $modalidad == 'virtual' )
-        {
-            $modalidad_cambio = " and id_modalidad in ( '3' ) " ;
-        }
-        
-        $centros_regionales = ConectorBD::ejecutarQuery( " select codigosede from sede where departamento = $this->cod ; " , 'eagle_admin' ) ;
-        $lista = ' ( ' ;
-        
-        for ($i = 0; $i < count( $centros_regionales ); $i++)
-        {
-        $lista .= " '{$centros_regionales[$i][0]}' , " ;
-        }
-        $lista .= " '' ) " ;
-        
-        $sql=" update indicativa set validar = 'E' where cod_centro in $lista $modalidad_cambio and validar = 'F' ";
-        //print_r($sql);
-        
-         if (ConectorBD::ejecutarQuery($sql, null)) {
-            //Historico de las acciones en el sistemas de informacion
-            $nuevo_query = str_replace("'", "|", $sql);
-            $historico = new Historico(null, null);
-            $historico->setIdentificacion($_SESSION["user"]);
-            $historico->setTipo_historico("ESTADO");
-            $historico->setHistorico(strtoupper($nuevo_query));
-            $historico->setFecha("now()");
-            $historico->setTabla("REGIONALNACIONAL");
-            $historico->grabar();
-            return true;
-        } else {
-            return false;
-        }
-       
-    }
-    
     public static function listaopciones(){ 
         $lista='';
         $si= ConectorBD::ejecutarQuery("select codigosede,nombresede,bd,imagen,nom_departamento from  sede, departamento where departamento.id=sede.departamento", null);

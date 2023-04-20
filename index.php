@@ -129,9 +129,9 @@ if ($aviso == '1') {
             <div class="wizard-header" style="margin-top: 100px ; margin-left: 100px;">
                 <h4 id="aviso">  
                 </h4>
+                <br>
                 <h3>
                     <b>DFP Direccion de Formación Profesional</b><br>
-                    <b id="aviso"></b><br>
                 </h3>
             </div>
         </div>

@@ -179,7 +179,7 @@ class Municipio {
             $historico->setTipo_historico("ADICIONAR");
             $historico->setHistorico(strtoupper($nuevo_query));
             $historico->setFecha("now()");
-            $historico->setTabla("MUNICIPIOVIRTUAL");
+            $historico->setTabla("MUNICIPIO");
             $historico->grabar();
             return true;
         } else {
@@ -205,7 +205,7 @@ class Municipio {
             $historico->setTipo_historico("MODIFICAR");
             $historico->setHistorico(strtoupper($nuevo_query));
             $historico->setFecha("now()");
-            $historico->setTabla("MUNICIPIOVIRTUAL");
+            $historico->setTabla("MUNICIPIO");
             $historico->grabar();
             return true;
         } else {
@@ -224,7 +224,7 @@ class Municipio {
             $historico->setTipo_historico("ELIMINAR");
             $historico->setHistorico(strtoupper($nuevo_query));
             $historico->setFecha("now()");
-            $historico->setTabla("MUNICIPIOBORRAR");
+            $historico->setTabla("MUNICIPIO");
             $historico->grabar();
             return true;
         } else {

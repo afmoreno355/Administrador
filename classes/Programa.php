@@ -215,7 +215,7 @@ class Programa {
             $historico->setTipo_historico("ADICIONAR");
             $historico->setHistorico(strtoupper($nuevo_query));
             $historico->setFecha("now()");
-            $historico->setTabla("PROGRAMAVIRTUAL");
+            $historico->setTabla("PROGRAMA");
             $historico->grabar();
             return true;
         } else {
@@ -245,7 +245,7 @@ class Programa {
             $historico->setTipo_historico("MODIFICAR");
             $historico->setHistorico(strtoupper($nuevo_query));
             $historico->setFecha("now()");
-            $historico->setTabla("PROGRAMAVIRTUAL");
+            $historico->setTabla("PROGRAMA");
             $historico->grabar();
             return true;
         } else {
@@ -263,7 +263,7 @@ class Programa {
             $historico->setTipo_historico("ELIMINAR");
             $historico->setHistorico(strtoupper($nuevo_query));
             $historico->setFecha("now()");
-            $historico->setTabla("PROGRAMABORRAR");
+            $historico->setTabla("PROGRAMA");
             $historico->grabar();
             return true;
         } else {
