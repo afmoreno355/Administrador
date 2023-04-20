@@ -12,6 +12,7 @@ require_once dirname(__FILE__) . "/../../autoload.php";
 date_default_timezone_set('America/Bogota');
 // bucarPalabraClave palabra clave que se busca asociada a ajax
 $bucarPalabraClave = "";
+$URL = "View/Municipio/MunicipioModales.php" ;
 $numeroPaginas = 0 ;
 $id_espe  = "" ;
 $filtro  = " departamento.id = municipio.id_departamento and municipio.id not in (0,1) " ;
@@ -50,8 +51,8 @@ if ( $ingreso === false && $permisos->getIdTipo() !== "SA" ) {
 ?> 
     <!-- Inicio de html tablas -->
     <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
-        <button type='button' id='button' class="ele" title='Adicionar municipio' title="Adicionar" value="ADICIONAR" onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `View/Municipio/MunicipioModales.php`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>MUNICIPIO</button>
-        <button type='button' id='button' class="ele" title='Ayuda del sistema' onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `View/Municipio/MunicipioModales.php`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
+        <button type='button' id='button' class="ele" title='Adicionar municipio' title="Adicionar" value="ADICIONAR" onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>MUNICIPIO</button>
+        <button type='button' id='button' class="ele" title='Ayuda del sistema' onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
     </div>  
          <table id="tableIntD" class="tableIntT sombra tableIntTa">
             <tr>
@@ -95,12 +96,12 @@ if ( $ingreso === false && $permisos->getIdTipo() !== "SA" ) {
                 <td class='noDisplay' ><?= $objetos->getCod_dpto_mpio() ?></td>
                 <td><?= $_estado ?></td>
                 <td>
-                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `View/Municipio/MunicipioModales.php`)" title="Información Elemento" value="INFORMACION">
-                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `View/Municipio/MunicipioModales.php`)" title="Información Elemento" value="BLOQUEAR">
+                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="INFORMACION">
+                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="BLOQUEAR">
                 </td>
                 <td>
-                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `View/Municipio/MunicipioModales.php`)" title="Modificar Elemento" value="MODIFICAR">
-                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_eli ?>`, `modalVentana`, `View/Municipio/MunicipioModales.php`)" title="Eliminar" value="ELIMINAR">
+                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `<?= $URL ?>`)" title="Modificar Elemento" value="MODIFICAR">
+                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_eli ?>`, `modalVentana`, `<?= $URL ?>`)" title="Eliminar" value="ELIMINAR">
                 </td>
             </tr> 
          
