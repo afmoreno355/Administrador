@@ -27,7 +27,9 @@ class Http {
         $menu[] = array('URL' => "inicio#USUARIOS", 'DONDE' => 'View/Persona/PersonaTabla.php', 'NOMBRE' => 'USUARIOS');
         $menu[] = array('URL' => "inicio#CARGO", 'DONDE' => 'View/Cargo/CargoTabla.php', 'NOMBRE' => 'CARGO');
         $menu[] = array('URL' => "inicio#MENU", 'DONDE' => 'View/Menu/MenuTabla', 'NOMBRE' => 'MENU');
-        return json_encode($menu);    }
+        $menu[] = array('URL' => "inicio#MUNICIPIO", 'DONDE' => 'View/Municipio/MunicipioTabla', 'NOMBRE' => 'MUNICIPIOA');
+        return json_encode($menu);  
+    }
 
     public static function encryptIt($q) {
         $qEncoded = base64_encode($q);
