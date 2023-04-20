@@ -12,6 +12,7 @@ require_once dirname(__FILE__) . "/../../autoload.php";
 date_default_timezone_set('America/Bogota');
 // bucarPalabraClave palabra clave que se busca asociada a ajax
 $bucarPalabraClave = "";
+$URL = "View/Programa/ProgramaModales.php" ;
 $numeroPaginas = 0 ;
 $id_espe  = "" ;
 $filtro  = " tipo_esp = 'T' " ;
