@@ -64,7 +64,7 @@ $ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "MI USUATI
     
     <div class="contenido">            
         <div class="tituloDonde">
-            <div>ROL :: <?= !empty( ( $_rol = ConectorBD::ejecutarQuery( " select nombrecargo from cargo where codigocargo = '{$permisos->getIdTipo()}' " , 'eagle_admin' ) ) ) ? $_rol[0][0] : 'SUPER ADMIN' ?></div><br> 
+            <div>ROL :: <?= !empty( ( $_rol = ConectorBD::ejecutarQuery( " select nombrecargo from cargo where nombrecargo <> '' and codigocargo = '{$permisos->getIdTipo()}' " , 'eagle_admin' ) ) ) ? $_rol[0][0] : 'SUPER ADMIN' ?></div><br> 
             <label style="color: white"><b>MODULO > <?= $_SESSION['MiEmpresa']?> > <span id="sections" ></span> </b></label>  
         </div>
         <table class="tableIntT c">   
