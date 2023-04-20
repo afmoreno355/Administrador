@@ -11,6 +11,7 @@ require_once dirname(__FILE__) . "/../../autoload.php";
 
 // filtro se usa para realizar las consultas de busqueda 
 $filtro = "";
+$URL = "View/Cargo/CargoModales.php" ;
 $year = date('Y', time());
 
 // bucarPalabraClave palabra clave que se busca asociada a ajax
@@ -48,8 +49,8 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA") {
 
 ?> 
      <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
-        <button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `View/Cargo/CargoModales.php`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>REGIONAL</button>
-        <button type='button' id='button' class="ele" title='Ayuda'  onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `View/Cargo/CargoModales.php`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
+        <button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>REGIONAL</button>
+        <button type='button' id='button' class="ele" title='Ayuda'  onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
     </div>  
     <!-- Inicio de html tablas -->
     <table id="tableIntD" class="tableIntT sombra tableIntTa">
@@ -74,12 +75,12 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA") {
                 <td> <?= $objet->getNombrecargo() ?></td>
                 <td> <?= $objet->getDetalle() ?></td>
                 <td>
-                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `View/Cargo/CargoModales.php`)" title="Información Elemento" value="INFORMACION">
-                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `View/Cargo/CargoModales.php`)" title="Bloquear Elemento" value="BLOQUEAR">
+                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="INFORMACION">
+                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `<?= $URL ?>`)" title="Bloquear Elemento" value="BLOQUEAR">
                 </td>
                 <td>
-                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `View/Cargo/CargoModales.php`)" title="Modificar Elemento" value="MODIFICAR">
-                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_eli ?>`, `modalVentana`, `View/Cargo/CargoModales.php`)" title="Eliminar" value="ELIMINAR">
+                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `<?= $URL ?>`)" title="Modificar Elemento" value="MODIFICAR">
+                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_eli ?>`, `modalVentana`, `<?= $URL ?>`)" title="Eliminar" value="ELIMINAR">
                 </td>
             </tr>
         <?PHP
