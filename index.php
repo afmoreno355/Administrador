@@ -3,6 +3,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+<<<<<<< HEAD
  */
 session_start();
 session_unset();
@@ -127,8 +128,9 @@ if ($aviso == '1') {
             <div class="wizard-header" style="margin-top: 100px ; margin-left: 100px;">
                 <h4 id="aviso">  
                 </h4>
+                <br>
                 <h3>
-                    <b>Ingenieria y Seguridad en las Alturas</b>
+                    <b>DFP Direccion de Formación Profesional</b><br>
                 </h3>
             </div>
         </div>

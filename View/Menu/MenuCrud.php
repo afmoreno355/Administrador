@@ -12,6 +12,8 @@ if( !isset($_SESSION["user"]) )
 {
     session_start();
 }
+// prueba nueva de carga
+
 
 date_default_timezone_set("America/Bogota");
 $fecha = date("YmdHis");

@@ -12,6 +12,7 @@ require_once dirname(__FILE__) . "/../../autoload.php";
 date_default_timezone_set('America/Bogota');
 // bucarPalabraClave palabra clave que se busca asociada a ajax
 $bucarPalabraClave = "";
+$URL = "View/Programa/ProgramaModales.php" ;
 $numeroPaginas = 0 ;
 $id_espe  = "" ;
 $filtro  = " tipo_esp = 'T' " ;
@@ -50,9 +51,9 @@ if ( $ingreso === false && $permisos->getIdTipo() !== "SA" ) {
 ?> 
     <!-- Inicio de html tablas -->
     <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
-        <button type='button' id='button' class="ele" title='Adicionar programa virtual' title="Adicionar" value="ADICIONAR" onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `View/Programa/ProgramaModales.php`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>PROGRAMA</button>
-        <button type='button' id='button' class="ele" title='Archivo plano' onclick="validarDatos(``, `I=<?= $var_pla ?>`, `modalVentana`, `View/Programa/ProgramaModales.php`, event, 'ele')"><img src="img/icon/excel.png"/> PROGRAMAS<br>CSV</button>
-        <button type='button' id='button' class="ele" title='Ayuda del sistema' onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `View/Programa/ProgramaModales.php`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
+        <button type='button' id='button' class="ele" title='Adicionar programa virtual' title="Adicionar" value="ADICIONAR" onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>PROGRAMA</button>
+        <button type='button' id='button' class="ele" title='Archivo plano' onclick="validarDatos(``, `I=<?= $var_pla ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/excel.png"/> PROGRAMAS<br>CSV</button>
+        <button type='button' id='button' class="ele" title='Ayuda del sistema' onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
     </div>  
          <table id="tableIntD" class="tableIntT sombra tableIntTa">
             <tr>
@@ -92,12 +93,12 @@ if ( $ingreso === false && $permisos->getIdTipo() !== "SA" ) {
                 <td class='noDisplay' ><?= $objetos->getModalidad() ?></td>
                 <td><?= $_estado ?></td>
                 <td>
-                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `View/Programa/ProgramaModales.php`)" title="Información Elemento" value="INFORMACION">
-                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `View/Programa/ProgramaModales.php`)" title="Información Elemento" value="BLOQUEAR">
+                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="INFORMACION">
+                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="BLOQUEAR">
                 </td>
                 <td>
-                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `View/Programa/ProgramaModales.php`)" title="Modificar Elemento" value="MODIFICAR">
-                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_eli ?>`, `modalVentana`, `View/Programa/ProgramaModales.php`)" title="Eliminar" value="ELIMINAR">
+                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `<?= $URL ?>`)" title="Modificar Elemento" value="MODIFICAR">
+                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_eli ?>`, `modalVentana`, `<?= $URL ?>`)" title="Eliminar" value="ELIMINAR">
                 </td>
             </tr> 
          

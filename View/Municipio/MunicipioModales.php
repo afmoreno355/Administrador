@@ -62,7 +62,7 @@ if ($id == 1 && $permisos)
             <fieldset>
                 <legend title='REGIONAL'>REGIONAL</legend>
                 <select  required name='id_departamento' id="id_departamento">
-                    <?= Select::listaopciones( 2 , $municipio->getId_departamento() , "select id , nom_departamento from departamento ;" )?>
+                    <?= Select::listaopciones( 1 , $municipio->getId_departamento() , "select id , nom_departamento from departamento ;" )?>
                 </select>
             </fieldset>
         </div>
@@ -88,7 +88,7 @@ if ($id == 1 && $permisos)
             <fieldset>
                 <legend title='ACTIVO'>ACTIVO</legend>
                 <select required name='activo' id='activo'>
-                    <?= Select::listaopciones( 11 , $municipio->getEstado()  )?>
+                    <?= Select::listaopciones( 8 , $municipio->getEstado()  )?>
                 </select>
             </fieldset>
         </div>
