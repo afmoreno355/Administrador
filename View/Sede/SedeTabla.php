@@ -36,7 +36,7 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
        
     // evalua si existe bucarPalabraClave y nos crea la cadena de busqueda
     if ($bucarPalabraClave != "") {
-       $filtro.=" ( codigosede like '%". strtoupper($bucarPalabraClave)."%' or  nombresede like '%". strtoupper($bucarPalabraClave)."%' or  nom_departamento like '%". strtoupper($bucarPalabraClave)."%' )";
+       $filtro.=" and ( codigosede like '%". strtoupper($bucarPalabraClave)."%' or  nombresede like '%". strtoupper($bucarPalabraClave)."%' or  nom_departamento like '%". strtoupper($bucarPalabraClave)."%' )";
     }
 
     // obj para llenar las tablas
@@ -44,39 +44,32 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
     // numero de paginas para la paginacion
     $numeroPaginas = ceil(Sede::count($filtro)[0][0] / 20);
     // ecrypt codifica lo que enviamos por javascript   
-    $var_add = Http::encryptIt("id=1&llave_Primaria=&user={$_SESSION["user"]}&accion=ADICIONAR");
-    $var_ayu = Http::encryptIt("id=4&llave_Primaria=&user={$_SESSION["user"]}&accion=AYUDA");
-
+    
 ?> 
-     <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
-        <button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `View/Sede/SedeModales.php`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>SEDE</button>
-        <button type='button' id='button' class="ele" title='Ayuda'  onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `View/Sede/SedeModales.php`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
+    <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
+        <button type='button' id='button' class="ele" title='Cargar PE04' value="PE04" onclick="validarDatos(``, `I=<?= '' ?>`, `modalVentana`, `View/Sede/sedeModales.php`, event, 'ele')"><img src="img/icon/excel.png"/> CARGAR<br>PE04</button>
+        <button type='button' id='button' class="ele" title='Cargar metas' value="METAS" onclick="validarDatos(``, `I=<?= '' ?>`, `modalVentana`, `View/Sede/sedeModales.php`, event, 'ele')"><img src="img/icon/excel.png"/> CARGAR<br>METAS</button>
     </div>  
     <!-- Inicio de html tablas -->
     <table id="tableIntD" class="tableIntT sombra tableIntTa">
         <tr>
             <th>CÓDIGO CENTRO</th>
-            <th>NOMBRES SEDE</th>
+            <th>NOMBRES REGIONAL</th>
             <th>NOMBRES CENTRO</th> 
-            <th colspan="2">ACCION</th>           
+            <th></th>           
         </tr>
 <?PHP
     for ($i = 0; $i < count($sede); $i++) {
         $objet = $sede[$i];
-        $var_mod = Http::encryptIt("id=1&llave_Primaria={$objet->getCod()}&user={$_SESSION["user"]}&accion=MODIFICAR");
-        $var_eli = Http::encryptIt("id=2&llave_Primaria={$objet->getCod()}&user={$_SESSION["user"]}&accion=ELIMINAR");
-        $var_inf = Http::encryptIt("id=3&llave_Primaria={$objet->getCod()}&user={$_SESSION["user"]}&accion=INFORMACION");
+        $var_ges = "id=1&sedeGestion={$objet->getCod()}&user={$_SESSION["user"]}&accion=GESTIONAR&pagina=0";
 ?> 
             <tr>
                 <td><?= $objet->getCod() ?></td>
                 <td> <?= $objet->getDepartamento() ?></td>
                 <td> <?= $objet->getNombre() ?></td>
-                <td>
-                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `View/Sede/SedeModales.php`)" title="Información Elemento" value="INFORMACION">
-                </td>
-                <td>
-                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `View/Sede/SedeModales.php`)" title="Modificar Elemento" value="MODIFICAR">
-                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_eli ?>`, `modalVentana`, `View/Sede/SedeModales.php`)" title="Eliminar" value="ELIMINAR">
+                <td> 
+                    <a onclick="botoncolor(`VIRTUAL`, `<?= $var_ges ?>`, `tableIntT`, `View/Virtual/VirtualTabla.php`)" title="Indicativa Virtual" ><img src="img/icon/virtual.png" style="width: 30px; height: 30px"/></a>
+                    <a onclick="botoncolor(`PRESENCIAL`, `<?= $var_ges ?>`, `tableIntT`, `View/Presencial/PresencialTabla.php`)" title="Indicativa Presencial" ><img src="img/icon/presencial.png" style="width: 30px; height: 30px"/></a>
                 </td>
             </tr>
 <?PHP

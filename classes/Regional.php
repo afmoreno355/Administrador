@@ -23,7 +23,7 @@ class Regional {
             }else{
                 $cadenaSQL="select * from departamento where $campo = $valor";
                 //print_r($cadenaSQL);
-                $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin');
+                $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, null);
                 if ( count($respuesta) > 0 )
                 {
                     $this->objeto($respuesta[0]);
@@ -64,7 +64,7 @@ class Regional {
         } 
         $cadenaSQL.=" order by id asc offset $pagina limit $limit ";
         //print_r($cadenaSQL);
-        return ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin');          
+        return ConectorBD::ejecutarQuery($cadenaSQL, null);          
     }
     
     public static function datosobjetos($filtro, $pagina, $limit){
@@ -82,7 +82,7 @@ class Regional {
         if($filtro!=''){
             $cadena.=" where $filtro";
         } 
-        return ConectorBD::ejecutarQuery($cadena, 'eagle_admin');        
+        return ConectorBD::ejecutarQuery($cadena, null);        
     }
     
     public function estado( $modalidad ) {
@@ -95,7 +95,7 @@ class Regional {
             $modalidad_cambio = " and id_modalidad in ( '3' ) " ;
         }
         
-        $centros_regionales = ConectorBD::ejecutarQuery( " select codigosede from sede where departamento = $this->cod ; " , 'eagle_admin' ) ;
+        $centros_regionales = ConectorBD::ejecutarQuery( " select codigosede from sede where departamento = $this->cod ; " , null ) ;
         $lista = ' ( ' ;
         
         for ($i = 0; $i < count( $centros_regionales ); $i++)

@@ -5,7 +5,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 session_start();
 // require auntomatico encuentra todas las clases/Model qeu se solicitan en el Controlador
 require_once dirname(__FILE__) . "/../../autoload.php";

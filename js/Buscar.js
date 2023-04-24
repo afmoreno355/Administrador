@@ -22,5 +22,5 @@ function BuscarElementos(bucarPalabraClave = document.getElementById('bucarPalab
     if (parseInt(document.getElementById('pag').innerHTML) != 1) {
         document.getElementById('pag').innerHTML = 1;
     }
-    idexistentesReCa('', 'bucarPalabraClave=' + bucarPalabraClave.trim() + '&pagina=0&limit=5' + addcadena, 'tableIntT', `View/${document.getElementById('donde').value}/${document.getElementById('donde').value}Tabla.php`, eve, tab);
+    idexistentesReCa('', 'bucarPalabraClave=' + bucarPalabraClave.trim() + '&pagina=0&limit=5' + addcadena, 'tableIntT', `View/${document.getElementById('donde').value}/${document.getElementById('donde').value}Tabla`, eve, tab);
 }

@@ -36,6 +36,7 @@ function formFotoDoc( donde , formData, hacer = 'aviso') {
 }
 
  function idexistentesReCa(id, postcad, donde = 'aviso' , accion , evt , tadId) {
+    console.log(postcad);
         var xhr=new XMLHttpRequest();
         xhr.onreadystatechange=function (){
             if(this.readyState==4 && this.status==200){
@@ -44,7 +45,8 @@ function formFotoDoc( donde , formData, hacer = 'aviso') {
                    respuestas( donde , respuesta ) ;
             }        
         };
-        xhr.open('POST',accion, true);
+        
+        xhr.open('POST',accion+'.php', true);
         xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xhr.send(postcad); 
         action( evt , tadId ) ;
@@ -75,8 +77,11 @@ function formFotoDoc( donde , formData, hacer = 'aviso') {
         }
         else if ( respuesta.split(":").length >= 2 && respuesta.split("}").length >= 2 && respuesta.split("{").length >= 2)
         {
-            jsonRespuesta = JSON.parse(respuesta);
-            //alert(jsonRespuesta["empresa"].toLowerCase());
+
+           
+            //let jsonRespuesta = JSON.parse('{"user":"1085264553","correo":"AFMORENO355@MISENA.EDU.CO","empresa":"SENA SG-DFP","token1":"e9a47b2d90858e078eddd1157959544e1","token2":"1d638cdf5c6d83588bf3216f3e2c3a881"}');
+            let jsonRespuesta = JSON.parse(respuesta);
+            
             if( jsonRespuesta["empresa"].toLowerCase() === 'sena sg-dfp' && window.location.toString().includes('adminV2') )
             {
                 const user = jsonRespuesta["user"];
@@ -86,7 +91,7 @@ function formFotoDoc( donde , formData, hacer = 'aviso') {
                 if( token1 === 'e9a47b2d90858e078eddd1157959544e1' && token2 === '1d638cdf5c6d83588bf3216f3e2c3a881' )
                 {
                     token(empresa,token1,token2,user);
-                    window.location.replace('inicio#MI_USUARIO');
+                    window.location.replace('inicio.php#MI_USUARIO');
                     return ; 
                 }
                 else
@@ -113,4 +118,14 @@ function formFotoDoc( donde , formData, hacer = 'aviso') {
     function token( empresa , token1 , token2 , user )
     {
         idexistentesReCa('', `empresa=${empresa}&token1=${token1}&token2=${token2}&user=${user}` , `aviso` , `View/Validar/Empresa` , null , null)
+    }
+
+
+    function validarDatos(id, postcad, donde, accion, eve = null, tab = null){
+        if(id !== null && postcad !== null && donde !== null && accion !== null ){
+            idexistentesReCa(id, postcad, donde, accion, eve, tab);
+        } 
+        document.getElementById("modales").style.transform='translateX(0%)';      
+        document.getElementById("modales").style.transition="1s"; 
+        document.getElementById("formularioDiv").style.width=""; 
     }

@@ -23,7 +23,7 @@ $permisos = new Persona(" identificacion ", "'" . $_SESSION['user'] . "'");
 
 
 $ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), 'eagle');
-//print_r($ingreso);
+//print_r("Ju@nfelipe1324");
 
 
 if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
@@ -57,7 +57,7 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
 ?> 
 <!-- Código para los botones-->
     <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
-<button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `View/Persona/PersonaModales.php`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>MENU</button>
+<button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `View/Persona/PersonaModales`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>MENU</button>
 <button type='button' id='button' class="ele" title='Ayuda'  onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `View/Persona/PersonaModales.php`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
 </div>
     <!-- Inicio de html tablas -->

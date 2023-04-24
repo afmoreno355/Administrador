@@ -33,7 +33,7 @@ class Programa {
             }else{
                 $cadenaSQL="select * from programas where $campo = $valor ";
                 //print_r($cadenaSQL);
-                $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin');
+                $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, null);
                 if ( count($respuesta) > 0 )
                 {
                     $this->objeto($respuesta[0]);
@@ -157,14 +157,14 @@ class Programa {
             $cadenaSQL .= " offset $pagina limit $limit ";
         }
         //print_r($cadenaSQL);
-        return ConectorBD::ejecutarQuery( $cadenaSQL, 'eagle_admin' );
+        return ConectorBD::ejecutarQuery( $cadenaSQL, null );
     }
     
      public static function count($filtro)
     {
         $cadena='select count(*) from programas where' . $filtro ; 
         //print_r($cadena);
-        return ConectorBD::ejecutarQuery($cadena, 'eagle_admin');        
+        return ConectorBD::ejecutarQuery($cadena, null);        
     }
 
     //convierte los array de datos en objetos enviando las posiciones al constructor 
@@ -207,7 +207,7 @@ class Programa {
                 '$this->activo'
              )";
         //print_r($sql);
-    if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
+    if (ConectorBD::ejecutarQuery($sql, null)) {
             //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "|", $sql);
             $historico = new Historico(null, null);
@@ -237,7 +237,7 @@ class Programa {
               , activo = '$this->activo'
                where id_programa = '$id' ";
         //print_r($sql);
-        if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
+        if (ConectorBD::ejecutarQuery($sql, null)) {
             //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "|", $sql);
             $historico = new Historico(null, null);
@@ -255,7 +255,7 @@ class Programa {
     
     public function Borrar() {
         $sql="delete from programas where id_programa = '$this->id_programa' ";
-        if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
+        if (ConectorBD::ejecutarQuery($sql, null)) {
             //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "|", $sql);
             $historico = new Historico(null, null);

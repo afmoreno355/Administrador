@@ -3,15 +3,12 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- * 
- * Prueba rama Dibier
  */
 session_start();
 session_unset();
 session_destroy();
 
-require_once dirname(__FILE__) . "./autoload.php";
-
+require_once dirname(__FILE__) . "/autoload.php";
 $avisoSesion = "";
 $aviso = "";
 $empresa = ConectorBD::ejecutarQuery( " select nombre , icono from empresa" , null ) ;
@@ -114,7 +111,7 @@ if ($aviso == '1') {
                                         <div class="pull-right">
                                             <input type="hidden" name="MiEmpresa" id="MiEmpresa" value="<?=$empresa[0][0]?>" />
                                             <input type="hidden" name="accion" id="accion" value="INICIAR" />
-                                            <input type="submit" class='btn btn-finish btn-fill btn-warning btn-wd btn-sm' name="accionU" id="accionU" value="INICIAR" onclick="cargar( 'aviso' , 'validar' )"/>
+                                            <input type="submit" class='btn btn-finish btn-fill btn-warning btn-wd btn-sm' name="accionU" id="accionU" value="INICIAR" onclick="cargar( 'aviso' , 'Validar' )"/>
                                         </div>
                                         <div class="pull-left">
                                             <input type='button' class='btn btn-previous btn-fill btn-default btn-wd btn-sm' name='previous' value='Previous' />

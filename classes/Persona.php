@@ -165,48 +165,12 @@ class Persona {
         return trim($this->nombre) . " " . trim($this->apellido);
     }
 
-    public static function datos($filtro, $pagina, $limit){
-        $cadenaSQL="select * from persona ";
-         if($filtro!=''){
-            $cadenaSQL.=" where $filtro";
-        } 
-        $cadenaSQL.=" order by identificacion asc offset $pagina limit $limit ";
-        return ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin');          
-    }
-    
-    public static function datosobjetos($filtro, $pagina, $limit){
-        $datos= self::datos($filtro, $pagina, $limit);
-        $lista=array();
-        for ($i = 0; $i < count($datos); $i++) {
-            $dato=new self($datos[$i], null);
-            $lista[$i]=$dato;
+    public static function datos($filtro, $pagina, $limit) {
+        $cadenaSQL = "select * from persona where identificacion <> '' " . $filtro;
+        if ($limit != null) {
+            $cadenaSQL .= " order by identificacion asc offset $pagina limit $limit ";
         }
-        return $lista;
-    }
-    
-    public static function count($filtro) {
-        $cadena='select count(*) from persona '; 
-        if($filtro!=''){
-            $cadena.=" where $filtro";
-        } 
-        return ConectorBD::ejecutarQuery($cadena, 'eagle_admin');        
-    }
-    
-     public function borrar() {
-        $cadenaSQL = "delete from persona where identificacion ='" . $this->id . "'";
-        if (ConectorBD::ejecutarQuery($cadenaSQL, null)) {
-             //Historico de las acciones en el sistemas de informacion
-            $nuevo_query = str_replace("'", "/", $cadenaSQL);
-            $historico = new Historico(null, null);
-            $historico->setIdentificacion($_SESSION['user']);
-            $historico->setTipo_historico("ELIMINAR");
-            $historico->setHistorico($nuevo_query);
-            $historico->setTabla("PERSONA");
-            $historico->grabar();
-            return true;
-        } else {
-            return false;
-        }
+        return ConectorBD::ejecutarQuery($cadenaSQL, null);
     }
 
     public function grabar() {
@@ -231,6 +195,23 @@ class Persona {
             $historico = new Historico(null, null);
             $historico->setIdentificacion($_SESSION['user']);
             $historico->setTipo_historico("GRABAR");
+            $historico->setHistorico($nuevo_query);
+            $historico->setTabla(" persona ");
+            $historico->grabar();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function borrar() {
+        $cadenaSQL = "delete from persona where identificacion ='" . $this->id . "'";
+        if (ConectorBD::ejecutarQuery($cadenaSQL, null)) {
+             //Historico de las acciones en el sistemas de informacion
+            $nuevo_query = str_replace("'", "/", $cadenaSQL);
+            $historico = new Historico(null, null);
+            $historico->setIdentificacion($_SESSION['user']);
+            $historico->setTipo_historico("ELIMINAR");
             $historico->setHistorico($nuevo_query);
             $historico->setTabla(" persona ");
             $historico->grabar();
@@ -265,6 +246,16 @@ class Persona {
         ConectorBD::ejecutarQuery($cadenaSQL, null);
     }
 
+    public static function datosobjetos($filtro, $pagina, $limit) {
+        $datos = Persona::datos($filtro, $pagina, $limit);
+        $lista = array();
+        for ($i = 0; $i < count($datos); $i++) {
+            $persona = new Persona($datos[$i], null);
+            $lista[$i] = $persona;
+        }
+        return $lista;
+    }
+
     public static function listaopciones($filtro, $tipo, $predeterminado) {
         $persona = Persona::datosobjetos($filtro, null);
         $lista = "<datalist id='" . $tipo . "'>";
@@ -280,7 +271,11 @@ class Persona {
         $lista .= "</datalist>";
         return $lista;
     }
-    
+
+    public static function count($filtro) {
+        return ConectorBD::ejecutarQuery("select count(*) from persona where identificacion<>'1085264553' " . $filtro, null);
+    }
+
     public function modificarImagen() {
         $cadena = "update persona set imagen='$this->imagen' where identificacion='$this->id';";
         ConectorBD::ejecutarQuery($cadena, null);
