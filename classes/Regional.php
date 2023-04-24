@@ -82,7 +82,7 @@ class Regional {
         if($filtro!=''){
             $cadena.=" where $filtro";
         } 
-        return ConectorBD::ejecutarQuery($cadena, 'eagle_admin');        
+        return ConectorBD::ejecutarQuery($cadena, null);        
     }
     
     public static function listaopciones(){ 
