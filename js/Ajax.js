@@ -46,7 +46,7 @@ function formFotoDoc( donde , formData, hacer = 'aviso') {
             }        
         };
         
-        xhr.open('POST',accion+'.php', true);
+        xhr.open('POST',accion, true); // estaba accion+'.php'
         xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xhr.send(postcad); 
         action( evt , tadId ) ;

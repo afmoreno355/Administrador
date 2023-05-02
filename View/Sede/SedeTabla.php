@@ -47,8 +47,8 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
     
 ?> 
     <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
-        <button type='button' id='button' class="ele" title='Cargar PE04' value="PE04" onclick="validarDatos(``, `I=<?= '' ?>`, `modalVentana`, `View/Sede/sedeModales.php`, event, 'ele')"><img src="img/icon/excel.png"/> CARGAR<br>PE04</button>
-        <button type='button' id='button' class="ele" title='Cargar metas' value="METAS" onclick="validarDatos(``, `I=<?= '' ?>`, `modalVentana`, `View/Sede/sedeModales.php`, event, 'ele')"><img src="img/icon/excel.png"/> CARGAR<br>METAS</button>
+        <button type='button' id='button' class="ele" title='Cargar PE04' value="PE04" onclick="validarDatos(``, `I=<?= '' ?>`, `modalVentana`, `View/Sede/sedeModales`, event, 'ele')"><img src="img/icon/excel.png"/> CARGAR<br>PE04</button>
+        <button type='button' id='button' class="ele" title='Cargar metas' value="METAS" onclick="validarDatos(``, `I=<?= '' ?>`, `modalVentana`, `View/Sede/sedeModales`, event, 'ele')"><img src="img/icon/excel.png"/> CARGAR<br>METAS</button>
     </div>  
     <!-- Inicio de html tablas -->
     <table id="tableIntD" class="tableIntT sombra tableIntTa">
