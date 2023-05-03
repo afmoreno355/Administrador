@@ -110,23 +110,17 @@ class Menu {
 
 
     public function Adicionar() {
-        $sql="insert into programas( id_programa ,     nombre_programa,     nivel_formacion ,    
-                                    duracion ,     red_conocimiento ,     linea_tecnologica ,     
-                                    tipo_esp ,     segmento ,     modalidad,     fic,     activo  ) values(
-                '$this->id_programa',
-                '$this->nombre_programa',
-                '$this->nivel_formacion',
-                '$this->duracion',
-                '$this->red_conocimiento',
-                '$this->linea_tecnologica',
-                '$this->tipo_esp',
-                '$this->segmento',
-                '$this->modalidad',
-                '$this->fic',
-                '$this->activo'
+        $sql="insert into menu(
+             nombre,
+             pnombre,
+             icono,
+            ) values(
+                '$this->nombre',
+                '$this->pnombre',
+                '$this->icono'
              )";
         //print_r($sql);
-    if (ConectorBD::ejecutarQuery($sql, null)) {
+        if (ConectorBD::ejecutarQuery($sql, null)) {
             //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "|", $sql);
             $historico = new Historico(null, null);
@@ -134,7 +128,7 @@ class Menu {
             $historico->setTipo_historico("ADICIONAR");
             $historico->setHistorico(strtoupper($nuevo_query));
             $historico->setFecha("now()");
-            $historico->setTabla("PROGRAMA");
+            $historico->setTabla("MENU");
             $historico->grabar();
             return true;
         } else {
@@ -143,18 +137,11 @@ class Menu {
     }
     
     public function Modificar( $id ) {
-        $sql="update programas set
-                nombre_programa = '$this->nombre_programa'
-              , nivel_formacion = '$this->nivel_formacion'
-              , duracion = '$this->duracion'
-              , red_conocimiento = '$this->red_conocimiento'
-              , linea_tecnologica = '$this->linea_tecnologica'
-              , segmento = '$this->segmento'
-              , id_programa = '$this->id_programa'
-              , modalidad = '$this->modalidad'
-              , fic = '$this->fic'
-              , activo = '$this->activo'
-               where id_programa = '$id' ";
+        $sql="update menu set
+             nombre = '$this->nombre',
+             pnombre = '$this->pnombre',
+             icono = '$this->icono'
+               where id = '$id' ";
         //print_r($sql);
         if (ConectorBD::ejecutarQuery($sql, null)) {
             //Historico de las acciones en el sistemas de informacion
@@ -164,7 +151,7 @@ class Menu {
             $historico->setTipo_historico("MODIFICAR");
             $historico->setHistorico(strtoupper($nuevo_query));
             $historico->setFecha("now()");
-            $historico->setTabla("PROGRAMA");
+            $historico->setTabla("MENU");
             $historico->grabar();
             return true;
         } else {
@@ -173,7 +160,7 @@ class Menu {
     }
     
     public function Borrar() {
-        $sql="delete from programas where id_programa = '$this->id_programa' ";
+        $sql="delete from menu where id = '$this->id_programa' ";
         if (ConectorBD::ejecutarQuery($sql, null)) {
             //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "|", $sql);
@@ -182,7 +169,7 @@ class Menu {
             $historico->setTipo_historico("ELIMINAR");
             $historico->setHistorico(strtoupper($nuevo_query));
             $historico->setFecha("now()");
-            $historico->setTabla("PROGRAMA");
+            $historico->setTabla("MENU");
             $historico->grabar();
             return true;
         } else {
