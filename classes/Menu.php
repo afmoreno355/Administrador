@@ -110,11 +110,7 @@ class Menu {
 
 
     public function Adicionar() {
-        $sql="insert into menu(
-             nombre,
-             pnombre,
-             icono,
-            ) values(
+        $sql="insert into menu (nombre, pnombre, icono) values (
                 '$this->nombre',
                 '$this->pnombre',
                 '$this->icono'

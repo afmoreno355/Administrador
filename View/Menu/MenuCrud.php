@@ -53,6 +53,9 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
         $menu = new Menu( $campo, $valor );
         if ($accion == "ADICIONAR" || $accion == "MODIFICAR") 
         {
+            if ($accion == "ADICIONAR") {
+                $id = 0;
+            }
             if ( Select::validar( $id , 'NUMERIC' , null, 'ID' ) &&
                  Select::validar( $nombre , 'TEXT' , 250 , 'NOMBRE' ) &&
                  Select::validar( $pnombre , 'TEXT' , 250 , 'PNOMBRE' ) &&
