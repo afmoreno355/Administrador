@@ -38,27 +38,28 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" && $_SESSION["rol"] !=
 $llave_Primaria_Contructor = ( $llave_Primaria == "" ) ? "null" : "'$llave_Primaria'";
 
 // llamamos la clase y verificamos si ya existe info de este dato que llega
-$regional = new Regional( ' id ' , $llave_Primaria_Contructor);
+$menu = new Menu( ' id ' , $llave_Primaria_Contructor);
 if ($id == 1 && $permisos)
 {
 ?>
+<h1>1</h1>
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
                 <img src="img/icon/gestionar.png"/><label class="where">Administrador DFP – Dirección de Formación Profesional</label></div>
             <br><br>
-            <label style="font-size: 1em; " >Tabla regional</label>  
+            <label style="font-size: 1em; " >Tabla menu</label>  
             <label style="font-size: 1em; " id="aviso" class="aviso" ></label> 
-            <label style="font-size: 1em; " id="aviso2" class="aviso" ><?= $regional->getCod() ?></label> 
+            <label style="font-size: 1em; " id="aviso2" class="aviso" ><?= $menu->getId() ?></label> 
         </div> 
         <div>
             <fieldset>
-                <legend title='NOMBRE DE LA REGIONAL'>NOMBRE DE LA REGIONAL</legend>
-                <input type="text" value='<?= $regional->getNombre() ?>' required name='nom_departamento' id="nom_departamento">
+                <legend title='NOMBRE DEL MENÚ'>NOMBRE DEL MENÚ</legend>
+                <input type="text" value='<?= $menu->getNombre() ?>' required name='nom_departamento' id="nom_departamento">
             </fieldset>
         </div>
         <div>        
-            <input type="hidden" value="<?= $regional->getCod() ?>" name="id" id="id">
+            <input type="hidden" value="<?= $menu->getId() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
             <input type='hidden' value='<?=$_SESSION['user']?>' name='personaGestion' id='personaGestion'>
             <input type="submit" value='<?= $accion ?>' name='accionU' id='accionU' onclick='cargar( "aviso" )'>
@@ -70,18 +71,19 @@ if ($id == 1 && $permisos)
 if ($id == 2 && $permisos)
 {
 ?>
+<h1>2</h1>
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
                 <img src="img/icon/borrar.png"/>
                 <lablel>
-                    Se realizara la accion "<?= $accion ?>" a la regional <?=$llave_Primaria?> cargado en el modulo de la Dirección de Formación Profesional.
+                    Se realizara la acción "<?= $accion ?>" al menú <?=$llave_Primaria?> cargado en el modulo de la Dirección de Formación Profesional.
                 </label>
             </div><br><br>
             <label style="font-size: 1em; " id="aviso"></label>  
         </div>  
         <div>        
-            <input type="hidden" value="<?= $regional->getCod() ?>" name="id" id="id">
+            <input type="hidden" value="<?= $menu->getId() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
             <input type="submit" title="ACEPTA <?= $accion ?> EL ITEM ELEGIDO"  value="<?= $accion ?>" name="accionU" id="accionU" onclick="eliminar('aviso')">
         </div>
@@ -91,6 +93,7 @@ if ($id == 2 && $permisos)
 elseif ($id == 3 && $permisos)
 {
 ?>
+<h1>3</h1>
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
@@ -104,12 +107,12 @@ elseif ($id == 3 && $permisos)
         <div class="nuevaseccion" >
             <fieldset>
                 <section>
-                    <h3>CODIGO DE REGIONAL: </h3> 
-                    <p> <?= $regional->getCod() ?></p>
+                    <h3>ID DE MENÚ: </h3> 
+                    <p> <?= $menu->getId() ?></p>
                 </section>
                 <section>
-                    <h3>NOMBRE DE REGIONAL: </h3> 
-                    <p> <?= $regional->getNombre() ?></p>
+                    <h3>NOMBRE DE MENÚ: </h3> 
+                    <p> <?= $menu->getNombre() ?></p>
                 </section>
             </fieldset>
         </div>
@@ -118,6 +121,7 @@ elseif ($id == 3 && $permisos)
 }
 elseif ($id == 4 && $permisos ) {
     ?>
+    <h1>4</h1>
     <div class="carga_Documento">
          <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
