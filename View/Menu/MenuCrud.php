@@ -19,10 +19,11 @@ $nombreSinTilde_Nuevo = array("A", "E", "I", "O", "U", "N", "", "", "A", "E", "I
 
 date_default_timezone_set("America/Bogota");
 $fecha = date("YmdHis");
-$fecha_indicativas = date("Y-m-d H:i:s");
+/*$fecha_indicativas = date("Y-m-d H:i:s");
 $fecha_indicativa_comp = date("Y-m-d");
 $anio_indicativa = date("Y");
 $acceso_Tipo_Usuario = ConectorBD::ejecutarQuery( " select validar from indicativa  WHERE cod_centro = '{$_SESSION['sede']}' and vigencia ='$anio_indicativa' and id_modalidad = '3' group by validar ; " ,  null ) ;
+/** */
 
 // variable variable trae las variables que trae POST
 foreach ($_POST as $key => $value)
@@ -41,45 +42,32 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
     if (isset($accion)) {
         if( $id != '' )
         {
-            $v1_A = ' id_programa ' ;
-            $v2_A = "'$id'" ;
+            $campo = ' id ' ;
+            $valor = "'$id'" ;
         }
         else
         {
-           $v1_A = null ;
-           $v2_A = null ; 
+           $campo = null ;
+           $valor = null ; 
         }
-        $programa = new Programa($v1_A, $v2_A );
+        $menu = new Menu( $campo, $valor );
         if ($accion == "ADICIONAR" || $accion == "MODIFICAR") 
         {
-            if ( Select::validar( $id_programa , 'NUMERIC' , null , 'CAMPO PROGRAMA' ) &&
-                 Select::validar( $nombre_programa , 'TEXT' , 500 , 'CAMPO NOMBRE DE PROGRAMA' ) &&
-                 Select::validar( $nivel_formacion , 'ARRAY' , null , 'CAMPO NIVEL DE FORMACION' ,  " nivel_formacion = '$nivel_formacion' " , null , 'programas' ) &&
-                 Select::validar( $red_conocimiento , 'ARRAY' , null , 'CAMPO RED DE CONOCIMIENTO' ,  " id_red = '$red_conocimiento' " , 'registro' , 'red_conocimiento' ) &&
-                 Select::validar( $linea_tecnologica , 'ARRAY' , null , 'CAMPO LINEA TECNOLOGICA' ,  " id = '$linea_tecnologica' " , 'registro' , 'linea_tecnologica' ) &&
-                 Select::validar( $segmento , 'ARRAY' , null , 'CAMPO SEGMENTO' ,  " segmento = '$segmento' " , null , 'programas' ) &&
-                 Select::validar( $modalidad , 'ARRAY' , null , 'CAMPO MODALIDAD' ,  " modalidad = '$modalidad' " , null , 'programas' ) &&
-                 Select::validar( $fic , 'ARRAY' , NULL , 'CAMPO FIC' , 10 ) &&
-                 Select::validar( $activo , 'ARRAY' , NULL , 'CAMPO ACTIVO' , 10 ) &&
-                 Select::validar( $duracion , 'NUMERIC' , null , 'CAMPO DURACION' )
+            if ( Select::validar( $id , 'NUMERIC' , null , 'CAMPO ID' ) &&
+                 Select::validar( $nombre , 'TEXT' , null , 'CAMPO DE NOMBRE MENÚ' ) &&
+                 Select::validar( $pnombre , 'TEXT' , null , 'CAMPO NOMBRE DE PNOMBRE' ) &&
+                 Select::validar( $icono, 'TEXT' , null , 'CAMPO DE ÍCONO' )
                 )
             {
-                $programa->setId_programa( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $id_programa ) ) ) ;
-                $programa->setNombre_programa( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $nombre_programa) ) ) ;
-                $programa->setNivel_formacion(str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $nivel_formacion) ) ) ;
-                $programa->setRed_conocimiento( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $red_conocimiento) ) ) ;
-                $programa->setLinea_tecnologica( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $linea_tecnologica) ) ) ;
-                $programa->setSegmento( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $segmento ) ) ) ;
-                $programa->setDuracion( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $duracion) ) );
-                $programa->setFic($fic);
-                $programa->setActivo($activo);
-                $programa->setModalidad( str_replace( $nombreTilde , $nombreSinTilde , strtoupper ( $modalidad) ) ) ;
-                $programa->setTipo_esp('T');
+                //$menu->setId( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $id ) ) ) ;
+                $menu->setPnombre( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $pnombre) ) ) ;
+                $menu->setNombre( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $nombre) ) ) ;
+                $menu->setIcono( $icono ) ;
                 if ($accion == "ADICIONAR") 
                 {
-                    if ($programa->Adicionar()) 
+                    if ($menu->Adicionar()) 
                     {
-                        print_r("Se ha cargado en el modulo , Programa Creada <|> codigo programa $id_programa" ) ;
+                        print_r("Se ha cargado en el modulo, registro menú creado <|> id menú $id" ) ;
                     } 
                     else 
                     {
@@ -88,9 +76,9 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 }
                 elseif ($accion == "MODIFICAR") 
                 {
-                    if ($programa->Modificar($id)) 
+                    if ($menu->Modificar($id)) 
                     {
-                        print_r("Se ha cargado en el modulo , Programa Modificada");
+                        print_r("Se ha cargado en el modulo, Menú Modificado  <|> id menú $id");
                     }
                     else 
                     {
@@ -101,14 +89,14 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
         }
         elseif ($accion == "ELIMINAR")
         {
-            $programa->setId_programa($id);
-            if ($programa->borrar()) 
+            $menu->setId($id);
+            if ($menu->borrar()) 
             {
-                print_r("** EL PROGRAMA FUE ELIMINADA **");
+                print_r("** EL MENÚ FUE ELIMINADO **");
             } 
             else 
             {
-                print_r("** EL PROGRAMA NO SE PUDO ELIMINAR **");
+                print_r("** EL MENÚ NO SE PUDO ELIMINAR **");
             }
         }
         elseif ( $accion == "SUBIR ARCHIVO" )
