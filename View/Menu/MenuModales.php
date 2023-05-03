@@ -114,6 +114,14 @@ elseif ($id == 3 && $permisos)
                     <h3>NOMBRE DE MENÚ: </h3> 
                     <p> <?= $menu->getNombre() ?></p>
                 </section>
+                <section>
+                    <h3>PNOMBRE DE MENÚ: </h3> 
+                    <p> <?= $menu->getPnombre() ?></p>
+                </section>
+                <section>
+                    <h3>ÍCONO DE MENÚ: </h3> 
+                    <p> <?= $menu->getIcono() ?></p>
+                </section>
             </fieldset>
         </div>
     </div>
