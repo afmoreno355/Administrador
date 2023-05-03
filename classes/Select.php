@@ -145,13 +145,14 @@ class Select {
         switch (strtoupper( $tipo ) )
         {
             case 'TEXT' ;
-                if( $variable  != '' && strlen( $variable ) <= $tamanio )
+               
+                if ( $variable != '' && strlen( $variable ) <= $tamanio )
                 {
                     return true;
                 }
                 else
                 {
-                    print_r(strtoupper( "  ERROR EN EL CAMPO $nombre NO DEBE ESTAR VACIO Y MINIMO DE CARACTERES $tamanio " ) );
+                    print_r(strtoupper( "  ERROR EN EL CAMPO $nombre NO DEBE ESTAR VACIO Y MÁXIMO DE CARACTERES $tamanio " ) );
                     return false;
                 }
             break;    

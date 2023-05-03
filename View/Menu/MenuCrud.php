@@ -53,10 +53,10 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
         $menu = new Menu( $campo, $valor );
         if ($accion == "ADICIONAR" || $accion == "MODIFICAR") 
         {
-            if ( Select::validar( $id , 'NUMERIC' , null , 'CAMPO ID' ) &&
-                 Select::validar( $nombre , 'TEXT' , null , 'CAMPO DE NOMBRE MENÚ' ) &&
-                 Select::validar( $pnombre , 'TEXT' , null , 'CAMPO NOMBRE DE PNOMBRE' ) &&
-                 Select::validar( $icono, 'TEXT' , null , 'CAMPO DE ÍCONO' )
+            if ( Select::validar( $id , 'NUMERIC' , null, 'ID' ) &&
+                 Select::validar( $nombre , 'TEXT' , 250 , 'NOMBRE' ) &&
+                 Select::validar( $pnombre , 'TEXT' , 250 , 'PNOMBRE' ) &&
+                 Select::validar( $icono, 'TEXT' , 250 , 'ÍCONO' )
                 )
             {
                 //$menu->setId( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $id ) ) ) ;

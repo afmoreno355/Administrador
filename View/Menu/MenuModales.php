@@ -48,14 +48,22 @@ if ($id == 1 && $permisos)
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
                 <img src="img/icon/gestionar.png"/><label class="where">Administrador DFP – Dirección de Formación Profesional</label></div>
             <br><br>
-            <label style="font-size: 1em; " >Tabla menu</label>  
+            <label style="font-size: 1em; " >Tabla Menú</label>  
             <label style="font-size: 1em; " id="aviso" class="aviso" ></label> 
             <label style="font-size: 1em; " id="aviso2" class="aviso" ><?= $menu->getId() ?></label> 
         </div> 
         <div>
             <fieldset>
                 <legend title='NOMBRE DEL MENÚ'>NOMBRE DEL MENÚ</legend>
-                <input type="text" value='<?= $menu->getNombre() ?>' required name='nom_departamento' id="nom_departamento">
+                <input type="text" value='<?= $menu->getNombre() ?>' required name='nombre' id="nombre">
+            </fieldset>
+            <fieldset>
+                <legend title='PNOMBRE DEL MENÚ'>PNOMBRE DEL MENÚ</legend>
+                <input type="text" value='<?= $menu->getPnombre() ?>' required name='pnombre' id="pnombre">
+            </fieldset>
+            <fieldset>
+                <legend title='ÍCONO DEL MENÚ'>ÍCONO DEL MENÚ</legend>
+                <input type="text" value='<?= $menu->getIcono() ?>' required name='icono' id="icono">
             </fieldset>
         </div>
         <div>        
