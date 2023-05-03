@@ -160,8 +160,10 @@ class Menu {
     }
     
     public function Borrar() {
-        $sql="delete from menu where id = '$this->id_programa' ";
+        $sql="delete from menu where id = '$this->id' ";
+        print_r($sql);
         if (ConectorBD::ejecutarQuery($sql, null)) {
+            
             //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "|", $sql);
             $historico = new Historico(null, null);
@@ -172,9 +174,8 @@ class Menu {
             $historico->setTabla("MENU");
             $historico->grabar();
             return true;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
 
 

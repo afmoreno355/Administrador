@@ -37,7 +37,7 @@ class Select {
                 return ConectorBD::ejecutarQuery( $query , null ) ;
             break; 
             case 2 :
-                return ConectorBD::ejecutarQuery( $query , null ) ; //tenía eagle_admin
+                return ConectorBD::ejecutarQuery( $query , 'otra db' ) ; //tenía eagle_admin
             break; 
             case 3 :
                 return array( array('1' , 'A DISTANCIA') ,
