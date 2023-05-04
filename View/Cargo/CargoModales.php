@@ -29,7 +29,7 @@ if ($id == 1 && $permisos) {
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
                 <img src="img/icon/gestionar.png"/><label class="where">Cargo DFP – Dirección de Formación Profesional</label></div>
             <br><br>
-            <label style="font-size: 1em; " >Cargo a modificar: </label>
+            <label style="font-size: 1em; " >Cargo a modificar o agregar: </label>
             <label style="font-size: 1em; " id="aviso2" class="aviso" ><?= $cargo->getNombrecargo() ?></label> 
         </div> 
         <div>
