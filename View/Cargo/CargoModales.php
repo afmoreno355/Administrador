@@ -34,7 +34,7 @@ if ($id == 1 && $permisos) {
         </div> 
         <div>
             <fieldset>
-                <legend title='CÓDIGO DEL CARGO'>CÓDIGO DEL  CARGO</legend>
+                <legend title='CÓDIGO DEL CARGO'>CÓDIGO DEL CARGO</legend>
                 <input type="text" value='<?= $cargo->getCodigocargo() ?>' required name='cod_cargo' id="cod_cargo">
                 <legend title='NOMBRE DEL CARGO'>NOMBRE DEL CARGO</legend>
                 <input type="text" value='<?= $cargo->getNombrecargo() ?>' required name='nom_cargo' id="nom_cargo">
@@ -146,7 +146,7 @@ if ($id == 1 && $permisos) {
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
-                <img src="img/icon/borrar.png"/>
+                <img src="img/icon/riesgo.png"/>
                 <lablel>
                                     Se realizara la accion de "<?= $accion ?>" al cargo <?= $cargo->getNombrecargo() ?> de los módulos de adminitración de la Dirección de Formación Profesional.
                     </label>
