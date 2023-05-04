@@ -141,5 +141,24 @@ if ($id == 1 && $permisos) {
         </div>
     </div>
     <?PHP
+}elseif ($id == 5 && $permisos) {
+    ?>
+    <div class="carga_Documento">
+        <div class="contenido">  
+            <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
+                <img src="img/icon/borrar.png"/>
+                <lablel>
+                                    Se realizara la accion de "<?= $accion ?>" al cargo <?= $cargo->getNombrecargo() ?> de los módulos de adminitración de la Dirección de Formación Profesional.
+                    </label>
+            </div><br><br>
+            <label style="font-size: 1em; " id="aviso"></label>  
+        </div>  
+        <div>        
+            <input type="hidden" value="<?= $cargo->getCodigocargo() ?>" name="id" id="id">
+            <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
+            <input type="submit" title="ACEPTA <?= $accion ?> EL ITEM ELEGIDO"  value="<?= $accion ?>" name="accionU" id="accionU" onclick="eliminar('aviso')">
+        </div>
+    </div> 
+    <?PHP
 }
 ?>
