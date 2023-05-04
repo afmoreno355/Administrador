@@ -42,7 +42,6 @@ class Menu {
         $this->pnombre = $vector[3];
     }
 
-
     // get and set 
     function getIcono() {
         return $this->icono;
@@ -99,21 +98,4 @@ class Menu {
         }
         return $listas;
     }
-
-    public static function count($filtro) {
-        $cadena = 'select count(*) from menu';
-        if ($filtro != null) {
-            $cadena.= " where " . $filtro;
-        }/** */
-        return ConectorBD::ejecutarQuery($cadena, null);
-    }/** */
-   /*public static function count($filtro) {
-        $cadena='select count(*) from menu , departamento where departamento=id '; 
-        if($filtro!=''){
-            $cadena.=" and $filtro";
-        } 
-        return ConectorBD::ejecutarQuery($cadena, null);        
-    }/***/
 }
-
-
