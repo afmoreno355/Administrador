@@ -24,11 +24,13 @@ class Http {
         $menu[] = array('URL' => "inicio#PROGRAMA", 'DONDE' => 'View/Programa/ProgramaTabla.php', 'NOMBRE' => 'PROGRAMA');
         $menu[] = array('URL' => "inicio#SEDE", 'DONDE' => 'View/Sede/SedeTabla.php', 'NOMBRE' => 'SEDE');
         $menu[] = array('URL' => "inicio#REGIONAL", 'DONDE' => 'View/Regional/RegionalTabla.php', 'NOMBRE' => 'REGIONAL');
+        $menu[] = array('URL' => "inicio#USUARIOS", 'DONDE' => 'View/Persona/PersonaTabla.php', 'NOMBRE' => 'USUARIOS');
         $menu[] = array('URL' => "inicio#CARGO", 'DONDE' => 'View/Cargo/CargoTabla.php', 'NOMBRE' => 'CARGO');
-        
-        return json_encode($menu);
+        $menu[] = array('URL' => "inicio#MENU", 'DONDE' => 'View/Menu/MenuTabla', 'NOMBRE' => 'MENU');
+        $menu[] = array('URL' => "inicio#MUNICIPIO", 'DONDE' => 'View/Municipio/MunicipioTabla', 'NOMBRE' => 'MUNICIPIO');
+        return json_encode($menu);  
     }
-    
+
     public static function encryptIt($q) {
         $qEncoded = base64_encode($q);
         return( $qEncoded );
@@ -56,7 +58,7 @@ class Http {
                     $persona_Menus = new Personamenu( 'identificacion' , "'$user'" );
                     if( !empty($persona_Menus) )
                     {
-                        $menus_Permisos = explode( '<|' , $persona_Menus->getMenu() );
+                        $menus_Permisos = explode( '<|' , $persona_Menus->getPersonamenu() );
                         if(count($menus_Permisos) > 0)
                         {
                             foreach ($menus_Permisos as $key => $value) 
@@ -80,11 +82,11 @@ class Http {
     
     public static function js() {
         $javascript = '' ;
-        $JS = scandir(dirname(__FILE__).'/../../js');
+        $JS = scandir(dirname(__FILE__).'../../Resources/js');
         for ($i = 0; $i < count($JS); $i++) {
             if( $JS[$i] !== '.'  && $JS[$i] !== '..'  )
             {
-                $javascript .= "<script src='js/{$JS[$i]}'></script>";
+                $javascript .= "<script src='./Resources/js/{$JS[$i]}'></script>";
             }
             
         }

@@ -23,7 +23,7 @@ class Regional {
             }else{
                 $cadenaSQL="select * from departamento where $campo = $valor";
                 //print_r($cadenaSQL);
-                $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, null);
+                $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin');
                 if ( count($respuesta) > 0 )
                 {
                     $this->objeto($respuesta[0]);
@@ -64,7 +64,7 @@ class Regional {
         } 
         $cadenaSQL.=" order by id asc offset $pagina limit $limit ";
         //print_r($cadenaSQL);
-        return ConectorBD::ejecutarQuery($cadenaSQL, null);          
+        return ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin');          
     }
     
     public static function datosobjetos($filtro, $pagina, $limit){
@@ -82,46 +82,7 @@ class Regional {
         if($filtro!=''){
             $cadena.=" where $filtro";
         } 
-        return ConectorBD::ejecutarQuery($cadena, null);        
-    }
-    
-    public function estado( $modalidad ) {
-        if( $modalidad == 'presencial' )
-        {
-            $modalidad_cambio = " and id_modalidad in ('1' , '2') " ;
-        }
-        elseif( $modalidad == 'virtual' )
-        {
-            $modalidad_cambio = " and id_modalidad in ( '3' ) " ;
-        }
-        
-        $centros_regionales = ConectorBD::ejecutarQuery( " select codigosede from sede where departamento = $this->cod ; " , null ) ;
-        $lista = ' ( ' ;
-        
-        for ($i = 0; $i < count( $centros_regionales ); $i++)
-        {
-        $lista .= " '{$centros_regionales[$i][0]}' , " ;
-        }
-        $lista .= " '' ) " ;
-        
-        $sql=" update indicativa set validar = 'E' where cod_centro in $lista $modalidad_cambio and validar = 'F' ";
-        //print_r($sql);
-        
-         if (ConectorBD::ejecutarQuery($sql, null)) {
-            //Historico de las acciones en el sistemas de informacion
-            $nuevo_query = str_replace("'", "|", $sql);
-            $historico = new Historico(null, null);
-            $historico->setIdentificacion($_SESSION["user"]);
-            $historico->setTipo_historico("ESTADO");
-            $historico->setHistorico(strtoupper($nuevo_query));
-            $historico->setFecha("now()");
-            $historico->setTabla("REGIONALNACIONAL");
-            $historico->grabar();
-            return true;
-        } else {
-            return false;
-        }
-       
+        return ConectorBD::ejecutarQuery($cadena, 'eagle_admin');        
     }
     
     public static function listaopciones(){ 
