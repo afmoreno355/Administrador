@@ -15,32 +15,33 @@ foreach ($nuevo_POST as $key => $value)
 // verificamos permisos
 $permisos = new Persona(" identificacion ", "'" . $_SESSION['user'] . "'");
 // permisos desde Http validando los permisos de un usuario segun la tabla personamenu
-$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "eagle_admin");
 if ($ingreso === false && $permisos->getIdTipo() !== "SA" && $_SESSION["rol"] !== "SA") {
     $permisos = false;
 }
 $llave_Primaria_Contructor = ( $llave_Primaria == "" ) ? "null" : "'$llave_Primaria'";
 // llamamos la clase y verificamos si ya existe info de este dato que llega
-$regional = new Regional(' id ', $llave_Primaria_Contructor);
 if ($id == 1 && $permisos) {
     ?>
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
-                <img src="img/icon/gestionar.png"/><label class="where">Administrador DFP – Dirección de Formación Profesional</label></div>
             <br><br>
-            <label style="font-size: 1em; " >Tabla regional</label>  
-            <label style="font-size: 1em; " id="aviso" class="aviso" ></label> 
-            <label style="font-size: 1em; " id="aviso2" class="aviso" ><?= $regional->getCod() ?></label> 
+            <label style="font-size: 1em; " id="aviso2" class="aviso" ><?= $cargo->getNombrecargo() ?></label> 
         </div> 
         <div>
             <fieldset>
-                <legend title='NOMBRE DE LA REGIONAL'>NOMBRE DE LA REGIONAL</legend>
-                <input type="text" value='<?= $regional->getNombre() ?>' required name='nom_departamento' id="nom_departamento">
+                <legend title='CÓDIGO DEL CARGO'>CÓDIGO DEL CARGO</legend>
+                <input type="text" value='<?= $cargo->getCodigocargo() ?>' required name='cod_cargo' id="cod_cargo">
+                <legend title='NOMBRE DEL CARGO'>NOMBRE DEL CARGO</legend>
+                <input type="text" value='<?= $cargo->getNombrecargo() ?>' required name='nom_cargo' id="nom_cargo">
+                <legend title='DETALLE DEL CARGO'>DETALLE DEL CARGO</legend>
+                <input type="text" value='<?= $cargo->getDetalle() ?>' required name='det_cargo' id="detalle_cargo">
+                <legend title='ID DEL CARGO'>ID DEL CARGO</legend>
+                <input type="text" value='<?= $cargo->getId() ?>' required name='id_cargo' id="id_cargo">
             </fieldset>
         </div>
         <div>        
-            <input type="hidden" value="<?= $regional->getCod() ?>" name="id" id="id">
+            <input type="hidden" value="<?= $cargo->getCodigocargo() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
             <input type='hidden' value='<?= $_SESSION['user'] ?>' name='personaGestion' id='personaGestion'>
             <input type="submit" value='<?= $accion ?>' name='accionU' id='accionU' onclick='cargar("aviso")'>
@@ -57,13 +58,13 @@ if ($id == 1 && $permisos) {
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
                 <img src="img/icon/borrar.png"/>
                 <lablel>
-                                    Se realizara la accion "<?= $accion ?>" a la regional <?= $llave_Primaria ?> cargado en el modulo de la Dirección de Formación Profesional.
+                                    Se realizara la accion de "<?= $accion ?>" al cargo <?= $cargo->getNombrecargo() ?> de los módulos de adminitración de la Dirección de Formación Profesional.
                     </label>
             </div><br><br>
             <label style="font-size: 1em; " id="aviso"></label>  
         </div>  
         <div>        
-            <input type="hidden" value="<?= $regional->getCod() ?>" name="id" id="id">
+            <input type="hidden" value="<?= $cargo->getCodigocargo() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
             <input type="submit" title="ACEPTA <?= $accion ?> EL ITEM ELEGIDO"  value="<?= $accion ?>" name="accionU" id="accionU" onclick="eliminar('aviso')">
         </div>
@@ -74,9 +75,9 @@ if ($id == 1 && $permisos) {
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
-                <img src="img/icon/estado.png"/>
+                <img src="img/icon/analisis.png"/>
                 <lablel>
-                                    Administrador DFP – Dirección de Formación Profesional
+                             Información – Cargo
                     </label>
             </div><br><br>
             <label style="font-size: 1em; " id="aviso"></label>  
@@ -84,12 +85,20 @@ if ($id == 1 && $permisos) {
         <div class="nuevaseccion" >
             <fieldset>
                 <section>
-                    <h3>CODIGO DE REGIONAL: </h3> 
-                    <p> <?= $regional->getCod() ?></p>
+                    <h3>ID: </h3> 
+                    <p> <?= $cargo->getId() ?></p>
                 </section>
                 <section>
-                    <h3>NOMBRE DE REGIONAL: </h3> 
-                    <p> <?= $regional->getNombre() ?></p>
+                    <h3>CÓDIGO CARGO: </h3> 
+                    <p> <?= $cargo->getCodigocargo() ?></p>
+                </section>
+                <section>
+                    <h3>NOMBRE CARGO: </h3> 
+                    <p> <?= $cargo->getNombrecargo () ?></p>
+                </section>
+                <section>
+                    <h3>DETALLE: </h3> 
+                    <p> <?= $cargo->getDetalle() ?></p>
                 </section>
             </fieldset>
         </div>
@@ -100,54 +109,31 @@ if ($id == 1 && $permisos) {
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
-                <label style="font-size: 1em; " >Manuales y documentos <br> Administrador DFP – Dirección de Formación Profesional<br><br></label> 
+                <label style="font-size: 1em; " >Manuales y documentos <br> CARGO DFP – Dirección de Formación Profesional<br><br></label> 
             </div>
         </div>
     </div>
     <div id="conte_seccion" class="conte_seccion_icon tableIntT">
         <section>
             <div>
-                <p>MANUAL PASO A PASO INDICATIVA VIRTUAL</p><a href="Archivos/Ejemplos/MANUAL_VIRTUAL.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
+                <p>MANUAL CREACIÓN Y MODIFICACIÓN DE CARGOS</p><a href="Archivos/Ejemplos/MANUAL_VIRTUAL.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
             </div>
             <div>
-                <p>MANUAL PASO A PASO INDICATIVA PRESENCIAL</p><a href="Archivos/Ejemplos/MANUAL_PRESENCIAL.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
-            </div>
-            <div>
-                <p>MANUAL PASO A PASO INDICATIVA REGIONAL</p><a href="Archivos/Ejemplos/MANUAL_REGIONAL.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
-            </div>
-            <div>
-                <p>MANUAL PASO A PASO INDICATIVA ADMINISTRADOR</p><a href="Archivos/Ejemplos/MANUAL_ADMIN.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
-            </div>
-            <div>
-                <p>ARCHIVO CARGA PLANO CSV PRESENCIAL</p><a href="Archivos/Ejemplos/CATALOGO_FORMATO_PRESENCIAL.csv"><img src="img/icon/excel.png" class="zoom" width=70" height=70"/></a>
-            </div>
-            <div>
-                <p>ARCHIVO CARGA PLANO CSV VIRTUAL</p><a href="Archivos/Ejemplos/CATALOGO_FORMATO_VIRTUAL.csv"><img src="img/icon/excel.png" class="zoom" width=70" height=70"/></a>
-            </div>
-            <div>
-                <p>ARCHIVO CARGA PLANO CSV PE04</p><a href="Archivos/Ejemplos/PE04.csv"><img src="img/icon/excel.png" class="zoom" width=70" height=70"/></a>
-            </div>
-            <div>
-                <p>ARCHIVO CARGA PLANO CSV METAS</p><a href="Archivos/Ejemplos/METAS.csv"><img src="img/icon/excel.png" class="zoom" width=70" height=70"/></a>
+                <p>MANUAL INFORMACIÓN Y BLOQUEO DE CARGOS</p><a href="Archivos/Ejemplos/MANUAL_PRESENCIAL.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
             </div>
         </section>
     </div>
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
-                <label style="font-size: 1em; " >Videos de ayuda dministrador DFP – Dirección de Formación Profesional<br><br></label> 
+                <label style="font-size: 1em; " >Video de ayuda cargo/administrador DFP – Dirección de Formación Profesional<br><br></label> 
             </div>
         </div>
         <div style="width: auto">
             <fieldset>
-                <legend title='PASO A PASO GENERAL '>PASO A PASO GENERAL CENTROS PRESENCIAL</legend>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/5y9Sg7okmjE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>            
+                <legend title='PASO A PASO CARGO '>PASO A PASO OPCIONES CARGO</legend>
+                <iframe width="560" height="315" src="https://sena4-my.sharepoint.com/:v:/g/personal/cfavella_sena_edu_co/EdbTJGz46ldFpiyTOV9ewocB26ZeVpQUqFxcY9_-pb7WhA?e=yZDY9D" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>            
             </fieldset>
-        </div>
-        <div style="width: auto">
-            <fieldset>
-                <legend title='PASO A PASO GENERAL '>PASO A PASO GENERAL CENTROS VIRTUAL</legend>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/VCtFmKXgWks" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>        </fieldset>
         </div>
     </div>
     <?PHP
