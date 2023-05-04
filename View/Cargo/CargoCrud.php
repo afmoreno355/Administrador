@@ -70,7 +70,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 {
                     if ($menu->Adicionar()) 
                     {
-                        print_r("Se ha cargado en el modulo, registro menú creado <|> id menú $id" ) ;
+                        print_r("Se ha cargado en el modulo, el cargo creado <|> id menú $id" ) ;
                     } 
                     else 
                     {
@@ -81,7 +81,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 {
                     if ($menu->Modificar($id)) 
                     {
-                        print_r("Se ha cargado en el modulo, Menú Modificado  <|> id menú $id");
+                        print_r("Se ha modificado en el modulo, el cargo <|> id menú $id");
                     }
                     else 
                     {
