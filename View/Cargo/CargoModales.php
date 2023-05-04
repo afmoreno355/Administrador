@@ -34,7 +34,7 @@ if ($id == 1 && $permisos) {
         </div> 
         <div>
             <fieldset>
-                <legend title='CÓDIGO DEL CARGO'>CÓDIGO DEL CARGO</legend>
+                <legend title='CÓDIGO DEL CARGO'>CÓDIGO DEL  CARGO</legend>
                 <input type="text" value='<?= $cargo->getCodigocargo() ?>' required name='cod_cargo' id="cod_cargo">
                 <legend title='NOMBRE DEL CARGO'>NOMBRE DEL CARGO</legend>
                 <input type="text" value='<?= $cargo->getNombrecargo() ?>' required name='nom_cargo' id="nom_cargo">
