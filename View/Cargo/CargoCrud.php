@@ -13,11 +13,17 @@ if( !isset($_SESSION["user"]) )
     session_start();
 }
 
+$nombreTilde = array("á", "é", "í", "ó", "ú", "ñ", ".", "", "Á", "É", "Í", "Ó", "Ú", "Ñ", ".", "");
+$nombreSinTilde = array("&Aacute;", "&Eacute;", "&Iacute;", "&Oacute;", "&Uacute;", "&Ntilde;", "", "", "&Aacute;", "&Eacute;", "&Iacute;", "&Oacute;", "&Uacute;", "&Ntilde;", "", "");
+$nombreSinTilde_Nuevo = array("A", "E", "I", "O", "U", "N", "", "", "A", "E", "I", "O", "U", "N", "", "");
+
 date_default_timezone_set("America/Bogota");
 $fecha = date("YmdHis");
-$fecha_documento = date("Y-m-d H:i:s");
-$anio_documento = date("Y");
-$mes_documento = date("m");
+/*$fecha_indicativas = date("Y-m-d H:i:s");
+$fecha_indicativa_comp = date("Y-m-d");
+$anio_indicativa = date("Y");
+$acceso_Tipo_Usuario = ConectorBD::ejecutarQuery( " select validar from indicativa  WHERE cod_centro = '{$_SESSION['sede']}' and vigencia ='$anio_indicativa' and id_modalidad = '3' group by validar ; " ,  null ) ;
+/** */
 
 // variable variable trae las variables que trae POST
 foreach ($_POST as $key => $value)
@@ -34,225 +40,118 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
     //header("Location: index");
 } elseif ($_SESSION["token1"] === $_COOKIE["token1"] && $_SESSION["token2"] === $_COOKIE["token2"] && password_verify(md5($token1 . $token2), $session->getToken3())) {
     if (isset($accion)) {
-        if ($accion == "METAS")
+        if( $id != '' )
         {
-            
-            $nuevoNombreCopy= "F:/wamp64/www/Virtual/Archivos/METAS$fecha.csv";
-            $anioFin = $anio_envio;
-            ConectorBD::ejecutarQuery( " delete from meta where anio = '$anio_envio' " , null ) ;
-            if( copy( $_FILES['documento']['tmp_name'] , $nuevoNombreCopy ) )
-            {
-            $contador=1;
-                if (($gestor = fopen($nuevoNombreCopy, "r")) !== FALSE)
-                {
-                    while (($nuevoNombre3 = fgetcsv($gestor, 0, ";")) !== FALSE) 
-                    {
-                        if($contador>=5)
-                        {
-                            if($contador==5 && trim(strtoupper($nuevoNombre3[1]))=='REGIONAL' && trim(strtoupper($nuevoNombre3[3]))=='CENTRO' && trim(strtoupper($nuevoNombre3[4]))=='EDUCACION SUPERIOR'){
-                                $validar=true;
-                            } 
-                            if( $contador>=8 && $validar==true )
-                            {
-                                //especializacion t presencial
-                                if(!empty($cursos_esp = ConectorBD::ejecutarQuery("select count(sede), tipo, SUM(total_aprendiz) from pe04 where sede='$nuevoNombre3[2]' and tipo = 'ESPECIALIZACION TECNOLOGICA' and (modalidad = 'PRESENCIAL' OR modalidad = 'A DISTANCIA') and programa_especial not in ( 'PROGRAMA DE BILINGUISMO' , 'INTEGRACION CON LA EDUCACION MEDIA GRADO 9' , 'INTEGRACION CON LA EDUCACION MEDIA TECNICA' , 'INTEGRACION CON LA EDUCACION MEDIA ACADEMICA' , 'FORMACION ESTRATEGIA DUAL' , 'FORMACION ESPECIAL MIPYMES-PND' , 'FORMACION COMPLEMENTARIA' , 'AMPLIACION DE COBERTURA' , 'SER' , 'SER POSCONFLICTO' ) and fecha_fin>='NOW()'  group by tipo",null)))
-                                {
-                                   $valorActivosETP=$cursos_esp[0][2];
-                                }
-                                else
-                                {
-                                    $valorActivosETP=0;
-                                }
-                                $replace= str_replace(".", "", $nuevoNombre3[5]);
-                                if(!is_numeric($replace))
-                                {
-                                    $replace=0;
-                                }
-                                ConectorBD::ejecutarQuery("insert into meta(anio, nombre_tipo, aprediz_activo, meta_concertada, meta_nacional, sede) values('$anioFin','ESPECIALIZACION_TECNOLOGICA_PRESENCIAL',$valorActivosETP,$replace,0,'{$nuevoNombre3[2]}')", null);
-                               
-                                //especializacion t virtual
-                                if(!empty($cursos_esp = ConectorBD::ejecutarQuery("select count(sede), tipo, SUM(total_aprendiz),  modalidad from pe04 where sede='$nuevoNombre3[2]' and tipo = 'ESPECIALIZACION TECNOLOGICA' and modalidad = 'VIRTUAL' and programa_especial not in ( 'PROGRAMA DE BILINGUISMO' , 'INTEGRACION CON LA EDUCACION MEDIA GRADO 9' , 'INTEGRACION CON LA EDUCACION MEDIA TECNICA' , 'INTEGRACION CON LA EDUCACION MEDIA ACADEMICA' , 'FORMACION ESTRATEGIA DUAL' , 'FORMACION ESPECIAL MIPYMES-PND' , 'FORMACION COMPLEMENTARIA' , 'AMPLIACION DE COBERTURA' , 'SER' , 'SER POSCONFLICTO' ) and fecha_fin>='NOW()' group by tipo, modalidad order by modalidad asc;",null)))
-                                {
-                                   $valorActivosETV=$cursos_esp[0][2];
-                                }
-                                else
-                                {
-                                    $valorActivosETV=0;
-                                }
-                                $replace= str_replace(".", "", $nuevoNombre3[7]);
-                                if(!is_numeric($replace))
-                                {
-                                    $replace=0;
-                                }
-                                ConectorBD::ejecutarQuery("insert into meta(anio, nombre_tipo, aprediz_activo, meta_concertada, meta_nacional, sede) values('$anioFin','ESPECIALIZACION_TECNOLOGICA_VIRTUAL',$valorActivosETP,$replace,0,'{$nuevoNombre3[2]}')", null);
-                            
-                                //tecnologia presencial
-                                if(!empty($cursos_esp = ConectorBD::ejecutarQuery("select count(sede), tipo, SUM(total_aprendiz) from pe04 where sede='$nuevoNombre3[2]' and tipo = 'TECNOLOGO' and (modalidad = 'PRESENCIAL' OR modalidad = 'A DISTANCIA') and programa_especial not in ( 'PROGRAMA DE BILINGUISMO' , 'INTEGRACION CON LA EDUCACION MEDIA GRADO 9' , 'INTEGRACION CON LA EDUCACION MEDIA TECNICA' , 'INTEGRACION CON LA EDUCACION MEDIA ACADEMICA' , 'FORMACION ESTRATEGIA DUAL' , 'FORMACION ESPECIAL MIPYMES-PND' , 'FORMACION COMPLEMENTARIA' , 'AMPLIACION DE COBERTURA' , 'SER' , 'SER POSCONFLICTO' ) and fecha_fin>='NOW()' group by tipo",null)))
-                                {
-                                   $valorActivosTecP=$cursos_esp[0][2];
-                                }
-                                else
-                                {
-                                    $valorActivosTecP=0;
-                                }
-                                $replace= str_replace(".", "", $nuevoNombre3[11]);
-                                if(!is_numeric($replace))
-                                {
-                                    $replace=0;
-                                }
-                                ConectorBD::ejecutarQuery("insert into meta(anio, nombre_tipo, aprediz_activo, meta_concertada, meta_nacional, sede) values('$anioFin','TECNOLOGO_PRESENCIAL',$valorActivosTecP,$replace,0,'{$nuevoNombre3[2]}')", null);
-                            
-                                 //tecnologia virtual
-                                if(!empty($cursos_esp = ConectorBD::ejecutarQuery("select count(sede), tipo, SUM(total_aprendiz),  modalidad from pe04 where sede='$nuevoNombre3[2]' and tipo = 'TECNOLOGO' and modalidad = 'VIRTUAL'  and programa_especial not in ( 'PROGRAMA DE BILINGUISMO' , 'INTEGRACION CON LA EDUCACION MEDIA GRADO 9' , 'INTEGRACION CON LA EDUCACION MEDIA TECNICA' , 'INTEGRACION CON LA EDUCACION MEDIA ACADEMICA' , 'FORMACION ESTRATEGIA DUAL' , 'FORMACION ESPECIAL MIPYMES-PND' , 'FORMACION COMPLEMENTARIA' , 'AMPLIACION DE COBERTURA' , 'SER' , 'SER POSCONFLICTO' ) and fecha_fin>='NOW()' group by tipo, modalidad order by modalidad asc;",null)))
-                                {
-                                   $valorActivosTecP=$cursos_esp[0][2];
-                                }
-                                else
-                                {
-                                    $valorActivosTecP=0;
-                                }
-                                $replace= str_replace(".", "", $nuevoNombre3[13]);
-                                if(!is_numeric($replace))
-                                {
-                                    $replace=0;
-                                }
-                                ConectorBD::ejecutarQuery("insert into meta(anio, nombre_tipo, aprediz_activo, meta_concertada, meta_nacional, sede) values('$anioFin','TECNOLOGO_VIRTUAL',$valorActivosTecP,$replace,0,'{$nuevoNombre3[2]}')", null);
-                            
-                                 //operario
-                                if(!empty($cursos_esp = ConectorBD::ejecutarQuery("select count(sede), tipo, SUM(total_aprendiz) from pe04 where sede='$nuevoNombre3[2]' and tipo = 'OPERARIO'   and programa_especial not in ( 'PROGRAMA DE BILINGUISMO' , 'INTEGRACION CON LA EDUCACION MEDIA GRADO 9' , 'INTEGRACION CON LA EDUCACION MEDIA TECNICA' , 'INTEGRACION CON LA EDUCACION MEDIA ACADEMICA' , 'FORMACION ESTRATEGIA DUAL' , 'FORMACION ESPECIAL MIPYMES-PND' , 'FORMACION COMPLEMENTARIA' , 'AMPLIACION DE COBERTURA' , 'SER' , 'SER POSCONFLICTO' ) and fecha_fin>='NOW()' group by tipo;",null)))
-                                {
-                                   $valorActivosTecP=$cursos_esp[0][2];
-                                }
-                                else
-                                {
-                                    $valorActivosTecP=0;
-                                }
-                                $replace= str_replace(".", "", $nuevoNombre3[19]);
-                                if(!is_numeric($replace))
-                                {
-                                    $replace=0;
-                                }
-                                ConectorBD::ejecutarQuery("insert into meta(anio, nombre_tipo, aprediz_activo, meta_concertada, meta_nacional, sede) values('$anioFin','OPERARIO_PRESENCIAL',$valorActivosTecP,$replace,0,'{$nuevoNombre3[2]}')", null);
-                                
-                                 //auxiliar
-                                if(!empty($cursos_esp = ConectorBD::ejecutarQuery("select count(sede), tipo, SUM(total_aprendiz) from pe04 where sede='{$nuevoNombre3[2]}' and tipo = 'AUXILIAR'  and programa_especial not in ( 'PROGRAMA DE BILINGUISMO' , 'INTEGRACION CON LA EDUCACION MEDIA GRADO 9' , 'INTEGRACION CON LA EDUCACION MEDIA TECNICA' , 'INTEGRACION CON LA EDUCACION MEDIA ACADEMICA' , 'FORMACION ESTRATEGIA DUAL' , 'FORMACION ESPECIAL MIPYMES-PND' , 'FORMACION COMPLEMENTARIA' , 'AMPLIACION DE COBERTURA' , 'SER' , 'SER POSCONFLICTO') and fecha_fin>='NOW()' group by tipo ;",null)))
-                                {
-                                   $valorActivosTecP=$cursos_esp[0][2];
-                                }
-                                else
-                                {
-                                    $valorActivosTecP=0;
-                                }
-                                $replace= str_replace(".", "", $nuevoNombre3[21]);
-                                if(!is_numeric($replace))
-                                {
-                                    $replace=0;
-                                }
-                                ConectorBD::ejecutarQuery("insert into meta(anio, nombre_tipo, aprediz_activo, meta_concertada, meta_nacional, sede) values('$anioFin','AUXILIAR_PRESENCIAL',$valorActivosTecP,$replace,0,'{$nuevoNombre3[2]}')", null);
-                                
-                                 //tecnico presencial
-                                if(!empty($cursos_esp = ConectorBD::ejecutarQuery("select count(sede), tipo, SUM(total_aprendiz) from pe04 where sede='$nuevoNombre3[2]' and tipo = 'TECNICO' and (modalidad = 'PRESENCIAL' OR modalidad = 'A DISTANCIA') and programa_especial not in ( 'PROGRAMA DE BILINGUISMO' , 'INTEGRACION CON LA EDUCACION MEDIA GRADO 9' , 'INTEGRACION CON LA EDUCACION MEDIA TECNICA' , 'INTEGRACION CON LA EDUCACION MEDIA ACADEMICA' , 'FORMACION ESTRATEGIA DUAL' , 'FORMACION ESPECIAL MIPYMES-PND' , 'FORMACION COMPLEMENTARIA' , 'AMPLIACION DE COBERTURA' , 'SER' , 'SER POSCONFLICTO' ) and fecha_fin>='NOW()' group by tipo",null)))
-                                {
-                                   $valorActivosTecP=$cursos_esp[0][2];
-                                }
-                                else
-                                {
-                                    $valorActivosTecP=0;
-                                }
-                                $replace= str_replace(".", "", $nuevoNombre3[25]);
-                                if(!is_numeric($replace))
-                                {
-                                    $replace=0;
-                                }
-                                ConectorBD::ejecutarQuery("insert into meta(anio, nombre_tipo, aprediz_activo, meta_concertada, meta_nacional, sede) values('$anioFin','TECNICO_LABORAL',$valorActivosTecP,$replace,0,'{$nuevoNombre3[2]}')", null);
-                                
-                                 //tecnico virtual
-                                if(!empty($cursos_esp = ConectorBD::ejecutarQuery("select count(sede), tipo, SUM(total_aprendiz) from pe04 where sede='$nuevoNombre3[2]' and tipo = 'TECNICO' and (modalidad = 'VIRTUAL') and programa_especial not in ( 'PROGRAMA DE BILINGUISMO' , 'INTEGRACION CON LA EDUCACION MEDIA GRADO 9' , 'INTEGRACION CON LA EDUCACION MEDIA TECNICA' , 'INTEGRACION CON LA EDUCACION MEDIA ACADEMICA' , 'FORMACION ESTRATEGIA DUAL' , 'FORMACION ESPECIAL MIPYMES-PND' , 'FORMACION COMPLEMENTARIA' , 'AMPLIACION DE COBERTURA' , 'SER' , 'SER POSCONFLICTO' ) and fecha_fin>='NOW()' group by tipo",null)))
-                                {
-                                   $valorActivosTecP=$cursos_esp[0][2];
-                                }
-                                else
-                                {
-                                    $valorActivosTecP=0;
-                                }
-                                $replace= str_replace(".", "", $nuevoNombre3[27]);
-                                if(!is_numeric($replace))
-                                {
-                                    $replace=0;
-                                }
-                                ConectorBD::ejecutarQuery("insert into meta(anio, nombre_tipo, aprediz_activo, meta_concertada, meta_nacional, sede) values('$anioFin','TECNICO_LABORAL_VIRTUAL',$valorActivosTecP,$replace,0,'{$nuevoNombre3[2]}')", null);
-                                
-                                 //tecnico ampliacion
-                                if(!empty($cursos_esp = ConectorBD::ejecutarQuery("select count(sede), tipo, SUM(total_aprendiz) from pe04 where sede='$nuevoNombre3[2]' and tipo = 'TECNICO'  and programa_especial  in ('INTEGRACION CON LA EDUCACION MEDIA GRADO 9' , 'INTEGRACION CON LA EDUCACION MEDIA TECNICA' , 'INTEGRACION CON LA EDUCACION MEDIA ACADEMICA') and fecha_fin>='NOW()' group by tipo ;",null)))
-                                {
-                                   $valorActivosTecP=$cursos_esp[0][2];
-                                }
-                                else
-                                {
-                                    $valorActivosTecP=0;
-                                }
-                                $replace= str_replace(".", "", $nuevoNombre3[29]);
-                                if(!is_numeric($replace))
-                                {
-                                    $replace=0;
-                                }
-                                ConectorBD::ejecutarQuery("insert into meta(anio, nombre_tipo, aprediz_activo, meta_concertada, meta_nacional, sede) values('$anioFin','TECNICO_INTEGRACION',$valorActivosTecP,$replace,0,'{$nuevoNombre3[2]}')", null);
-                                
-                                //MIPYMES-PND
-                                if(!empty($cursos_esp = ConectorBD::ejecutarQuery("select count(sede), programa_especial, SUM(total_aprendiz) from pe04 where sede='$nuevoNombre3[2]'  and  programa_especial IN('FORMACION ESPECIAL MIPYMES-PND') and fecha_fin>='NOW()' group by  programa_especial",null)))
-                                {
-                                   $valorActivosTecP=$cursos_esp[0][2];
-                                }
-                                else
-                                {
-                                    $valorActivosTecP=0;
-                                }
-                                $replace= str_replace(".", "", $nuevoNombre3[49]);
-                                if(!is_numeric($replace))
-                                {
-                                    $replace=0;
-                                }
-                                ConectorBD::ejecutarQuery("insert into meta(anio, nombre_tipo, aprediz_activo, meta_concertada, meta_nacional, sede) values('$anioFin','FORMACION_ESPECIAL_MIPYMES-PNDE',$valorActivosTecP,$replace,0,'{$nuevoNombre3[2]}')", null);
-                                
-                                if(!empty($cursos_esp = ConectorBD::ejecutarQuery("select count(sede), tipo, SUM(total_aprendiz),  modalidad from pe04 where sede='$nuevoNombre3[2]' and tipo = 'PROFUNDIZACION TECNICA' and programa_especial not in ( 'PROGRAMA DE BILINGUISMO' , 'INTEGRACION CON LA EDUCACION MEDIA GRADO 9' , 'INTEGRACION CON LA EDUCACION MEDIA TECNICA' , 'INTEGRACION CON LA EDUCACION MEDIA ACADEMICA' , 'FORMACION ESTRATEGIA DUAL' , 'FORMACION ESPECIAL MIPYMES-PND' , 'FORMACION COMPLEMENTARIA' , 'AMPLIACION DE COBERTURA' , 'SER' , 'SER POSCONFLICTO' ) and fecha_fin>='NOW()' group by tipo, modalidad order by modalidad asc;",null)))
-                                {
-                                   $valorActivosETV=$cursos_esp[0][2];
-                                }
-                                else
-                                {
-                                    $valorActivosETV=0;
-                                }
-                                $replace= str_replace(".", "", $nuevoNombre3[33]);
-                                if(!is_numeric($replace))
-                                {
-                                    $replace=0;
-                                }
-                                ConectorBD::ejecutarQuery("insert into meta(anio, nombre_tipo, aprediz_activo, meta_concertada, meta_nacional, sede) values('$anioFin','PROFUNDIZACION_TECNICA',$valorActivosETP,$replace,0,'{$nuevoNombre3[2]}')", null);
-                            
-                            }    
-                        }   
-                        $contador++;
-                    }
-                    fclose($gestor);
-                }    
-                print_r(" Se ha cargado en el modulo , METAS actualizadas ");
-                unlink($nuevoNombreCopy) ;   
-            }
-            
-            
+            $campo = ' id ' ;
+            $valor = "'$id'" ;
         }
-        else if ($accion == "PE04")
+        else
         {
-            
-            $nuevoNombreCopy= "F:/wamp64/www/Virtual/Archivos/PE04$fecha.csv";
-            if( copy( $_FILES['documento']['tmp_name'] , $nuevoNombreCopy ) )
-            {
-                if( ConectorBD::ejecutarQuery( " copy public.pe04 from '$nuevoNombreCopy' DELIMITER ';' CSV HEADER ;  " , null ) )
-                {
-                   print_r( "Se ha cargado en el modulo , PE04 actualizado "   ) ;
-                }
-                unlink($nuevoNombreCopy) ; 
+           $campo = null ;
+           $valor = null ; 
+        }
+        $menu = new Menu( $campo, $valor );
+        if ($accion == "ADICIONAR" || $accion == "MODIFICAR") 
+        {
+            if ($accion == "ADICIONAR") {
+                $id = 0;
             }
+            if ( Select::validar( $id , 'NUMERIC' , null, 'ID' ) &&
+                 Select::validar( $nombre , 'TEXT' , 250 , 'NOMBRE' ) &&
+                 Select::validar( $pnombre , 'TEXT' , 250 , 'PNOMBRE' ) &&
+                 Select::validar( $icono, 'TEXT' , 250 , 'ÍCONO' )
+                )
+            {
+                //$menu->setId( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $id ) ) ) ;
+                $menu->setPnombre( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $pnombre) ) ) ;
+                $menu->setNombre( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $nombre) ) ) ;
+                $menu->setIcono( $icono ) ;
+                if ($accion == "ADICIONAR") 
+                {
+                    if ($menu->Adicionar()) 
+                    {
+                        print_r("Se ha cargado en el modulo, registro menú creado <|> id menú $id" ) ;
+                    } 
+                    else 
+                    {
+                        print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                    }
+                }
+                elseif ($accion == "MODIFICAR") 
+                {
+                    if ($menu->Modificar($id)) 
+                    {
+                        print_r("Se ha cargado en el modulo, Menú Modificado  <|> id menú $id");
+                    }
+                    else 
+                    {
+                        print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                    }
+                }   
+            }
+        }
+        elseif ($accion == "ELIMINAR")
+        {
+            $menu->setId($id);
+            if ($menu->borrar()) 
+            {
+                print_r("** EL MENÚ FUE ELIMINADO **");
+            } 
+            else 
+            {
+                print_r("** EL MENÚ NO SE PUDO ELIMINAR **");
+            }
+        }
+        elseif ( $accion == "SUBIR ARCHIVO" )
+        {
+            if(  Select::validar( $_FILES['archivo'] , 'FILE' , null , 'ARCHIVO' , 'CSV' ) )
+            {
+               if ( copy( $_FILES['archivo']['tmp_name'] , $ruta_Plano = "F:/wamp64/www/Virtual/Archivos/" . "Registro" . "_"  . $_SESSION['user'] . "_" . $fecha . "." . pathinfo( strtolower( $_FILES['archivo']['name'] ) , PATHINFO_EXTENSION ) ) )
+               {
+                    if ( ( $gestor = fopen( $ruta_Plano , "r" ) ) !== FALSE )
+                    {
+                        $contador = 1;
+                        while ( ( $nuevoNombre3 = fgetcsv( $gestor , 0 , ";" ) ) !== FALSE ) 
+                        {
+                            if ( $contador >= 2 )
+                            {
+                                if ( Select::validar( $id_programa , 'NUMERIC' , null , 'CAMPO PROGRAMA' ) &&
+                                    Select::validar( $nombre_programa , 'TEXT' , 500 , 'CAMPO NOMBRE DE PROGRAMA' ) &&
+                                    Select::validar( $nivel_formacion , 'ARRAY' , null , 'CAMPO NIVEL DE FORMACION' ,  " nivel_formacion = '$nivel_formacion' " , null , 'programas' ) &&
+                                    Select::validar( $red_conocimiento , 'ARRAY' , null , 'CAMPO RED DE CONOCIMIENTO' ,  " id_red = '$red_conocimiento' " , 'registro' , 'red_conocimiento' ) &&
+                                    Select::validar( $linea_tecnologica , 'ARRAY' , null , 'CAMPO LINEA TECNOLOGICA' ,  " id = '$linea_tecnologica' " , 'registro' , 'linea_tecnologica' ) &&
+                                    Select::validar( $segmento , 'ARRAY' , null , 'CAMPO SEGMENTO' ,  " segmento = '$segmento' " , null , 'programas' ) &&
+                                    Select::validar( $modalidad , 'ARRAY' , null , 'CAMPO MODALIDAD' ,  " modalidad = '$modalidad' " , null , 'programas' ) &&
+                                    Select::validar( $fic , 'ARRAY' , NULL , 'CAMPO FIC' , 10 ) &&
+                                    Select::validar( $activo , 'ARRAY' , NULL , 'CAMPO ACTIVO' , 10 ) &&
+                                    Select::validar( $duracion , 'NUMERIC' , null , 'CAMPO DURACION' )
+                                    )
+                                {                                
+                                    $programa->setId_programa( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $id_programa ) ) ) ;
+                                    $programa->setNombre_programa( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $nombre_programa) ) ) ;
+                                    $programa->setNivel_formacion(str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $nivel_formacion) ) ) ;
+                                    $programa->setRed_conocimiento( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $red_conocimiento) ) ) ;
+                                    $programa->setLinea_tecnologica( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $linea_tecnologica) ) ) ;
+                                    $programa->setSegmento( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $segmento ) ) ) ;
+                                    $programa->setDuracion( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $duracion) ) );
+                                    $programa->setFic($fic);
+                                    $programa->setActivo($activo);
+                                    $programa->setModalidad( str_replace( $nombreTilde , $nombreSinTilde , strtoupper ( $modalidad) ) ) ;
+                                    $programa->setTipo_esp('T');                                   
+                                }
+                            }
+                            $contador += 1;
+                        }
+                    }   
+                    print_r("Se ha cargado en el modulo");
+                    unlink( $ruta_Plano );
+               }
+               else
+               {
+                    print_r(strtoupper( "  ERROR EN EL CAMPO ARCHIVO PROBLEMA CARGADO AL SERVIDOR " ) );
+               }
+            }
+            print_r("Se ha cargado en el modulo , indicativa Creada " ) ;
         }
     }
 }
