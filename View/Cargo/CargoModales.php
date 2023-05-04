@@ -8,7 +8,7 @@ foreach ($_POST as $key => $value)
     ${$key} = $value;
 // desencripta las variables
 $nuevo_POST = Http::decryptIt($I);
-// evalua las nuevas variables que vienen ya desencriptadas para seguridad
+// evalua las nuevas variables que vienen ya desencriptadas
 foreach ($nuevo_POST as $key => $value)
     ${$key} = $value;
 
