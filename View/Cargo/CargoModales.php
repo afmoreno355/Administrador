@@ -36,8 +36,14 @@ if ($id == 1 && $permisos) {
             <fieldset>
                 <legend title='CÓDIGO DEL CARGO'>CÓDIGO DEL CARGO</legend>
                 <input type="text" value='<?= $cargo->getCodigocargo() ?>' required name='cod_cargo' id="cod_cargo">
+            </fieldset>
+            </div>
+        <div>
+            <fieldset>
                 <legend title='NOMBRE DEL CARGO'>NOMBRE DEL CARGO</legend>
                 <input type="text" value='<?= $cargo->getNombrecargo() ?>' required name='nom_cargo' id="nom_cargo">
+            </fieldset>
+        </div>
                 <legend title='DETALLE DEL CARGO'>DETALLE DEL CARGO</legend>
                 <input type="text" value='<?= $cargo->getDetalle() ?>' required name='det_cargo' id="detalle_cargo">
                 <legend title='ID DEL CARGO'>ID DEL CARGO</legend>

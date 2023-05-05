@@ -70,7 +70,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 {
                     if ($menu->Adicionar()) 
                     {
-                        print_r("Se ha cargado en el modulo, registro menú creado <|> id menú $id" ) ;
+                        print_r("Se ha cargado en el modulo, registro cargo creado <|> id menú $id" ) ;
                     } 
                     else 
                     {
@@ -81,7 +81,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 {
                     if ($menu->Modificar($id)) 
                     {
-                        print_r("Se ha cargado en el modulo, Menú Modificado  <|> id menú $id");
+                        print_r("Se ha cargado en el modulo, Cargo Modificado  <|> id menú $id");
                     }
                     else 
                     {
@@ -95,11 +95,11 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
             $menu->setId($id);
             if ($menu->borrar()) 
             {
-                print_r("** EL MENÚ FUE ELIMINADO **");
+                print_r("** EL CARGO FUE ELIMINADO **");
             } 
             else 
             {
-                print_r("** EL MENÚ NO SE PUDO ELIMINAR **");
+                print_r("** EL CARGO NO SE PUDO ELIMINAR **");
             }
         }
         elseif ( $accion == "SUBIR ARCHIVO" )
