@@ -24,6 +24,7 @@ class Cargo {
                 $this->objeto($campo);
             }else{
                 $cadenaSQL="select * from CARGO where $campo = $valor";
+                print_r($cadenaSQL);
                 $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, null);
                 if (count($respuesta)>0 ){ $this->objeto($respuesta[0]);}
             }

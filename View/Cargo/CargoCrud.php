@@ -104,7 +104,16 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
         }
         elseif ( $accion == "BLOQUEAR" )
         {
-            print_r("Te he bloqueado");
+             $menu->setId($id);
+            if ($menu->borrar()) 
+            {
+                print_r("** EL CARGO FUE BLOQUERADO **");
+            } 
+            else 
+            {
+                print_r("** EL CARGO NO SE PUDO BLOQUEAR **");
+                
+            }
         }
     }
 }
