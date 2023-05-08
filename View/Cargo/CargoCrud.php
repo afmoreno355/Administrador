@@ -102,8 +102,9 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 print_r("** EL CARGO NO SE PUDO ELIMINAR **");
             }
         }
-        elseif ( $accion == "SUBIR ARCHIVO" )
+        elseif ( $accion == "BLOQUEAR" )
         {
+            print_r("Te he bloqueado");
         }
     }
 }
