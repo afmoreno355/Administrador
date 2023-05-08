@@ -11,7 +11,7 @@ require_once dirname(__FILE__) . "/../../autoload.php";
 
 // filtro se usa para realizar las consultas de busqueda 
 $filtro = "";
-$URL = "View/Menu/MenuModales.php" ;
+$URL = "View/Menu/MenuModales.php" ; //Inicialmente está con .php
 $year= date('Y', time());
 
 // bucarPalabraClave palabra clave que se busca asociada a ajax
@@ -24,7 +24,6 @@ $permisos = new Persona(" identificacion ", "'" . $_SESSION['user'] . "'");
 
 
 $ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), 'eagle');
-//print_r($ingreso);
 
 
 if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
