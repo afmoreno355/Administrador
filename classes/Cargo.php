@@ -24,7 +24,7 @@ class Cargo {
                 $this->objeto($campo);
             }else{
                 $cadenaSQL="select * from CARGO where $campo = $valor";
-                print_r($cadenaSQL);
+                //print_r($cadenaSQL);
                 $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, null);
                 if (count($respuesta)>0 ){ $this->objeto($respuesta[0]);}
             }
@@ -104,24 +104,62 @@ class Cargo {
         return ConectorBD::ejecutarQuery($cadena, null);        
     }
     
-    public static function listaopciones( $id , $select = '' ){ 
-        $lista='';
-        $seleccion='';
-        $si = self::listas( $id );
-        for ($i = 0; $i < count($si); $i++) {
-            print_r($select);
-            print_r($si[$i][0]);
-            if( $si[$i][0]==$select && $select != '' )
-            {
-                $seleccion='selected';
-            }
-            else
-            {
-                $seleccion='';
-            }
-            $lista.="<option value='{$si[$i][0]}' $seleccion> {$si[$i][1]} </option>";
+public static function listaopciones() 
+    {
+        $lista = "";
+        $si = self::datosobjetos(null, null, null);
+        for ($i = 0; $i < count($si); $i++) 
+        {
+            $obj = $si[$i];
+            $lista .= "<option value='{$obj->getId_programa()}'> {$obj->getId_programa()} {$obj->getNombre_programa()} </option>";
         }
-    return $lista;
-    } 
+        return $lista;
+    }
+    
+    public function Adicionar() {
+        $sql="insert into cargo( id ,     codigocargo,     nombrecargo , detalle  ) values(
+                '$this->id',
+                '$this->codigocargo',
+                '$this->nombrecargo',
+                '$this->detalle',
+             )";
+        //print_r($sql);
+    if (ConectorBD::ejecutarQuery($sql, null)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function Modificar( $id ) {
+        $sql="update programas set
+                nombre_programa = '$this->nombre_programa'
+              , nivel_formacion = '$this->nivel_formacion'
+              , duracion = '$this->duracion'
+              , red_conocimiento = '$this->red_conocimiento'
+              , linea_tecnologica = '$this->linea_tecnologica'
+              , segmento = '$this->segmento'
+              , id_programa = '$this->id_programa'
+              , modalidad = '$this->modalidad'
+              , fic = '$this->fic'
+              , activo = '$this->activo'
+               where id_programa = '$id' ";
+        //print_r($sql);
+        if (ConectorBD::ejecutarQuery($sql, null)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function borrar() {
+        //console.log(":D");
+        $sql="delete from cargo where id = '$this->id' ";
+        if (ConectorBD::ejecutarQuery($sql,null)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
 }
