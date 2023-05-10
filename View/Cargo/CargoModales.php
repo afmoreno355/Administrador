@@ -29,31 +29,25 @@ if ($id == 1 && $permisos) {
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
                 <img src="img/icon/gestionar.png"/><label class="where">Cargo DFP – Dirección de Formación Profesional</label></div>
             <br><br>
-            <label style="font-size: 1em; " >Cargo a modificar o agregar: </label>
-            <label style="font-size: 1em; " id="aviso2" class="aviso" ><?= $cargo->getNombrecargo() ?></label> 
+            <label style="font-size: 1em; " >Modificar o agregar cargo. </label>
+            <label style="font-size: 1em; " id="aviso" class="aviso" ><?= $cargo->getNombrecargo() ?></label> 
         </div> 
         <div>
             <fieldset>
-                <legend title='ID DEL CARGO'>ID DEL CARGO</legend>
-                <input type="text" value='<?= $cargo->getId() ?>' required name='id_cargo' id="id_cargo">
-            </fieldset>
-        </div>
-        <div>
-            <fieldset>
                 <legend title='CÓDIGO DEL CARGO'>CÓDIGO DEL CARGO</legend>
-                <input type="text" value='<?= $cargo->getCodigocargo() ?>' required name='cod_cargo' id="cod_cargo">
+                <input type="text" value='<?= $cargo->getCodigocargo() ?>' required name='codigocargo' id="codigocargo">
             </fieldset>
         </div>
         <div>
             <fieldset>
                 <legend title='NOMBRE DEL CARGO'>NOMBRE DEL CARGO</legend>
-                <input type="text" value='<?= $cargo->getNombrecargo() ?>' required name='nom_cargo' id="nom_cargo">
+                <input type="text" value='<?= $cargo->getNombrecargo() ?>' required name='nombrecargo' id="nombrecargo">
             </fieldset>
         </div>
         <div>
             <fieldset>
                 <legend title='DETALLE DEL CARGO'>DETALLE DEL CARGO</legend>
-                <input type="text" value='<?= $cargo->getDetalle() ?>' required name='det_cargo' id="detalle_cargo">
+                <input type="text" value='<?= $cargo->getDetalle() ?>' required name='detalle' id="detalle">
             </fieldset>
         </div>
         <div>        
