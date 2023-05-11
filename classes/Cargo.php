@@ -150,9 +150,17 @@ class Cargo {
               , nombrecargo = '$this->nombrecargo'
               , detalle = '$this->detalle'
                where id = '$id' ";
-        print_r($sql);
+        //print_r($sql);
         if (ConectorBD::ejecutarQuery($sql, null)) {
-            return false;
+            $nuevo_query = str_replace("'", "|", $sql);
+            $historico = new Historico(null, null);
+            $historico->setIdentificacion($_SESSION["user"]);
+            $historico->setTipo_historico("MODIFICAR");
+            $historico->setHistorico(strtoupper($nuevo_query));
+            $historico->setFecha("now()");
+            $historico->setTabla("CARGO");
+            $historico->grabar();
+            return true;
         } else {
             return false;
         }
