@@ -67,7 +67,7 @@ if ($id == 1 && $permisos)
             </fieldset>
             <fieldset>
                 <legend title='IMAGEN ÍCONO PNG'>IMAGEN ÍCONO PNG</legend>
-                <input type='file'  value=''  name='archivo' id='archivo' ">
+                <input type='file'  value=''  name='imagen' id='imagen' >
             </fieldset>
         </div>
         <div>        

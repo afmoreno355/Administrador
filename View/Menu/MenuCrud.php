@@ -53,40 +53,69 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
         $menu = new Menu( $campo, $valor );
         if ($accion == "ADICIONAR" || $accion == "MODIFICAR") 
         {
-            if ($accion == "ADICIONAR") {
-                $id = 0;
-            }
-            if ( Select::validar( $id , 'NUMERIC' , null, 'ID' ) &&
+
+            if (
                  Select::validar( $nombre , 'TEXT' , 250 , 'NOMBRE' ) &&
                  Select::validar( $pnombre , 'TEXT' , 250 , 'PNOMBRE' ) &&
-                 Select::validar( $icono, 'TEXT' , 250 , 'ÍCONO' ) &&
-                 Select::validar( $_FILES['archivo'] , 'FILE' , null , 'ARCHIVO' , 'PNG' )
+                 Select::validar( $icono, 'TEXT' , 250 , 'ÍCONO' )
                 )
             {
-                //$menu->setId( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $id ) ) ) ;
-                $menu->setPnombre( $pnombre ) ;
                 $menu->setNombre( $nombre ) ;
+                $menu->setPnombre( $pnombre ) ;
                 $menu->setIcono( $icono ) ;
+                $imagen = $_FILES['imagen'] ;
+
                 if ($accion == "ADICIONAR") 
                 {
-                    if ($menu->Adicionar()) 
+                    if ( isset( $imagen ) && $imagen['name'] != '' )
                     {
-                        print_r("Se ha cargado en el modulo, registro menú creado <|> id menú $id" ) ;
-                    } 
-                    else 
+                        if ( Select::validar( $imagen, 'FILE', null, 'IMAGEN', 'PNG' ) )
+                        {
+                            if ( $menu->Adicionar() ) {
+                                print_r("Se ha cargado en el modulo, Menú adicionado <|> id menú $id");
+                            } else {
+                                print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                            }
+                        }
+                    }
+                    else
                     {
-                        print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                        if ( $menu->Adicionar() )
+                        {
+                            print_r("Se ha cargado en el modulo, Menú adicionado <|> id menú $id");
+                        }
+                        else
+                        {
+                            print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                        }
                     }
                 }
                 elseif ($accion == "MODIFICAR") 
                 {
-                    if ($menu->Modificar($id)) 
+                    if ( Select::validar( $id, 'NUMERIC', null, 'ID' ) )
                     {
-                        print_r("Se ha cargado en el modulo, Menú Modificado  <|> id menú $id");
-                    }
-                    else 
-                    {
-                        print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                        if ( isset( $imagen ) && $imagen['name'] != '' )
+                        {
+                            if ( Select::validar( $imagen, 'FILE', null, 'IMAGEN', 'PNG' ) )
+                            {
+                                if ( $menu->Modificar( $id ) ) {
+                                    print_r("Se ha cargado en el modulo, Menú modificado <|> id menú $id");
+                                } else {
+                                    print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if ( $menu->Modificar( $id ) )
+                            {
+                                print_r("Se ha cargado en el modulo, Menú modificado <|> id menú $id");
+                            }
+                            else
+                            {
+                                print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                            }
+                        }
                     }
                 }   
             }
@@ -103,7 +132,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 print_r("** EL MENÚ NO SE PUDO ELIMINAR **");
             }
         }
-        elseif ( $accion == "SUBIR ARCHIVO" )
+        /*elseif ( $accion == "SUBIR ARCHIVO" )
         {
             if(  Select::validar( $_FILES['archivo'] , 'FILE' , null , 'ARCHIVO' , 'CSV' ) )
             {
@@ -153,6 +182,6 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                }
             }
             print_r("Se ha cargado en el modulo , indicativa Creada " ) ;
-        }
+        }/** SUBIR ARCHIVO*/
     }
 }
