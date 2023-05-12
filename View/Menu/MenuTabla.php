@@ -72,9 +72,9 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
 <?PHP
     for ($i = 0; $i < count($menu); $i++) {
         $objet = $menu[$i];
-        $var_mod = Http::encryptIt("id=1&llave_Primaria={$objet->getId()}&user={$_SESSION["user"]}&accion=MODIFICAR");
+        $var_mod = Http::encryptIt("id=1&llave_Primaria={$objet->getId()}&user={$_SESSION["user"]}&accion=MODIFICA");
         $var_eli = Http::encryptIt("id=2&llave_Primaria={$objet->getId()}&user={$_SESSION["user"]}&accion=ELIMINAR");
-        $var_blo = Http::encryptIt("id=5&llave_Primaria={$objet->getId()}&user={$_SESSION["user"]}&accion=BLOQUEO USUARIO");
+        $var_blo = Http::encryptIt("id=5&llave_Primaria={$objet->getId()}&user={$_SESSION["user"]}&accion=BLOQUEO");
         $var_inf = Http::encryptIt("id=3&llave_Primaria={$objet->getId()}&user={$_SESSION["user"]}&accion=INFORMACION");
 ?> 
             <tr>
@@ -87,7 +87,7 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
 <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `<?= $URL ?>`)" title="Bloquear Elemento" value="BLOQUEAR">
 </td>
 <td>
-<input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `<?= $URL ?>`)" title="Modificar Elemento" value="MODIFICAR">
+<input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `<?= $URL ?>`)" title="Modificar Elemento" value="MODIFICA">
 <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_eli ?>`, `modalVentana`, `<?= $URL ?>`)" title="Eliminar" value="ELIMINAR">
 </td>
             </tr>

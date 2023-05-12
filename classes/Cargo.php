@@ -143,22 +143,39 @@ class Cargo {
         }
     }
 
-    public function Modificar($id) {
-        $sql = "update cargo set
-                id = '$this->id'
-              , codigocargo = '$this->codigocargo'
-              , nombrecargo = '$this->nombrecargo'
-              , detalle = '$this->detalle'
-               where id = '$id' ";
-        print_r($sql);
+    public function modificar($id) {
+        $sql = "update cargo set id = '$this->id', codigocargo = '$this->codigocargo', nombrecargo = '$this->nombrecargo', detalle = '$this->detalle' where id = '$id' ";
+        //print_r($sql);
         if (ConectorBD::ejecutarQuery($sql, null)) {
-            return false;
+            return true;
         } else {
             return false;
         }
     }
 
     public function borrar() {
+        //console.log(":D");
+        $sql = "delete from cargo where id = '$this->id' ";
+        try {
+            if (ConectorBD::ejecutarQuery($sql, null)) {
+                $nuevo_query = str_replace("'", "|", $sql);
+                $historico = new Historico(null, null);
+                $historico->setIdentificacion($_SESSION["user"]);
+                $historico->setTipo_historico("MODIFICAR");
+                $historico->setHistorico(strtoupper($nuevo_query));
+                $historico->setFecha("now()");
+                $historico->setTabla("CARGO");
+                $historico->grabar();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $exc) {
+            return false;
+        }
+    }
+    
+        public function bloqueo() {
         //console.log(":D");
         $sql = "delete from cargo where id = '$this->id' ";
         try {

@@ -15,9 +15,7 @@
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/adminV2/View/Cargo/CargoTabla.php</file>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/adminV2/classes/Cargo.php</file>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/adminV2/View/Cargo/CargoCrud.php</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/adminV2/js/Eliminar.js</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/adminV2/classes/Select.php</file>
-            <file>file:/Applications/XAMPP/xamppfiles/htdocs/adminV2/js/Cargar.js</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/adminV2/View/Menu/MenuTabla.php</file>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/adminV2/View/Cargo/CargoModales.php</file>
         </group>
     </open-files>
