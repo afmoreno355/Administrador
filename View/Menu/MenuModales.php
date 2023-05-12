@@ -62,8 +62,12 @@ if ($id == 1 && $permisos)
                 <input type="text" value='<?= $menu->getPnombre() ?>' required name='pnombre' id="pnombre">
             </fieldset>
             <fieldset>
-                <legend title='ÍCONO DEL MENÚ'>ÍCONO DEL MENÚ</legend>
+                <legend title='NOMBRE ÍCONO'>NOMBRE ÍCONO</legend>
                 <input type="text" value='<?= $menu->getIcono() ?>' required name='icono' id="icono">
+            </fieldset>
+            <fieldset>
+                <legend title='IMAGEN ÍCONO PNG'>IMAGEN ÍCONO PNG</legend>
+                <input type='file'  value=''  name='archivo' id='archivo' ">
             </fieldset>
         </div>
         <div>        

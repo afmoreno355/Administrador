@@ -59,12 +59,13 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
             if ( Select::validar( $id , 'NUMERIC' , null, 'ID' ) &&
                  Select::validar( $nombre , 'TEXT' , 250 , 'NOMBRE' ) &&
                  Select::validar( $pnombre , 'TEXT' , 250 , 'PNOMBRE' ) &&
-                 Select::validar( $icono, 'TEXT' , 250 , 'ÍCONO' )
+                 Select::validar( $icono, 'TEXT' , 250 , 'ÍCONO' ) &&
+                 Select::validar( $_FILES['archivo'] , 'FILE' , null , 'ARCHIVO' , 'PNG' )
                 )
             {
                 //$menu->setId( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $id ) ) ) ;
-                $menu->setPnombre( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $pnombre) ) ) ;
-                $menu->setNombre( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $nombre) ) ) ;
+                $menu->setPnombre( $pnombre ) ;
+                $menu->setNombre( $nombre ) ;
                 $menu->setIcono( $icono ) ;
                 if ($accion == "ADICIONAR") 
                 {
