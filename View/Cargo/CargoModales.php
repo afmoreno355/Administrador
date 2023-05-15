@@ -51,7 +51,7 @@ if ($id == 1 && $permisos) {
             </fieldset>
         </div>
         <div>        
-            <input type="hidden" value="<?= $cargo->getCodigocargo() ?>" name="id" id="id">
+            <input type="hidden" value="<?= $cargo->getId() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
             <input type='hidden' value='<?= $_SESSION['user'] ?>' name='personaGestion' id='personaGestion'>
             <input type="submit" value='<?= $accion ?>' name='accionU' id='accionU' onclick='cargar("aviso")'>
@@ -160,7 +160,7 @@ if ($id == 1 && $permisos) {
             <label style="font-size: 1em; " id="aviso"></label>  
         </div>  
         <div>        
-            <input type="hidden" value="<?= $cargo->getCodigocargo() ?>" name="id" id="id">
+            <input type="hidden" value="<?= $cargo->getId() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
             <input type="submit" title="ACEPTA <?= $accion ?> EL ITEM ELEGIDO"  value="<?= $accion ?>" name="accionU" id="accionU" onclick="eliminar('aviso')">
         </div>

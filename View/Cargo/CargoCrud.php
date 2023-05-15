@@ -38,7 +38,8 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
             $v2_A = null;
         }
         $cargo = new cargo($v1_A, $v2_A);
-        print_r($accion);
+        //print_r($accion);
+        //Print_r("+**+");
 
         if ($accion == "ADICIONAR" || $accion == "MODIFICAR") {
             if (Select::validar($codigocargo, 'TEXT', 3, 'CODIGOCARGO') &&
@@ -51,27 +52,32 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 if ($accion == "ADICIONAR") {
                     if ($cargo->Adicionar()) {
                         $id = ConectorBD::ejecutarQuery("select id from cargo where codigocargo = '{$cargo->getCodigocargo()}'; ", null)[0][0];
-                        print_r("Se ha creado el cargo con el id: $id");
+                        print_r("** Se ha creado el cargo con el id: $id **");
                     } else {
-                        print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                        print_r("** EL CÓDIGO DEL CARGO SE ENCUENTRA YA REGISTRADO **");
                     }
                 } elseif ($accion == "MODIFICAR") {
                     if ($cargo->modificar($id)) {
-                        print_r("Se ha cargado en el modulo , Cargo Modificado <|> id cargo $id");
+                        print_r("** Se ha modificado el cargo con el id: $id **");
                     } else {
-                        print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                        print_r("** ERROR INESPERADO VUELVE A INTENTAR. **");
                     }
                 }
             }
         } elseif ($accion == "ELIMINAR") {
             $cargo->setId($id);
             if ($cargo->borrar()) {
-                print_r("** EL CARGO FUE ELIMINADO. **");
+                print_r("** El cargo fue eliminado. **");
             } else {
                 print_r("** EL CARGO NO PUDO SER ELIMINADO, EXISTE ALGUNA PERSONA CON ESTE CARGO. **");
             }
         } elseif ($accion == "BLOQUEAR"){
-            print_r(":D");
+            $cargo->setId($id);
+            if ($cargo->bloqueo()) {
+                print_r("** El cargo fue bloqueado. **");
+            } else {
+                print_r("** EL CARGO NO PUDO SER BLOQUEADO, EXISTE ALGUNA RESTRICCIÓN DE LA BASE DE DATOS CON ESTE CARGO. **");
+            }
         }
     }
 }

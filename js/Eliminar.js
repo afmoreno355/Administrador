@@ -14,7 +14,7 @@ function eliminar(donde , pag = document.getElementById('donde').value )
     });
     formFotoDoc(`View/${pag}/${pag}Crud.php`,formData ,donde);
     window.setTimeout( () =>{
-            //cerrarventana(); 
+            cerrarventana(); 
         },2000);
 }
 
