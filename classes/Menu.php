@@ -86,6 +86,7 @@ class Menu {
         if ($pagina != null && $limit != null) {
             $cadenaSQL .= " offset $pagina limit $limit ";
         }
+        //print_r($cadenaSQL);
         return ConectorBD::ejecutarQuery($cadenaSQL, null);
     }
 
@@ -107,6 +108,74 @@ class Menu {
         }
         return ConectorBD::ejecutarQuery($cadena, null);
     }
-}
 
+
+    public function Adicionar() {
+        $sql="insert into menu (nombre, pnombre, icono) values (
+                '$this->nombre',
+                '$this->pnombre',
+                '$this->icono'
+             )";
+        //print_r($sql);
+        if (ConectorBD::ejecutarQuery($sql, null)) {
+            //Historico de las acciones en el sistemas de informacion
+            $nuevo_query = str_replace("'", "|", $sql);
+            $historico = new Historico(null, null);
+            $historico->setIdentificacion($_SESSION["user"]);
+            $historico->setTipo_historico("ADICIONAR");
+            $historico->setHistorico(strtoupper($nuevo_query));
+            $historico->setFecha("now()");
+            $historico->setTabla("MENU");
+            $historico->grabar();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function Modificar( $id ) {
+        $sql="update menu set
+             nombre = '$this->nombre',
+             pnombre = '$this->pnombre',
+             icono = '$this->icono'
+               where id = '$id' ";
+        //print_r($sql);
+        if (ConectorBD::ejecutarQuery($sql, null)) {
+            //Historico de las acciones en el sistemas de informacion
+            $nuevo_query = str_replace("'", "|", $sql);
+            $historico = new Historico(null, null);
+            $historico->setIdentificacion($_SESSION["user"]);
+            $historico->setTipo_historico("MODIFICAR");
+            $historico->setHistorico(strtoupper($nuevo_query));
+            $historico->setFecha("now()");
+            $historico->setTabla("MENU");
+            $historico->grabar();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function Borrar() {
+        $sql="delete from menu where id = '$this->id' ";
+        print_r($sql);
+        if (ConectorBD::ejecutarQuery($sql, null)) {
+            
+            //Historico de las acciones en el sistemas de informacion
+            $nuevo_query = str_replace("'", "|", $sql);
+            $historico = new Historico(null, null);
+            $historico->setIdentificacion($_SESSION["user"]);
+            $historico->setTipo_historico("ELIMINAR");
+            $historico->setHistorico(strtoupper($nuevo_query));
+            $historico->setFecha("now()");
+            $historico->setTabla("MENU");
+            $historico->grabar();
+            return true;
+        } 
+        return false;
+    }
+
+
+
+}
 

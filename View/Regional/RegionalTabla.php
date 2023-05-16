@@ -44,46 +44,43 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
             $filtro.="  and ( nom_departamento like '%". strtoupper($bucarPalabraClave)."%' )";
         }
     }
-    
-    if( $permisos->getIdTipo() != 'SA' && $permisos->getIdTipo() != "AI" && $permisos->getIdTipo() != "AV"  && $permisos->getIdTipo() != "Rc" && $permisos->getIdTipo() != "Ra" )
-    {
-         $filtro .= " and id = '" . ( $regional_centro = new Sede( ' codigosede ' , $_SESSION['sede'] ) )->getId_departamento() . "' ";   
-    }
 
     // obj para llenar las tablas
     $regional = Regional::datosobjetos($filtro , $pagina, 20);
     // numero de paginas para la paginacion
     $numeroPaginas = ceil(Regional::count($filtro)[0][0] / 20);
     // ecrypt codifica lo que enviamos por javascript    
+    $var_add = Http::encryptIt("id=1&llave_Primaria=&user={$_SESSION["user"]}&accion=ADICIONAR");
+    $var_ayu = Http::encryptIt("id=4&llave_Primaria=&user={$_SESSION["user"]}&accion=AYUDA");
+
 ?> 
+     <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
+        <button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `View/Regional/RegionalModales.php`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>REGIONAL</button>
+        <button type='button' id='button' class="ele" title='Ayuda'  onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `View/Regional/RegionalModales.php`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
+    </div>  
     <!-- Inicio de html tablas -->
     <table id="tableIntD" class="tableIntT sombra tableIntTa">
         <tr>
             <th>CODIGO DE REGIONAL</th>
             <th>NOMBRE DE REGIONAL</th>
-            <th>ACCION</th>           
+            <th colspan="2">ACCION</th>           
         </tr>
 <?PHP
     for ($i = 0; $i < count($regional); $i++) {
         $objet = $regional[$i];
-        $var_pdf = Http::encryptIt( "id=1&llave_Primaria={$objet->getCod()}&user={$_SESSION["user"]}&accion=VISOR PDF&pagina=0" );
-        $var_car = Http::encryptIt( "id=2&llave_Primaria={$objet->getCod()}&user={$_SESSION["user"]}&accion=CARGAR PDF&pagina=0" );
-        $var_apr = Http::encryptIt( "id=3&llave_Primaria={$objet->getCod()}&user={$_SESSION["user"]}&accion=APROBAR&pagina=0" );
+        $var_mod = Http::encryptIt("id=1&llave_Primaria={$objet->getCod()}&user={$_SESSION["user"]}&accion=MODIFICAR");
+        $var_eli = Http::encryptIt("id=2&llave_Primaria={$objet->getCod()}&user={$_SESSION["user"]}&accion=ELIMINAR");
+        $var_inf = Http::encryptIt("id=3&llave_Primaria={$objet->getCod()}&user={$_SESSION["user"]}&accion=INFORMACION");
 ?> 
             <tr>
                 <td><?= $objet->getCod() ?></td>
                 <td> <?= $objet->getNombre() ?></td>
                 <td>
-                    <a onclick="validarDatos(``, `I=<?= $var_pdf ?>`, `modalVentana`, `View/Regional/RegionalModales.php`)" title="PDF Cargado por la Regional"><img src="img/icon/pdf.png" style="width: 30px; height: 30px"/></a>
-                    <?PHP
-                    if( $permisos->getIdTipo() === "IR" )
-                    {
-                    ?> 
-                        <a onclick="validarDatos(``, `I=<?= $var_car ?>`, `modalVentana`, `View/Regional/RegionalModales.php`)" title="PDF a Cargar por la Regional"><img src="img/icon/adds.png" style="width: 30px; height: 30px"/></a>
-                        <a onclick="validarDatos(``, `I=<?= $var_apr ?>`, `modalVentana`, `View/Regional/RegionalModales.php`)" title="Aprobar el centro"><img src="img/icon/aprobar.png" style="width: 30px; height: 30px"/></a>
-                    <?PHP
-                    }
-                    ?>
+                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `View/Regional/RegionalModales.php`)" title="Información Elemento" value="INFORMACION">
+                </td>
+                <td>
+                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `View/Regional/RegionalModales.php`)" title="Modificar Elemento" value="MODIFICAR">
+                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_eli ?>`, `modalVentana`, `View/Regional/RegionalModales.php`)" title="Eliminar" value="ELIMINAR">
                 </td>
             </tr>
 <?PHP

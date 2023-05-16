@@ -37,40 +37,20 @@ class Select {
                 return ConectorBD::ejecutarQuery( $query , null ) ;
             break; 
             case 2 :
-                return ConectorBD::ejecutarQuery( $query , null ) ;
+                return ConectorBD::ejecutarQuery( $query , 'registro' ) ;
             break; 
             case 3 :
                 return array( array('1' , 'A DISTANCIA') ,
-                              array('2' , 'PRESENCIAL') 
+                              array('2' , 'PRESENCIAL') ,
+                              array('3' , 'VIRTUAL') 
                     ) ;
             break; 
             case 4 :
-                $tipo = array() ;
-                if( trim( $query ) == 'ABIERTA' || trim( $query ) == ''  )
-                {
-                     array_push($tipo , array('ABIERTA DE FORMACION' , 'ABIERTA DE FORMACION') ) ;
-                }
-                if( trim( $query ) == 'ESPECIAL' || trim( $query ) == ''  )
-                {
-                     array_push($tipo , array('ESPECIAL EMPRESARIAL' , 'ESPECIAL EMPRESARIAL') ) ;
-                     array_push($tipo , array('ESPECIAL SOCIAL' , 'ESPECIAL SOCIAL') ) ;                
-                }
-                return $tipo;
+                return array( array('si' , 'SI') ,
+                              array('no' , 'NO') 
+                    ) ;
             break; 
             case 5 :
-                return array( array('15' , '15 APREDICES') ,
-                              array('20' , '20 APREDICES') ,
-                              array('25' , '25 APREDICES') ,
-                              array('30' , '30 APREDICES') ,
-                              array('35' , '35 APREDICES') 
-                    ) ;
-            break; 
-            case 6 :
-                return array( array('s' , 'SI') ,
-                              array('n' , 'NO') 
-                    ) ;
-            break; 
-            case 7 :
                 date_default_timezone_set('America/Bogota');
             
                 $month= date('m', time());
@@ -104,27 +84,22 @@ class Select {
                      
                 return $months ;
             break;
-            case 8 :
+            case 6 :
                 return array( array('MADRUGADA' , 'MADRUGADA') ,
                               array('DIURNA' , 'DIURNA') , 
                               array('NOCTURNA' , 'NOCTURNA') ,
                               array('MIXTA' , 'MIXTA') 
                     ) ;
             break; 
-            case 9 :
+            case 7 :
                 return ConectorBD::ejecutarQuery( $query , 'registro' ) ;
             break;
-            case 10 :
-                return array( array('si' , 'SI') ,
-                              array('no' , 'NO') 
-                    ) ;
-            break;
-            case 11 :
+            case 8 :
                 return array( array('A' , 'ACTIVO') ,
                               array('I' , 'INACTIVO') 
                     ) ;
             break;
-            case 12 :
+            case 9 :
                 return array( array('1trimestre' , 'PRIMER TRIMESTRE') ,
                               array('2trimestre' , 'SEGUNDO TRIMESTRE') ,
                               array('3trimestre' , 'TERCER TRIMESTRE') ,
@@ -132,6 +107,7 @@ class Select {
                               array('5trimestre' , 'OFERTA ESPECIAL') 
                     ) ;
             break;
+           default : '';
         }
     } 
     public static function validar( $variable /*VARIABLE QUE LLEGA*/ ,

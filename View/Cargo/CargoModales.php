@@ -4,7 +4,7 @@ session_start();
 date_default_timezone_set("America/Bogota");
 $fecha = date("Y-m-d");
 $fecha_vigencia = date("Y");
-foreach ($_POST as $key => $value)
+foreach ($_POST as $key => $value)    
     ${$key} = $value;
 // desencripta las variables
 $nuevo_POST = Http::decryptIt($I);
@@ -29,8 +29,8 @@ if ($id == 1 && $permisos) {
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
                 <img src="img/icon/gestionar.png"/><label class="where">Cargo DFP – Dirección de Formación Profesional</label></div>
             <br><br>
-            <label style="font-size: 1em; " >Modificar o agregar cargo. </label>
-            <label style="font-size: 1em; " id="aviso" class="aviso" ><?= $cargo->getNombrecargo() ?></label> 
+            <label style="font-size: 1em; " >Tabla cargo </label>
+            <label style="font-size: 1em; " id="aviso" class="aviso" ><?= $cargo->getId() ?></label> 
         </div> 
         <div>
             <fieldset>

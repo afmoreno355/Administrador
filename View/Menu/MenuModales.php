@@ -42,7 +42,6 @@ $menu = new Menu( ' id ' , $llave_Primaria_Contructor);
 if ($id == 1 && $permisos)
 {
 ?>
-<h1>1</h1>
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
@@ -57,13 +56,17 @@ if ($id == 1 && $permisos)
                 <legend title='NOMBRE DEL MENÚ'>NOMBRE DEL MENÚ</legend>
                 <input type="text" value='<?= $menu->getNombre() ?>' required name='nombre' id="nombre">
             </fieldset>
+        </div>
+        <div>  
             <fieldset>
-                <legend title='PNOMBRE DEL MENÚ'>PNOMBRE DEL MENÚ</legend>
+                <legend title='REDIRECCIÓN DEL MENÚ'>REDIRECCIÓN DEL MENÚ</legend>
                 <input type="text" value='<?= $menu->getPnombre() ?>' required name='pnombre' id="pnombre">
             </fieldset>
+        </div>
+        <div>      
             <fieldset>
-                <legend title='ÍCONO DEL MENÚ'>ÍCONO DEL MENÚ</legend>
-                <input type="text" value='<?= $menu->getIcono() ?>' required name='icono' id="icono">
+                <legend title='IMAGEN ÍCONO PNG'>IMAGEN ÍCONO PNG</legend>
+                <input type='file'  value=''  name='imagen' id='imagen' >
             </fieldset>
         </div>
         <div>        

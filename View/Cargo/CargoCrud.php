@@ -52,13 +52,13 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 if ($accion == "ADICIONAR") {
                     if ($cargo->Adicionar()) {
                         $id = ConectorBD::ejecutarQuery("select id from cargo where codigocargo = '{$cargo->getCodigocargo()}'; ", null)[0][0];
-                        print_r("** Se ha creado el cargo con el id: $id **");
+                        print_r("Se ha cargado en el módulo, id: $id Creado ");
                     } else {
                         print_r("** EL CÓDIGO DEL CARGO SE ENCUENTRA YA REGISTRADO **");
                     }
                 } elseif ($accion == "MODIFICAR") {
                     if ($cargo->modificar($id)) {
-                        print_r("** Se ha modificado el cargo con el id: $id **");
+                        print_r("Se ha cargado en el módulo, id: $id Modificado ");
                     } else {
                         print_r("** ERROR INESPERADO VUELVE A INTENTAR. **");
                     }
