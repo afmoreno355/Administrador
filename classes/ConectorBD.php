@@ -57,12 +57,10 @@ class ConectorBD {
     public static function ejecutarQuery($cadenaSQL,$bd) {
         $conector=new ConectorBD();
         $conector->conectar($bd);
-        $sentencia=$conector->conexion->prepare($cadenaSQL);        
-
+        $sentencia=$conector->conexion->prepare($cadenaSQL);
         if (!$sentencia->execute()){ //si hay error en el SQL devuelve falso
-            echo "Error al ejecutar en $bd: $cadenaSQL. ";
+            //echo "Error al ejecutar en $bd: $cadenaSQL. ";
             $conector->desconectar();
-            
             return(false);
         } else {
             $resultado=$sentencia->fetchAll();
