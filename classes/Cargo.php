@@ -12,31 +12,35 @@
  * @author Cristian Avella 18/04/2023 prueba de descarga
  */
 class Cargo {
+
     //put your code here
     private $id;
     private $codigocargo;
     private $nombrecargo;
     private $detalle;
-    
+
     function __construct($campo, $valor) {
-        if ($campo!=null){
+        if ($campo != null) {
             if (is_array($campo)) {
-                $this->objeto($campo);
-            }else{
-                $cadenaSQL="select * from CARGO where $campo = $valor";
-                $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, null);
-                if (count($respuesta)>0 ){ $this->objeto($respuesta[0]);}
+                $this->cargarObjetoDeVector($campo);
+            } else {
+                $cadenaSQL = "select * from CARGO where $campo = $valor";
+                //print_r($cadenaSQL);
+                $respuesta = ConectorBD::ejecutarQuery($cadenaSQL, null);
+                if (count($respuesta) > 0) {
+                    $this->cargarObjetoDeVector($respuesta[0]);
+                }
             }
         }
     }
 
-    private function objeto($vector){
-        $this->id=$vector[0];
-        $this->codigocargo=$vector[1];
-        $this->nombrecargo=$vector[2];
-        $this->detalle=$vector[3];
+    private function cargarObjetoDeVector($vector) {
+        $this->id = $vector[0];
+        $this->codigocargo = $vector[1];
+        $this->nombrecargo = $vector[2];
+        $this->detalle = $vector[3];
     }
-    
+
     public function getId() {
         return $this->id;
     }
@@ -69,58 +73,128 @@ class Cargo {
         $this->detalle = $detalle;
     }
 
-        
     public function __toString() {
         return $this->nombre;
     }
-   
-    public static function datos($filtro, $pagina, $limit){
-        $cadenaSQL="select * from CARGO ";
-         if($filtro!=''){
-            $cadenaSQL.=" where $filtro";
-        } 
-        $cadenaSQL.=" order by id asc offset $pagina limit $limit ";
+
+    public static function datos($filtro, $pagina, $limit) {
+        $cadenaSQL = "select * from CARGO ";
+        if ($filtro != '') {
+            $cadenaSQL .= " where $filtro";
+        }
+        $cadenaSQL .= " order by id asc offset $pagina limit $limit ";
         //print_r($cadenaSQL);
-        return ConectorBD::ejecutarQuery($cadenaSQL, null);          
+        return ConectorBD::ejecutarQuery($cadenaSQL, null);
     }
-    
-    public static function datosobjetos($filtro, $pagina, $limit){
-        $datos= Cargo::datos($filtro, $pagina, $limit);
+
+    public static function datosobjetos($filtro, $pagina, $limit) {
+        $datos = Cargo::datos($filtro, $pagina, $limit);
         //print_r($datos);
-        $lista=array();
+        $lista = array();
         for ($i = 0; $i < count($datos); $i++) {
-            $_lista=new Cargo($datos[$i], null);
-            $lista[$i]=$_lista;
+            $_lista = new Cargo($datos[$i], null);
+            $lista[$i] = $_lista;
         }
         return $lista;
     }
-    
-     public static function count($filtro) {
-        $cadena='select count(*) from CARGO '; 
-        if($filtro!=''){
-            $cadena.=" where $filtro";
-        } 
-        return ConectorBD::ejecutarQuery($cadena, null);        
+
+    public static function count($filtro) {
+        $cadena = 'select count(*) from CARGO ';
+        if ($filtro != '') {
+            $cadena .= " where $filtro";
+        }
+        return ConectorBD::ejecutarQuery($cadena, null);
+    }
+
+    public static function listaopciones() {
+        $lista = "";
+        $si = self::datosobjetos(null, null, null);
+        for ($i = 0; $i < count($si); $i++) {
+            $obj = $si[$i];
+            $lista .= "<option value='{$obj->getId()}'> {$obj->getId()} {$obj->getNombrecargo()} </option>";
+        }
+        return $lista;
+    }
+
+    public function Adicionar() {
+        $sql = "insert into cargo( codigocargo,     nombrecargo , detalle  ) values(
+                '$this->codigocargo',
+                '$this->nombrecargo',
+                '$this->detalle'
+             )";
+        //print_r($sql);
+
+        try {
+            if (ConectorBD::ejecutarQuery($sql, null)) {
+                $nuevo_query = str_replace("'", "|", $sql);
+                $historico = new Historico(null, null);
+                $historico->setIdentificacion($_SESSION["user"]);
+                $historico->setTipo_historico("ADICIONAR");
+                $historico->setHistorico(strtoupper($nuevo_query));
+                $historico->setFecha("now()");
+                $historico->setTabla("CARGO");
+                $historico->grabar();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $exc) {
+            return false;
+        }
+    }
+
+    public function modificar($id) {
+        $sql = "update cargo set id = '$this->id', codigocargo = '$this->codigocargo', nombrecargo = '$this->nombrecargo', detalle = '$this->detalle' where id = '$id' ";
+        //print_r($sql);
+        if (ConectorBD::ejecutarQuery($sql, null)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function borrar() {
+        //console.log(":D");
+        $sql = "delete from cargo where id = '$this->id' ";
+        try {
+            if (ConectorBD::ejecutarQuery($sql, null)) {
+                $nuevo_query = str_replace("'", "|", $sql);
+                $historico = new Historico(null, null);
+                $historico->setIdentificacion($_SESSION["user"]);
+                $historico->setTipo_historico("MODIFICAR");
+                $historico->setHistorico(strtoupper($nuevo_query));
+                $historico->setFecha("now()");
+                $historico->setTabla("CARGO");
+                $historico->grabar();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $exc) {
+            return false;
+        }
     }
     
-    public static function listaopciones( $id , $select = '' ){ 
-        $lista='';
-        $seleccion='';
-        $si = self::listas( $id );
-        for ($i = 0; $i < count($si); $i++) {
-            print_r($select);
-            print_r($si[$i][0]);
-            if( $si[$i][0]==$select && $select != '' )
-            {
-                $seleccion='selected';
+        public function bloqueo() {
+        //console.log(":D");
+        $sql = "delete from cargo where id = '$this->id' ";
+        try {
+            if (ConectorBD::ejecutarQuery($sql, null)) {
+                $nuevo_query = str_replace("'", "|", $sql);
+                $historico = new Historico(null, null);
+                $historico->setIdentificacion($_SESSION["user"]);
+                $historico->setTipo_historico("MODIFICAR");
+                $historico->setHistorico(strtoupper($nuevo_query));
+                $historico->setFecha("now()");
+                $historico->setTabla("CARGO");
+                $historico->grabar();
+                return true;
+            } else {
+                return false;
             }
-            else
-            {
-                $seleccion='';
-            }
-            $lista.="<option value='{$si[$i][0]}' $seleccion> {$si[$i][1]} </option>";
+        } catch (Exception $exc) {
+            return false;
         }
-    return $lista;
-    } 
-    
+    }
+
 }

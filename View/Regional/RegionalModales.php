@@ -13,7 +13,7 @@ session_start();
 
 date_default_timezone_set("America/Bogota");
 $fecha = date("Y-m-d");
-$fecha_vigencia = date("Y");
+$fecha_regional = date("Y");
 
 // variable variable trae las variables que trae POST
 foreach ($_POST as $key => $value)
@@ -22,14 +22,15 @@ foreach ($_POST as $key => $value)
 // desencripta las variables
 $nuevo_POST = Http::decryptIt($I);
 // evalua las nuevas variables que vienen ya desencriptadas
+// array['numero', 1]
 foreach ($nuevo_POST as $key => $value)
     ${$key} = $value;
-
+     // ${numero} $numero = 1
 // verificamos permisos
 $permisos = new Persona(" identificacion ", "'" . $_SESSION['user'] . "'");
 
 // permisos desde Http validando los permisos de un usuario segun la tabla personamenu
-$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "eagle_admin");
+$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "Indicativa");
 
 if ($ingreso === false && $permisos->getIdTipo() !== "SA" && $_SESSION["rol"] !== "SA") {
     $permisos = false;
@@ -38,23 +39,60 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" && $_SESSION["rol"] !=
 $llave_Primaria_Contructor = ( $llave_Primaria == "" ) ? "null" : "'$llave_Primaria'";
 
 // llamamos la clase y verificamos si ya existe info de este dato que llega
-$regional = new Regional( ' id ' , $llave_Primaria_Contructor);
+$regional = new Regional( ' id  ' , $llave_Primaria_Contructor);
+
 if ($id == 1 && $permisos)
+{
+    $anio_actas = ConectorBD::ejecutarQuery( " select anio from evidencia group by anio ; " , null ) ;
+    $nom_dep = ConectorBD::ejecutarQuery( " select nom_departamento from departamento where id = {$regional->getCod()} " , null )[0][0] ;
+    for ( $i = 0; $i < count( $anio_actas ); $i++ ) {
+?>
+    <div class="carga_Documento">
+        <div class="contenido">  
+            <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
+                <lablel>
+                    Actas cargadas regional <?= strtolower( $nom_dep ) ?>  año <?= $anio_actas[$i][0]  ?>   cargado en el modulo de la Dirección de Formación Profesional.
+                </label>            </div><br><br>
+
+            <label style="font-size: 1em; " id="aviso"></label>  
+        </div> 
+<?PHP
+        $_actas = ConectorBD::ejecutarQuery( " select evidencia from evidencia where anio = '{$anio_actas[$i][0]}' and regional = {$regional->getCod()} order by evidencia desc; " , null ) ;
+       // print_r(" select evidencia from evidencia where anio = '{$anio_actas[$i][0]}' and regional = {$regional->getCod()} ; ");
+        for ($j = 0;  $j < count($_actas); $j++) 
+        {
+?>        
+        <div>
+            <span>
+                <a title="Eliminar documento del proceso" ><i onclick="eliminarPro()" style="color: black;font-size: 1.2rem;cursor: pointer"  class="fas fa-times-circle salir"></i></a>
+            </span>
+            <p style="margin-top: -10px">
+                ARCHIVO CARGADO : <?= str_replace( [ 'Archivos/pdf/' , '.pdf' ], ['',''] ,  $_actas[$j][0] ) ?>
+            </p>
+            <a target="_blank" href="<?= $_actas[$j][0] ?>"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
+        </div>
+<?PHP
+    }
+?>         
+     </div> 
+<?PHP 
+    }
+}
+elseif ($id == 2 && $permisos)
 {
 ?>
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
-                <img src="img/icon/gestionar.png"/><label class="where">Administrador DFP – Dirección de Formación Profesional</label></div>
+                <img src="img/icon/gestionar.png"/><label class="where">Modulo Autoevaluaciones – Dirección de Formación Profesional</label></div>
             <br><br>
-            <label style="font-size: 1em; " >Tabla regional</label>  
+            <label style="font-size: 1em; " >Tabla Documentos</label>  
             <label style="font-size: 1em; " id="aviso" class="aviso" ></label> 
-            <label style="font-size: 1em; " id="aviso2" class="aviso" ><?= $regional->getCod() ?></label> 
         </div> 
         <div>
             <fieldset>
-                <legend title='NOMBRE DE LA REGIONAL'>NOMBRE DE LA REGIONAL</legend>
-                <input type="text" value='<?= $regional->getNombre() ?>' required name='nom_departamento' id="nom_departamento">
+                <legend title='ARCHIVO ACTA REGIONAL'>ARCHIVO ACTA REGIONAL</legend>
+                <input type='file' value='' required name='documento' id="documento">
             </fieldset>
         </div>
         <div>        
@@ -64,113 +102,42 @@ if ($id == 1 && $permisos)
             <input type="submit" value='<?= $accion ?>' name='accionU' id='accionU' onclick='cargar( "aviso" )'>
             <input type="reset" name="limpiarU"  value="LIMPIAR"/>
         </div>
-    </div>
+        <br>         
+     </div>
+     <div class="contenedor_barra_estado">
+        <div class="barra_estado" id="barra_estado">
+            <span id="spam">
+            </span>
+        </div>  
+     </div>  
 <?PHP 
 }
-if ($id == 2 && $permisos)
+if ($id == 3 && $permisos)
 {
-?>
+    ?>
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
-                <img src="img/icon/borrar.png"/>
+            <img src="<?PHP if($accion == 'BORRAR TODO'){  print_r('img/icon/borrar.png'); } else { print_r('img/icon/send.png'); }?>"/>
                 <lablel>
-                    Se realizara la accion "<?= $accion ?>" a la regional <?=$llave_Primaria?> cargado en el modulo de la Dirección de Formación Profesional.
+                    Se realizara la accion "<?= $accion ?>" a Indicativa Virtual o Presencial cargado en el modulo de la Dirección de Formación Profesional.
                 </label>
             </div><br><br>
             <label style="font-size: 1em; " id="aviso"></label>  
-        </div>  
+        </div> 
+        <div>
+            <fieldset>
+                <legend title='ACCION'>ACCION</legend>
+                 Presencial <br> <input type='radio' required checked value='presencial'  name='modalidad' id='modalidad' "><br>
+                 Virtual <br> <input type='radio' required value='virtual'  name='modalidad' id='modalidad' ><br>
+            </fieldset>
+        </div> 
         <div>        
             <input type="hidden" value="<?= $regional->getCod() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
-            <input type="submit" title="ACEPTA <?= $accion ?> EL ITEM ELEGIDO"  value="<?= $accion ?>" name="accionU" id="accionU" onclick="eliminar('aviso')">
+            <input type="submit" title="ACEPTA <?= $accion ?> EL ITEM ELEGIDO"  value="<?= $accion ?>" name="accionU" id="accionU" onclick="cargar()">
         </div>
     </div>    
-<?PHP
-}
-elseif ($id == 3 && $permisos)
-{
-?>
-    <div class="carga_Documento">
-        <div class="contenido">  
-            <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
-                <img src="img/icon/estado.png"/>
-                <lablel>
-                    Administrador DFP – Dirección de Formación Profesional
-                </label>
-            </div><br><br>
-            <label style="font-size: 1em; " id="aviso"></label>  
-        </div>
-        <div class="nuevaseccion" >
-            <fieldset>
-                <section>
-                    <h3>CODIGO DE REGIONAL: </h3> 
-                    <p> <?= $regional->getCod() ?></p>
-                </section>
-                <section>
-                    <h3>NOMBRE DE REGIONAL: </h3> 
-                    <p> <?= $regional->getNombre() ?></p>
-                </section>
-            </fieldset>
-        </div>
-    </div>
-<?PHP
-}
-elseif ($id == 4 && $permisos ) {
-    ?>
-    <div class="carga_Documento">
-         <div class="contenido">  
-            <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
-                <label style="font-size: 1em; " >Manuales y documentos <br> Administrador DFP – Dirección de Formación Profesional<br><br></label> 
-            </div>
-        </div>
-    </div>
-    <div id="conte_seccion" class="conte_seccion_icon tableIntT">
-        <section>
-            <div>
-                <p>MANUAL PASO A PASO INDICATIVA VIRTUAL</p><a href="Archivos/Ejemplos/MANUAL_VIRTUAL.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
-            </div>
-            <div>
-                <p>MANUAL PASO A PASO INDICATIVA PRESENCIAL</p><a href="Archivos/Ejemplos/MANUAL_PRESENCIAL.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
-            </div>
-            <div>
-                <p>MANUAL PASO A PASO INDICATIVA REGIONAL</p><a href="Archivos/Ejemplos/MANUAL_REGIONAL.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
-            </div>
-            <div>
-                <p>MANUAL PASO A PASO INDICATIVA ADMINISTRADOR</p><a href="Archivos/Ejemplos/MANUAL_ADMIN.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
-            </div>
-            <div>
-                <p>ARCHIVO CARGA PLANO CSV PRESENCIAL</p><a href="Archivos/Ejemplos/CATALOGO_FORMATO_PRESENCIAL.csv"><img src="img/icon/excel.png" class="zoom" width=70" height=70"/></a>
-            </div>
-            <div>
-                <p>ARCHIVO CARGA PLANO CSV VIRTUAL</p><a href="Archivos/Ejemplos/CATALOGO_FORMATO_VIRTUAL.csv"><img src="img/icon/excel.png" class="zoom" width=70" height=70"/></a>
-            </div>
-            <div>
-                <p>ARCHIVO CARGA PLANO CSV PE04</p><a href="Archivos/Ejemplos/PE04.csv"><img src="img/icon/excel.png" class="zoom" width=70" height=70"/></a>
-            </div>
-            <div>
-                <p>ARCHIVO CARGA PLANO CSV METAS</p><a href="Archivos/Ejemplos/METAS.csv"><img src="img/icon/excel.png" class="zoom" width=70" height=70"/></a>
-            </div>
-        </section>
-    </div>
-    <div class="carga_Documento">
-         <div class="contenido">  
-            <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
-                <label style="font-size: 1em; " >Videos de ayuda dministrador DFP – Dirección de Formación Profesional<br><br></label> 
-            </div>
-        </div>
-        <div style="width: auto">
-            <fieldset>
-                <legend title='PASO A PASO GENERAL '>PASO A PASO GENERAL CENTROS PRESENCIAL</legend>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/5y9Sg7okmjE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>            
-            </fieldset>
-         </div>
-         <div style="width: auto">
-            <fieldset>
-                <legend title='PASO A PASO GENERAL '>PASO A PASO GENERAL CENTROS VIRTUAL</legend>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/VCtFmKXgWks" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>            </fieldset>
-         </div>
-    </div>
 <?PHP
 }
 ?>
