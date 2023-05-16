@@ -4,7 +4,7 @@ session_start();
 date_default_timezone_set("America/Bogota");
 $fecha = date("Y-m-d");
 $fecha_vigencia = date("Y");
-foreach ($_POST as $key => $value)
+foreach ($_POST as $key => $value) 
     ${$key} = $value;
 // desencripta las variables
 $nuevo_POST = Http::decryptIt($I);
