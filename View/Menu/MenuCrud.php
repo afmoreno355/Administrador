@@ -77,6 +77,8 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                                 if (!copy($imagen_src, $imagen_ds) ){
                                     print_r("*** No se ha cargado la imagen correctamente ***");
                                 }
+                                $menuNuevo = new Menu(' nombre ', "'$nombre'");
+                                $id = $menuNuevo->getId();            
                                 print_r("Se ha cargado en el modulo, Menú adicionado <|> id menú $id");
                             } else {
                                 print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
@@ -87,6 +89,8 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                     {
                         if ( $menu->Adicionar() )
                         {
+                            $menuNuevo = new Menu(' nombre ', "'$nombre'");
+                            $id = $menuNuevo->getId();
                             print_r("Se ha cargado en el modulo, Menú adicionado <|> id menú $id");
                         }
                         else
