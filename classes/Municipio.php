@@ -231,4 +231,24 @@ class Municipio {
             return false;
         }
     }
+    
+    public function ActivarDesactivar() {
+        $sql="update municipio set estado = '{$this->estado}' where id = $this->id ";
+        //print_r($sql);
+        //print_r($sql);
+        if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
+            //Historico de las acciones en el sistemas de informacion
+            $nuevo_query = str_replace("'", "|", $sql);
+            $historico = new Historico(null, null);
+            $historico->setIdentificacion($_SESSION["user"]);
+            $historico->setTipo_historico("BLOQUEAR");
+            $historico->setHistorico(strtoupper($nuevo_query));
+            $historico->setFecha("now()");
+            $historico->setTabla("MUNICIPIO");
+            $historico->grabar();
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -12,7 +12,7 @@ require_once dirname(__FILE__) . "/../../autoload.php";
 date_default_timezone_set('America/Bogota');
 // bucarPalabraClave palabra clave que se busca asociada a ajax
 $bucarPalabraClave = "";
-$URL = "View/Programa/ProgramaModales.php" ;
+$URL = "View/Programa/ProgramaModales.php";
 $numeroPaginas = 0 ;
 $id_espe  = "" ;
 $filtro  = " tipo_esp = 'T' " ;
@@ -23,7 +23,7 @@ $year= date('Y', time());
 $permisos = new Persona(" identificacion ", "'" . $_SESSION['user'] . "'");
 
 // permisos desde Http validando los permisos de un usuario segun la tabla personamenu
-$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "Eagle_admin");
+$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "Indicativa");
 
 if ( $ingreso === false && $permisos->getIdTipo() !== "SA" ) {
     print_r("NO TIENE PERMISO PARA ESTE MENU");
@@ -46,24 +46,26 @@ if ( $ingreso === false && $permisos->getIdTipo() !== "SA" ) {
     // numero de paginas para la paginacion
     $numeroPaginas = ceil(Programa::count($filtro)[0][0] / 20);
     $var_add = Http::encryptIt("id=1&llave_Primaria=&user={$_SESSION["user"]}&accion=ADICIONAR");
-    $var_pla = Http::encryptIt("id=3&llave_Primaria=&user={$_SESSION["user"]}&accion=SUBIR ARCHIVO");
-    $var_ayu = Http::encryptIt("id=6&llave_Primaria=&user={$_SESSION["user"]}&accion=AYUDA");
+    $var_des = Http::encryptIt("id=6&llave_Primaria=&user={$_SESSION["user"]}&accion=DESCARGAR ARCHIVO");
+    $var_car = Http::encryptIt("id=3&llave_Primaria=&user={$_SESSION["user"]}&accion=CARGAR ARCHIVO");
+    $var_ayu = Http::encryptIt("id=7&llave_Primaria=&user={$_SESSION["user"]}&accion=AYUDA");
 ?> 
     <!-- Inicio de html tablas -->
     <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
-        <button type='button' id='button' class="ele" title='Adicionar programa virtual' title="Adicionar" value="ADICIONAR" onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>PROGRAMA</button>
-        <button type='button' id='button' class="ele" title='Archivo plano' onclick="validarDatos(``, `I=<?= $var_pla ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/excel.png"/> PROGRAMAS<br>CSV</button>
-        <button type='button' id='button' class="ele" title='Ayuda del sistema' onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
+        <button type='button' id='button' class="ele" title='Adicionar programa' title="Adicionar" value="ADICIONAR" onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>PROGRAMA</button>
+        <button type='button' id='button' class="ele" title='Archivo de desacarga' onclick="reporte(`` , `I=<?= $var_des ?>`, `formDetalle`, `<?= $URL ?>`, event, 'ele' , 'PROGRAMAS EN SISTEMA')"><img src="img/icon/excel.png"/> DESCARGAR<br>PROGRAMAS</button>
+        <button type='button' id='button' class="ele" title='Archivo de cargue de programas' onclick="validarDatos(``, `I=<?= $var_car ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/excel.png"/> CARGAR<br>PROGRAMAS</button>
+        <button type='button' id='button' class="ele" title='Ayuda del sistema' onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MÓDULO</button>
     </div>  
          <table id="tableIntD" class="tableIntT sombra tableIntTa">
             <tr>
-                <th class='noDisplay'>CODIGO DE PROGRAMA</th>
-                <th>NIVEL DE FORMACION</th>
+                <th class='noDisplay'>CÓDIGO DE PROGRAMA</th>
+                <th>NIVEL DE FORMACIÓN</th>
                 <th>NOMBRE DEL PROGRAMA</th>
-                <th class="noDisplay">DURACION (Meses)</th>
+                <th class="noDisplay">DURACIÓN (Meses)</th>
                 <th class="noDisplay">MODALIDAD</th>
                 <th>ESTADO</th>
-                <th colspan="2" >ACCION</th> 
+                <th colspan="2" >ACCIÓN</th> 
             </tr> 
 <?PHP            
     for ($j = 0; $j < count($programa); $j++) 
@@ -93,7 +95,7 @@ if ( $ingreso === false && $permisos->getIdTipo() !== "SA" ) {
                 <td class='noDisplay' ><?= $objetos->getModalidad() ?></td>
                 <td><?= $_estado ?></td>
                 <td>
-                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="INFORMACION">
+                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="INFORMACIÓN">
                     <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="BLOQUEAR">
                 </td>
                 <td>

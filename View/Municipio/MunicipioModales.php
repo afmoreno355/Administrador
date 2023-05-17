@@ -46,7 +46,7 @@ if ($id == 1 && $permisos)
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
-                <img src="img/icon/gestionar.png"/><label class="where">Modulo Indicativa – Dirección de Formación Profesional</label></div>
+                <img src="img/icon/gestionar.png"/><label class="where">Módulo Indicativa – Dirección de Formación Profesional</label></div>
             <br><br>
             <label style="font-size: 1em; " >Tabla Municipio</label>  
             <label style="font-size: 1em; " id="aviso" class="aviso" ></label> 
@@ -62,13 +62,13 @@ if ($id == 1 && $permisos)
             <fieldset>
                 <legend title='REGIONAL'>REGIONAL</legend>
                 <select  required name='id_departamento' id="id_departamento">
-                    <?= Select::listaopciones( 1 , $municipio->getId_departamento() , "select id , nom_departamento from departamento ;" )?>
+                    <?= Select::listaopciones( 2 , $municipio->getId_departamento() , "select id , nom_departamento from departamento ;" )?>
                 </select>
             </fieldset>
         </div>
         <div>
             <fieldset>
-                <legend title='CODIGO MUNICIPIO'>CODIGO MUNICIPIO</legend>
+                <legend title='CÓDIGO MUNICIPIO'>CÓDIGO MUNICIPIO</legend>
                 <input type="number" value='<?= $municipio->getCodigo_municipio() ?>' required name='codigo_municipio' id="codigo_municipio">
             </fieldset>
         </div>
@@ -80,7 +80,7 @@ if ($id == 1 && $permisos)
         </div>
         <div>
             <fieldset>
-                <legend title='CODIGO REGIONAL DEPARTAMENTO'>CODIGO REGIONAL MUNICIPIO</legend>
+                <legend title='CÓDIGO REGIONAL DEPARTAMENTO'>CÓDIGO REGIONAL MUNICIPIO</legend>
                 <input type="number" value='<?= $municipio->getCod_dpto_mpio() ?>' required name='cod_dpto_mpio' id="cod_dpto_mpio">
             </fieldset>
         </div>
@@ -88,7 +88,7 @@ if ($id == 1 && $permisos)
             <fieldset>
                 <legend title='ACTIVO'>ACTIVO</legend>
                 <select required name='activo' id='activo'>
-                    <?= Select::listaopciones( 8 , $municipio->getEstado()  )?>
+                    <?= Select::listaopciones( 11 , $municipio->getEstado()  )?>
                 </select>
             </fieldset>
         </div>
@@ -110,7 +110,7 @@ if ($id == 2 && $permisos)
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
                 <img src="<?PHP if($accion == 'ELIMINAR'){  print_r('img/icon/borrar.png'); } else { print_r('img/icon/estado.png'); }?>"/>
                 <lablel>
-                    Se realizara la accion "<?= $accion ?>" a Indicativa <?=$llave_Primaria?> cargado en el modulo de la Dirección de Formación Profesional.
+                    Se realizará la acción "<?= $accion ?>" a Indicativa <?=$llave_Primaria?> cargado en el módulo de la Dirección de Formación Profesional.
                 </label>
             </div><br><br>
             <label style="font-size: 1em; " id="aviso"></label>  
@@ -178,7 +178,7 @@ elseif ($id == 4 && $permisos)
                     <p> <?= $municipio->getId_departamento() ?></p>
                 </section>                
                 <section>
-                    <h3>CODIGO DEL MUNICIPIO: </h3> 
+                    <h3>CÓDIGO DEL MUNICIPIO: </h3> 
                     <p> <?= $municipio->getCodigo_municipio() ?></p>
                 </section>                
                 <section>
@@ -204,7 +204,15 @@ elseif ($id == 5 && $permisos)
             </label><br><br>
             <label style="font-size: 1em; " >Bloqueo de municipio</label>   
             <label style="font-size: 1em; " id="aviso"></label>   
-        </div>         
+        </div>  
+        <div>
+            <fieldset>
+                <legend title='ACTIVO'>ACTIVO</legend>
+                <select required name='activo' id='activo'>
+                    <?= Select::listaopciones( 11 , $municipio->getEstado()  )?>
+                </select>
+            </fieldset>
+        </div>
         <div>        
             <input type="hidden" value="<?= $municipio->getId() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
@@ -214,4 +222,43 @@ elseif ($id == 5 && $permisos)
         </div>
 </div>   
 <?PHP 
+}
+elseif ($id == 6 && $permisos)
+{
+    if( !empty( $resultadosReporte=ConectorBD::ejecutarQuery(
+              "
+               SELECT 
+                    id ,             
+                    municipio ,
+                    id_departamento ,
+                    codigo_municipio ,
+                    dane ,             
+                    cod_dpto_mpio ,
+                    case
+                       when estado = 'A' then 'ACTIVO'
+                       when estado = 'I' then 'INACTIVO'
+                    else
+                       'INACTIVO'
+                    end
+                       as
+                         estado
+                from 
+                    municipio 
+             " , 'eagle_admin')
+            )
+        )
+    {    
+        $lista = "IDENTIFICADOR EN SISTEMA ; NOMBRE DEL MUNICIPIO ; IDENTIFICADOR DE REGIONAL  ; CODIGO DEL MUNICIPIO ; CODIGO DANE ; CODIGO DEPARTAMENTO MUNICIPIO ; MUNICIPIO ACTIVO " ; 
+        for ($j = 0; $j < count($resultadosReporte); $j++) 
+        {
+            $lista .= "\n{$resultadosReporte[$j][0]};" ;
+            $lista .= "{$resultadosReporte[$j][1]};" ;
+            $lista .= "{$resultadosReporte[$j][2]};" ;
+            $lista .= "{$resultadosReporte[$j][3]};" ;
+            $lista .= "{$resultadosReporte[$j][4]};" ;
+            $lista .= "{$resultadosReporte[$j][5]};" ;
+            $lista .= "{$resultadosReporte[$j][6]};" ;
+        } 
+    }
+    print_r( strtoupper( $lista ) ) ;
 }
