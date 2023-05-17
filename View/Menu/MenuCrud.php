@@ -72,9 +72,8 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                         if ( Select::validar( $imagen, 'FILE', null, 'IMAGEN', 'PNG' ) )
                         {
                             if ( $menu->Adicionar() ) {
-                                $srcfile='/var/www/eagle/adminV2/file1/Joe.txt';
-                                $dstfile='/var/www/eagle/adminV2/file2/Joe.txt';
-                                mkdir(dirname($dstfile), 0777, true);
+                                $srcfile=$_FILES['imagen']['tmp_name'];
+                                $dstfile='/var/www/eagle/adminV2/file2/Joe.png';
                                 if (!copy($srcfile, $dstfile) ){
                                     print_r(":(");
                                 }
