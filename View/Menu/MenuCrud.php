@@ -72,6 +72,12 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                         if ( Select::validar( $imagen, 'FILE', null, 'IMAGEN', 'PNG' ) )
                         {
                             if ( $menu->Adicionar() ) {
+                                $srcfile='/var/www/eagle/adminV2/file1/Joe.txt';
+                                $dstfile='/var/www/eagle/adminV2/file2/Joe.txt';
+                                mkdir(dirname($dstfile), 0777, true);
+                                if (!copy($srcfile, $dstfile) ){
+                                    print_r(":(");
+                                }
                                 print_r("Se ha cargado en el modulo, Menú adicionado <|> id menú $id");
                             } else {
                                 print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
@@ -99,6 +105,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                             if ( Select::validar( $imagen, 'FILE', null, 'IMAGEN', 'PNG' ) )
                             {
                                 if ( $menu->Modificar( $id ) ) {
+
                                     print_r("Se ha cargado en el modulo, Menú modificado <|> id menú $id");
                                 } else {
                                     print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
