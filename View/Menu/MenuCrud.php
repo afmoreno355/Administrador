@@ -72,10 +72,10 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                         if ( Select::validar( $imagen, 'FILE', null, 'IMAGEN', 'PNG' ) )
                         {
                             if ( $menu->Adicionar() ) {
-                                $srcfile=$_FILES['imagen']['tmp_name'];
-                                $dstfile='/var/www/eagle/adminV2/file2/Joe.png';
-                                if (!copy($srcfile, $dstfile) ){
-                                    print_r(":(");
+                                $imagen_src=$imagen['tmp_name'];
+                                $imagen_ds='/var/www/eagle/adminV2/img/icon/'.$icono.'.png';
+                                if (!copy($imagen_src, $imagen_ds) ){
+                                    print_r("*** No se ha cargado la imagen correctamente ***");
                                 }
                                 print_r("Se ha cargado en el modulo, Menú adicionado <|> id menú $id");
                             } else {
@@ -104,7 +104,11 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                             if ( Select::validar( $imagen, 'FILE', null, 'IMAGEN', 'PNG' ) )
                             {
                                 if ( $menu->Modificar( $id ) ) {
-
+                                    $imagen_src=$imagen['tmp_name'];
+                                    $imagen_ds='/var/www/eagle/adminV2/img/icon/'.$icono.'.png';
+                                    if (!copy($imagen_src, $imagen_ds) ){
+                                        print_r("*** No se ha cargado la imagen correctamente ***");
+                                    }
                                     print_r("Se ha cargado en el modulo, Menú modificado <|> id menú $id");
                                 } else {
                                     print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
