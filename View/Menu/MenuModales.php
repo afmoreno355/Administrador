@@ -131,7 +131,8 @@ elseif ($id == 3 && $permisos)
                     <p> <?= $menu->getPnombre() ?></p>
                 </section>
                 <section>
-                    <h3>ÍCONO DE MENÚ: </h3> 
+                    <h3>ÍCONO DE MENÚ: </h3>
+                    <p><?= $menu->getIcono() ?></p>
                     <img width="100" src="img/icon/<?= $menu->getIcono() ?>.png" alt="<?= $menu->getIcono() ?>" />
                 </section>
             </fieldset>
