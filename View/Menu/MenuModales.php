@@ -42,7 +42,7 @@ $menu = new Menu( ' id ' , $llave_Primaria_Contructor);
 if ($id == 1 && $permisos)
 {
 ?>
-<h1>1</h1>
+<!--h1>1</h1-->
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
@@ -83,7 +83,7 @@ if ($id == 1 && $permisos)
 if ($id == 2 && $permisos)
 {
 ?>
-<h1>2</h1>
+<!--h1>2</h1-->
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
@@ -105,7 +105,7 @@ if ($id == 2 && $permisos)
 elseif ($id == 3 && $permisos)
 {
 ?>
-<h1>3</h1>
+<!--h1>3</h1-->
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
@@ -141,8 +141,9 @@ elseif ($id == 3 && $permisos)
 }
 elseif ($id == 4 && $permisos ) {
     ?>
-    <h1>4</h1>
-    <div class="carga_Documento">
+    <p>(Ayuda aquí)</p>
+    <!--h1>4</h1-->
+    <!--div class="carga_Documento">
          <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
                 <label style="font-size: 1em; " >Manuales y documentos <br> Administrador DFP – Dirección de Formación Profesional<br><br></label> 
@@ -194,13 +195,14 @@ elseif ($id == 4 && $permisos ) {
                 <legend title='PASO A PASO GENERAL '>PASO A PASO GENERAL CENTROS VIRTUAL</legend>
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/VCtFmKXgWks" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>            </fieldset>
          </div>
-    </div>
+    </div-->
 <?PHP
 }
 elseif ($id == 5 && $permisos ) {
     ?>
-    <h1>5</h1>
-    <div class="carga_Documento">
+    <p>(Manuales aquí)</p>
+    <!--h1>5</h1-->
+    <!--div class="carga_Documento">
          <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
                 <label style="font-size: 1em; " >Manuales y documentos <br> Administrador DFP – Dirección de Formación Profesional<br><br></label> 
@@ -252,7 +254,7 @@ elseif ($id == 5 && $permisos ) {
                 <legend title='PASO A PASO GENERAL '>PASO A PASO GENERAL CENTROS VIRTUAL</legend>
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/VCtFmKXgWks" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>            </fieldset>
          </div>
-    </div>
+    </div-->
 <?PHP
 }
 ?>
