@@ -29,7 +29,7 @@ foreach ($nuevo_POST as $key => $value)
 $permisos = new Persona(" identificacion ", "'" . $_SESSION['user'] . "'");
 
 // permisos desde Http validando los permisos de un usuario segun la tabla personamenu
-$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "eagle_admin");
+$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "eagle");
 
 if ($ingreso === false && $permisos->getIdTipo() !== "SA" && $_SESSION["rol"] !== "SA") {
     $permisos = false;
@@ -118,22 +118,22 @@ elseif ($id == 3 && $permisos)
         </div>
         <div class="nuevaseccion" >
             <fieldset>
-                <section>
+                <section tyle="padding: 10px">
                     <h3>ID DE MENÚ: </h3> 
                     <p> <?= $menu->getId() ?></p>
                 </section>
-                <section>
+                <section tyle="padding: 10px">
                     <h3>NOMBRE DE MENÚ: </h3> 
                     <p> <?= $menu->getNombre() ?></p>
                 </section>
-                <section>
+                <section tyle="padding: 10px">
                     <h3>PNOMBRE DE MENÚ: </h3> 
-                    <p> <?= $menu->getPnombre() ?></p>
+                    <p style="word-wrap: break-word; margin: 10px"> <?= $menu->getPnombre() ?></p>
                 </section>
-                <section>
+                <section style="padding: 10px">
                     <h3>ÍCONO DE MENÚ: </h3>
                     <p><?= $menu->getIcono() ?></p>
-                    <img width="100" src="img/icon/<?= $menu->getIcono() ?>.png" alt="<?= $menu->getIcono() ?>" />
+                    <img width="50" src="img/icon/<?= $menu->getIcono() ?>.png" alt="<?= $menu->getIcono() ?>" />
                 </section>
             </fieldset>
         </div>
