@@ -154,6 +154,13 @@ class Menu {
             return false;
         }
     }
+
+    public function AdicionarModificar( $id ) {
+        if ( $id == 0 ) {
+            return $this->Adicionar();
+        }
+        return $this->Modificar( $id ) ;
+    }
     
     public function Borrar() {
         $sql="delete from menu where id = '$this->id' ";

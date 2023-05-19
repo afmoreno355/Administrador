@@ -7,12 +7,11 @@
  */
 
 ?> 
-            <label id='modalesT' class='modalesT'>CERRAR SESION</label>   				
+            <label id='modalesT' class='modalesT'>CERRAR SESIÓN</label>   				
             <table>
                 <tr>
                     <td>
-                        Accion:<br>
-                        Esta seguro de Cerrar Sesión<br><br>
+                        ¿Esta seguro de Cerrar Sesión'?<br><br>
                     </td>
                 </tr>
                               

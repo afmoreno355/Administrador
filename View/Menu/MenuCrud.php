@@ -19,11 +19,6 @@ $nombreSinTilde_Nuevo = array("A", "E", "I", "O", "U", "N", "", "", "A", "E", "I
 
 date_default_timezone_set("America/Bogota");
 $fecha = date("YmdHis");
-/*$fecha_indicativas = date("Y-m-d H:i:s");
-$fecha_indicativa_comp = date("Y-m-d");
-$anio_indicativa = date("Y");
-$acceso_Tipo_Usuario = ConectorBD::ejecutarQuery( " select validar from indicativa  WHERE cod_centro = '{$_SESSION['sede']}' and vigencia ='$anio_indicativa' and id_modalidad = '3' group by validar ; " ,  null ) ;
-/** */
 
 // variable variable trae las variables que trae POST
 foreach ($_POST as $key => $value)
@@ -50,11 +45,16 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
            $campo = null ;
            $valor = null ; 
         }
-        $menu = new Menu( $campo, $valor );
+        $menu = new Menu( $campo, $valor ) ;
         if ($accion == "ADICIONAR" || $accion == "MODIFICAR") 
         {
+            if ($accion == "ADICIONAR")
+            {
+                $id = 0;
+            }
 
             if (
+                 Select::validar( $id, 'NUMERIC', null, 'ID') &&
                  Select::validar( $nombre , 'TEXT' , 250 , 'NOMBRE' ) &&
                  Select::validar( $pnombre , 'TEXT' , 250 , 'PNOMBRE' ) &&
                  Select::validar( $icono, 'TEXT' , 250 , 'ÍCONO' )
@@ -63,73 +63,47 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 $menu->setNombre( $nombre ) ;
                 $menu->setPnombre( $pnombre ) ;
                 $menu->setIcono( $icono ) ;
-                $imagen = $_FILES['imagen'] ;
 
-                if ($accion == "ADICIONAR") 
+                $imagen = $_FILES['imagen'] ;
+                $cargarImagen = isset( $imagen ) && $imagen['name'] != '' ;
+                $imagen_destino = '/srv/http/www/adminV2/img/icon/'.$icono.'.png';
+
+                if ($cargarImagen)
                 {
-                    if ( isset( $imagen ) && $imagen['name'] != '' )
+                    if ( Select::validar( $imagen, 'FILE', null, 'IMAGEN', 'PNG' ) )
                     {
-                        if ( Select::validar( $imagen, 'FILE', null, 'IMAGEN', 'PNG' ) )
+                        if ( $menu->AdicionarModificar( $id ) )
                         {
-                            if ( $menu->Adicionar() ) {
-                                $imagen_src=$imagen['tmp_name'];
-                                $imagen_ds='/var/www/eagle/adminV2/img/icon/'.$icono.'.png';
-                                if (!copy($imagen_src, $imagen_ds) ){
-                                    print_r("*** No se ha cargado la imagen correctamente ***");
-                                }
-                                $menuNuevo = new Menu(' nombre ', "'$nombre'");
-                                $id = $menuNuevo->getId();            
-                                print_r("Se ha cargado en el modulo, Menú adicionado <|> id menú $id");
-                            } else {
-                                print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                            if ( !copy($imagen['tmp_name'], $imagen_destino) )
+                            {
+                                print_r(" No se ha cargado la imagen correctamente. ");
                             }
+
+                            if ( $id == 0 )
+                            {
+                                $menuNuevo = new Menu(' nombre ', "'$nombre'");
+                                $id = $menuNuevo->getId();
+                            }
+
+                            print_r(" Se ha cargado menú en el módulo <|> id $id ");
+
+                        } else
+                        {
+                            print_r( " ERROR INESPERADO, VUELVA A INTENTAR. " );
                         }
                     }
-                    else
+                } else {
+                    if ( $menu->AdicionarModificar( $id ) )
                     {
-                        if ( $menu->Adicionar() )
+                        if ( $id == 0)
                         {
                             $menuNuevo = new Menu(' nombre ', "'$nombre'");
                             $id = $menuNuevo->getId();
-                            print_r("Se ha cargado en el modulo, Menú adicionado <|> id menú $id");
                         }
-                        else
-                        {
-                            print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
-                        }
-                    }
-                }
-                elseif ($accion == "MODIFICAR") 
-                {
-                    if ( Select::validar( $id, 'NUMERIC', null, 'ID' ) )
-                    {
-                        if ( isset( $imagen ) && $imagen['name'] != '' )
-                        {
-                            if ( Select::validar( $imagen, 'FILE', null, 'IMAGEN', 'PNG' ) )
-                            {
-                                if ( $menu->Modificar( $id ) ) {
-                                    $imagen_src=$imagen['tmp_name'];
-                                    $imagen_ds='/var/www/eagle/adminV2/img/icon/'.$icono.'.png';
-                                    if (!copy($imagen_src, $imagen_ds) ){
-                                        print_r("*** No se ha cargado la imagen correctamente ***");
-                                    }
-                                    print_r("Se ha cargado en el modulo, Menú modificado <|> id menú $id");
-                                } else {
-                                    print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if ( $menu->Modificar( $id ) )
-                            {
-                                print_r("Se ha cargado en el modulo, Menú modificado <|> id menú $id");
-                            }
-                            else
-                            {
-                                print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
-                            }
-                        }
+
+                        print_r(" Se ha cargado menú en el módulo <|> id $id ");
+                    } else {
+                        print_r( " ERROR INESPERADO, VUELVA A INTENTAR. " );
                     }
                 }   
             }
