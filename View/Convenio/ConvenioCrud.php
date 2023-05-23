@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once dirname(__FILE__) . "/../../autoload.php";
+require_once __DIR__ . "/../../autoload.php";
 //
 // Iniciamos sesion para tener las variables
 if( !isset($_SESSION["user"]) )
@@ -73,7 +73,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                         {
                             if ( $menu->Adicionar() ) {
                                 $imagen_src=$imagen['tmp_name'];
-                                $imagen_ds='/var/www/eagle/adminV2/img/icon/'.$icono.'.png';
+                                $imagen_ds = __DIR__.'/../../img/icon/'.$icono.'.png';
                                 if (!copy($imagen_src, $imagen_ds) ){
                                     print_r("*** No se ha cargado la imagen correctamente ***");
                                 }

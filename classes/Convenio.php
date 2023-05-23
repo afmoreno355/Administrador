@@ -14,10 +14,13 @@
  */
 class Convenio {
 
-    private $icono;
     private $id;
-    private $nombre;
-    private $pnombre;
+    private $area;
+    private $abogado;
+    private $tecnicoExperto;
+    private $tecnicoEconomico;
+    private $mes;
+    private $estado;
 
     // constructor multifuncional segun el tipo de elemento que recibe realiza una busqueda, funciona como constructor vacio o recibe un array.
     function __construct($campo, $valor) {
@@ -25,8 +28,15 @@ class Convenio {
             if (is_array($campo)) {
                 $this->cargarObjetoDeVector($campo);
             } else {
-                $cadenaSQL = "select icono,id,nombre,pnombre from  menu  where $campo = $valor";
-                $resultado = ConectorBD::ejecutarQuery($cadenaSQL, null);
+                $cadenaSQL = "select id,
+                                     area,
+                                     abogado,
+                                     tecnico_experto,
+                                     tecnico_economico,
+                                     mes,
+                                     estado
+                                     from convenios where $campo = $valor";
+                $resultado = ConectorBD::ejecutarQuery($cadenaSQL, ' convenios ');
                 if ( !empty($resultado) && count($resultado) > 0) {
                     $this->cargarObjetoDeVector($resultado[0]);
                 }
@@ -36,49 +46,84 @@ class Convenio {
 
     //organiza el array que recibe el constructor  pero se debe colocar la posicion de la columna en el vector 
     private function cargarObjetoDeVector($vector) {
-        $this->icono = $vector[0];
-        $this->id = $vector[1];
-        $this->nombre = $vector[2];
-        $this->pnombre = $vector[3];
+        $this->id = $vector[0];
+        $this->area = $vector[1];
+        $this->abogado = $vector[2];
+        $this->tecnicoExperto = $vector[3];
+        $this->tecnicoEconomico = $vector[4];
+        $this->mes = $vector[5];
+        $this->estado = $vector[6];
     }
 
 
-    // get and set 
-    function getIcono() {
-        return $this->icono;
-    }
-
-    function setIcono($variable) {
-        $this->icono = $variable;
-    }
+    // get and set
 
     function getId() {
         return $this->id;
     }
 
     function setId($variable) {
-        $this->id = $variable;
+        $this->id= $variable;
     }
 
-    function getNombre() {
-        return $this->nombre;
+    function getArea() {
+        return $this->area;
     }
 
-    function setNombre($variable) {
-        $this->nombre = $variable;
+    function setArea($variable) {
+        $this->id = $area;
     }
 
-    function getPnombre() {
-        return $this->pnombre;
+    function getAbogado() {
+        return $this->abogado;
     }
 
-    function setPnombre($variable) {
-        $this->pnombre = $variable;
+    function setAbogado($variable) {
+        $this->abogado = $variable;
+    }
+
+    function getTecnicoExperto() {
+        return $this->tecnicoExperto;
+    }
+
+    function setTecnicoExperto($variable) {
+        $this->tecnicoExperto = $variable;
+    }
+
+    function getTecnicoEconomico() {
+        return $this->tecnicoEconomico;
+    }
+
+    function setTecnicoEconomico($variable) {
+        $this->tecnicoEconomico = $variable;
+    }
+
+    function getMes() {
+        return $this->mes;
+    }
+
+    function setMes($variable) {
+        $this->mes = $variable;
+    }
+
+    function getEstado() {
+        return $this->estado;
+    }
+
+    function setEstado($variable) {
+        $this->estado = $variable;
     }
 
     //datos hace la consulta sql.
     public static function datos($filtro, $pagina, $limit) {
-        $cadenaSQL = "select icono,id,nombre,pnombre from  menu  ";
+        $cadenaSQL = "select id,
+                            area,
+                            abogado,
+                            tecnico_experto,
+                            tecnico_economico,
+                            mes,
+                            estado
+                            from convenios ";
         if ($filtro != null) {
             $cadenaSQL .= " where " . $filtro;
         }
@@ -86,7 +131,7 @@ class Convenio {
         if ($pagina != null && $limit != null) {
             $cadenaSQL .= " offset $pagina limit $limit ";
         }
-        return ConectorBD::ejecutarQuery($cadenaSQL, null);
+        return ConectorBD::ejecutarQuery($cadenaSQL, ' convenios ');
     }
 
     //convierte los array de datos en objetos enviando las posiciones al constructor 
@@ -101,11 +146,11 @@ class Convenio {
     }
 
     public static function count($filtro) {
-        $cadena = 'select count(*) from menu';
+        $cadena = 'select count(*) from convenios';
         if ($filtro != null) {
             $cadena.= " where " . $filtro;
         }
-        return ConectorBD::ejecutarQuery($cadena, null);
+        return ConectorBD::ejecutarQuery($cadena, ' convenios ');
     }
 
 
