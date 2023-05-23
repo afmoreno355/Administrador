@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once dirname(__FILE__) . "/../../autoload.php";
+require_once __DIR__ . "/../../autoload.php";
 //
 // Iniciamos sesion para tener las variables
 if( !isset($_SESSION["user"]) )
@@ -66,7 +66,8 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
 
                 $imagen = $_FILES['imagen'] ;
                 $cargarImagen = isset( $imagen ) && $imagen['name'] != '' ;
-                $imagen_destino = '/srv/http/www/adminV2/img/icon/'.$icono.'.png';
+                print_r(__DIR__.'/../../img/icon/'.$icono.'.png');
+                $imagen_destino = __DIR__.'/../../img/icon/'.$icono.'.png';
 
                 if ($cargarImagen)
                 {
