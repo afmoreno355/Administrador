@@ -117,7 +117,7 @@ class Contratos {
     }
 
     public function Adicionar() {
-        $sql = "insert into CONTRATOS( codigocargo,     nombrecargo , detalle  ) values(
+        $sql = "insert into CONTRATOS( codigocontratos,     nombrecontratos , detalle  ) values(
                 '$this->codigocontratos',
                 '$this->nombrecontratos',
                 '$this->detalle'
@@ -144,7 +144,7 @@ class Contratos {
     }
 
     public function modificar($id) {
-        $sql = "update CONTRATOS set id = '$this->id', codigocargo = '$this->codigocontratos', nombrecargo = '$this->nombrecontratos', detalle = '$this->detalle' where id = '$id' ";
+        $sql = "update CONTRATOS set id = '$this->id', codigocontratos = '$this->codigocontratos', nombrecontratos = '$this->nombrecontratos', detalle = '$this->detalle' where id = '$id' ";
         //print_r($sql);
         if (ConectorBD::ejecutarQuery($sql, null)) {
             return true;
