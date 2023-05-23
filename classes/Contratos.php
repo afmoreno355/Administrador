@@ -11,7 +11,7 @@
  *
  * @author Cristian Avella 18/04/2023 prueba de descarga
  */
-class Cargo {
+class Contratos {
 
     //put your code here
     private $id;
