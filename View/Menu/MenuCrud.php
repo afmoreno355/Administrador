@@ -66,7 +66,6 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
 
                 $imagen = $_FILES['imagen'] ;
                 $cargarImagen = isset( $imagen ) && $imagen['name'] != '' ;
-                print_r(__DIR__.'/../../img/icon/'.$icono.'.png');
                 $imagen_destino = __DIR__.'/../../img/icon/'.$icono.'.png';
 
                 if ($cargarImagen)
