@@ -69,33 +69,37 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
             <th>TÉCNICO ECONÓMICO</th>
             <th>MES</th>
             <th>ESTADO</th> 
-            <th>ACCIONES</th>
+            <th>ACCIÓN</th>
             <th></th>       
         </tr>
 <?PHP
     for ($i = 0; $i < count($convenio); $i++) {
-        $objet = $convenio[$i];
-        $var_mod = Http::encryptIt("id=1&llave_Primaria={$objet->getId()}&user={$_SESSION["user"]}&accion=MODIFICAR");
-        $var_eli = Http::encryptIt("id=2&llave_Primaria={$objet->getId()}&user={$_SESSION["user"]}&accion=ELIMINAR");
-        //$var_blo = Http::encryptIt("id=5&llave_Primaria={$objet->getId()}&user={$_SESSION["user"]}&accion=BLOQUEO USUARIO");
-        $var_inf = Http::encryptIt("id=3&llave_Primaria={$objet->getId()}&user={$_SESSION["user"]}&accion=INFORMACION");
+        $object = $convenio[$i];
+        $id = $object->getId();
+        $sql = "select e.estado_completado
+                        from estado_solicitudes e inner join solicitudes s
+                        on e.id_estado = s.id_estado where s.id_solicitud = $id";
+        $completado = ConectorBD::ejecutarQuery($sql, ' convenios ')[0][0];
+        if ( $completado ) {
+            $accion = "DETALLE";
+            $name = 3;
+        } else {
+            $accion = "COMPLETAR";
+            $name = 1;
+        }
+        $http = Http::encryptIt("id=1&llave_Primaria={$object->getId()}&user={$_SESSION["user"]}&accion=$accion");
 ?> 
             <tr>
-                <td><?= $objet->getId() ?></td>
-                <td> <?= $objet->getArea() ?></td>
-                <td> <?= $objet->getAbogado() ?></td>
-                <td> <?= $objet->getTecnicoExperto() ?> </td>
-                <td> <?= $objet->getTecnicoEconomico() ?> </td>
-                <td> <?= $objet->getMes() ?> </td>
-                <td> <?= $objet->getEstado() ?></td>
+                <td> <?= $object->getId() ?></td>
+                <td> <?= $object->getArea() ?></td>
+                <td> <?= $object->getAbogado() ?></td>
+                <td> <?= $object->getTecnicoExperto() ?> </td>
+                <td> <?= $object->getTecnicoEconomico() ?> </td>
+                <td> <?= $object->getMes() ?> </td>
+                <td> <?= $object->getEstado() ?></td>
                 <td>
-<input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="INFORMACION">
-<!--input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `<?= $URL ?>`)" title="Bloquear Elemento" value="BLOQUEAR"-->
-</td>
-<td>
-<input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `<?= $URL ?>`)" title="Modificar Elemento" value="MODIFICAR">
-<input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_eli ?>`, `modalVentana`, `<?= $URL ?>`)" title="Eliminar" value="ELIMINAR">
-</td>
+                    <input type="button" id="button" name="<?= $name ?>" onclick="validarDatos(``, `I=<?= $http ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="<?= $accion ?>">
+                </td>
             </tr>
 <?PHP
     }
