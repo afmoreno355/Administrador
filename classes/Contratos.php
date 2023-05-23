@@ -7,16 +7,16 @@
  */
 
 /**
- * Description of Cargo
+ * Description of Contratos
  *
- * @author Cristian Avella 18/04/2023 prueba de descarga
+ * @author Cristian Avella 23/05/2023 prueba de descarga
  */
 class Contratos {
 
     //put your code here
     private $id;
-    private $codigocargo;
-    private $nombrecargo;
+    private $codigocontratos;
+    private $nombrecontratos;
     private $detalle;
 
     function __construct($campo, $valor) {
@@ -24,7 +24,7 @@ class Contratos {
             if (is_array($campo)) {
                 $this->cargarObjetoDeVector($campo);
             } else {
-                $cadenaSQL = "select * from CARGO where $campo = $valor";
+                $cadenaSQL = "select * from contratos where $campo = $valor";
                 //print_r($cadenaSQL);
                 $respuesta = ConectorBD::ejecutarQuery($cadenaSQL, null);
                 if (count($respuesta) > 0) {
@@ -36,8 +36,8 @@ class Contratos {
 
     private function cargarObjetoDeVector($vector) {
         $this->id = $vector[0];
-        $this->codigocargo = $vector[1];
-        $this->nombrecargo = $vector[2];
+        $this->codigocontratos = $vector[1];
+        $this->nombrecontratos = $vector[2];
         $this->detalle = $vector[3];
     }
 
@@ -45,12 +45,12 @@ class Contratos {
         return $this->id;
     }
 
-    public function getCodigocargo() {
-        return $this->codigocargo;
+    public function getCodigocontratos() {
+        return $this->codigocontratos;
     }
 
-    public function getNombrecargo() {
-        return $this->nombrecargo;
+    public function getNombrecontratos() {
+        return $this->nombrecontratos;
     }
 
     public function getDetalle() {
@@ -61,12 +61,12 @@ class Contratos {
         $this->id = $id;
     }
 
-    public function setCodigocargo($codigocargo): void {
-        $this->codigocargo = $codigocargo;
+    public function setCodigocontratos($codigocontratos): void {
+        $this->codigocontratos = $codigocontratos;
     }
 
-    public function setNombrecargo($nombrecargo): void {
-        $this->nombrecargo = $nombrecargo;
+    public function setNombrecontratos($nombrecontratos): void {
+        $this->nombrecontratos = $nombrecontratos;
     }
 
     public function setDetalle($detalle): void {
@@ -78,7 +78,7 @@ class Contratos {
     }
 
     public static function datos($filtro, $pagina, $limit) {
-        $cadenaSQL = "select * from CARGO ";
+        $cadenaSQL = "select * from contratos ";
         if ($filtro != '') {
             $cadenaSQL .= " where $filtro";
         }
@@ -88,18 +88,18 @@ class Contratos {
     }
 
     public static function datosobjetos($filtro, $pagina, $limit) {
-        $datos = Cargo::datos($filtro, $pagina, $limit);
+        $datos = Contratos::datos($filtro, $pagina, $limit);
         //print_r($datos);
         $lista = array();
         for ($i = 0; $i < count($datos); $i++) {
-            $_lista = new Cargo($datos[$i], null);
+            $_lista = new Contratos($datos[$i], null);
             $lista[$i] = $_lista;
         }
         return $lista;
     }
 
     public static function count($filtro) {
-        $cadena = 'select count(*) from CARGO ';
+        $cadena = 'select count(*) from CONTRATOS ';
         if ($filtro != '') {
             $cadena .= " where $filtro";
         }
@@ -111,15 +111,15 @@ class Contratos {
         $si = self::datosobjetos(null, null, null);
         for ($i = 0; $i < count($si); $i++) {
             $obj = $si[$i];
-            $lista .= "<option value='{$obj->getId()}'> {$obj->getId()} {$obj->getNombrecargo()} </option>";
+            $lista .= "<option value='{$obj->getId()}'> {$obj->getId()} {$obj->getNombrecontratos()} </option>";
         }
         return $lista;
     }
 
     public function Adicionar() {
-        $sql = "insert into cargo( codigocargo,     nombrecargo , detalle  ) values(
-                '$this->codigocargo',
-                '$this->nombrecargo',
+        $sql = "insert into CONTRATOS( codigocargo,     nombrecargo , detalle  ) values(
+                '$this->codigocontratos',
+                '$this->nombrecontratos',
                 '$this->detalle'
              )";
         //print_r($sql);
@@ -132,7 +132,7 @@ class Contratos {
                 $historico->setTipo_historico("ADICIONAR");
                 $historico->setHistorico(strtoupper($nuevo_query));
                 $historico->setFecha("now()");
-                $historico->setTabla("CARGO");
+                $historico->setTabla("Contratos");
                 $historico->grabar();
                 return true;
             } else {
@@ -144,7 +144,7 @@ class Contratos {
     }
 
     public function modificar($id) {
-        $sql = "update cargo set id = '$this->id', codigocargo = '$this->codigocargo', nombrecargo = '$this->nombrecargo', detalle = '$this->detalle' where id = '$id' ";
+        $sql = "update CONTRATOS set id = '$this->id', codigocargo = '$this->codigocontratos', nombrecargo = '$this->nombrecontratos', detalle = '$this->detalle' where id = '$id' ";
         //print_r($sql);
         if (ConectorBD::ejecutarQuery($sql, null)) {
             return true;
@@ -155,7 +155,7 @@ class Contratos {
 
     public function borrar() {
         //console.log(":D");
-        $sql = "delete from cargo where id = '$this->id' ";
+        $sql = "delete from CONTRATOS where id = '$this->id' ";
         try {
             if (ConectorBD::ejecutarQuery($sql, null)) {
                 $nuevo_query = str_replace("'", "|", $sql);
@@ -164,7 +164,7 @@ class Contratos {
                 $historico->setTipo_historico("MODIFICAR");
                 $historico->setHistorico(strtoupper($nuevo_query));
                 $historico->setFecha("now()");
-                $historico->setTabla("CARGO");
+                $historico->setTabla("Contratos");
                 $historico->grabar();
                 return true;
             } else {
@@ -177,7 +177,7 @@ class Contratos {
     
         public function bloqueo() {
         //console.log(":D");
-        $sql = "delete from cargo where id = '$this->id' ";
+        $sql = "delete from CONTRATOS where id = '$this->id' ";
         try {
             if (ConectorBD::ejecutarQuery($sql, null)) {
                 $nuevo_query = str_replace("'", "|", $sql);
@@ -186,7 +186,7 @@ class Contratos {
                 $historico->setTipo_historico("MODIFICAR");
                 $historico->setHistorico(strtoupper($nuevo_query));
                 $historico->setFecha("now()");
-                $historico->setTabla("CARGO");
+                $historico->setTabla("Contratos");
                 $historico->grabar();
                 return true;
             } else {

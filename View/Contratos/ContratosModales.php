@@ -21,37 +21,37 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" && $_SESSION["rol"] !=
 }
 $llave_Primaria_Contructor = ( $llave_Primaria == "" ) ? "null" : "'$llave_Primaria'";
 // llamamos la clase y verificamos si ya existe info de este dato que llega
-$cargo = new Cargo(' id ', $llave_Primaria_Contructor);
+$contratos = new Contratos(' id ', $llave_Primaria_Contructor);
 if ($id == 1 && $permisos) {
     ?>
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
-                <img src="img/icon/gestionar.png"/><label class="where">Cargo DFP – Dirección de Formación Profesional</label></div>
+                <img src="img/icon/gestionar.png"/><label class="where">Contratos DFP – Dirección de Formación Profesional</label></div>
             <br><br>
-            <label style="font-size: 1em; " >Modificar o agregar cargo. </label>
-            <label style="font-size: 1em; " id="aviso" class="aviso" ><?= $cargo->getNombrecargo() ?></label> 
+            <label style="font-size: 1em; " >Modificar o agregar contratos. </label>
+            <label style="font-size: 1em; " id="aviso" class="aviso" ><?= $contratos->getNombrecontratos() ?></label> 
         </div> 
         <div>
             <fieldset>
-                <legend title='CÓDIGO DEL CARGO'>CÓDIGO DEL CARGO</legend>
-                <input type="text" value='<?= $cargo->getCodigocargo() ?>' required name='codigocargo' id="codigocargo">
+                <legend title='CÓDIGO DEL CONTRATO'>CÓDIGO DEL CONTRATO</legend>
+                <input type="text" value='<?= $contratos->getCodigocontratos() ?>' required name='codigocontratos' id="codigocontratos">
             </fieldset>
         </div>
         <div>
             <fieldset>
-                <legend title='NOMBRE DEL CARGO'>NOMBRE DEL CARGO</legend>
-                <input type="text" value='<?= $cargo->getNombrecargo() ?>' required name='nombrecargo' id="nombrecargo">
+                <legend title='NOMBRE DEL CONTRATOS'>NOMBRE DEL CONTRATOS</legend>
+                <input type="text" value='<?= $contratos->getNombrecontratos() ?>' required name='nombrecontrato' id="nombrecontrato">
             </fieldset>
         </div>
         <div>
             <fieldset>
-                <legend title='DETALLE DEL CARGO'>DETALLE DEL CARGO</legend>
-                <input type="text" value='<?= $cargo->getDetalle() ?>' required name='detalle' id="detalle">
+                <legend title='DETALLE DEL CONTRATOS'>DETALLE DEL CONTRATOS</legend>
+                <input type="text" value='<?= $contratos->getDetalle() ?>' required name='detalle' id="detalle">
             </fieldset>
         </div>
         <div>        
-            <input type="hidden" value="<?= $cargo->getId() ?>" name="id" id="id">
+            <input type="hidden" value="<?= $contratos->getId() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
             <input type='hidden' value='<?= $_SESSION['user'] ?>' name='personaGestion' id='personaGestion'>
             <input type="submit" value='<?= $accion ?>' name='accionU' id='accionU' onclick='cargar("aviso")'>
@@ -68,13 +68,13 @@ if ($id == 1 && $permisos) {
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
                 <img src="img/icon/borrar.png"/>
                 <lablel>
-                                    Se realizara la accion de "<?= $accion ?>" al cargo <?= $cargo->getNombrecargo() ?> de los módulos de adminitración de la Dirección de Formación Profesional.
+                                    Se realizara la accion de "<?= $accion ?>" al contrato <?= $contratos->getNombrecontratos() ?> de los módulos de adminitración de la Dirección de Formación Profesional.
                     </label>
             </div><br><br>
             <label style="font-size: 1em; " id="aviso"></label>  
         </div>  
         <div>        
-            <input type="hidden" value="<?= $cargo->getId() ?>" name="id" id="id">
+            <input type="hidden" value="<?= $contratos->getId() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
             <input type="submit" title="ACEPTA <?= $accion ?> EL ITEM ELEGIDO"  value="<?= $accion ?>" name="accionU" id="accionU" onclick="eliminar('aviso')">
         </div>
@@ -87,7 +87,7 @@ if ($id == 1 && $permisos) {
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
                 <img src="img/icon/analisis.png"/>
                 <lablel>
-                             Información – Cargo
+                             Información – Contratos
                     </label>
             </div><br><br>
             <label style="font-size: 1em; " id="aviso"></label>  
@@ -96,19 +96,19 @@ if ($id == 1 && $permisos) {
             <fieldset>
                 <section>
                     <h3>ID: </h3> 
-                    <p> <?= $cargo->getId() ?></p>
+                    <p> <?= $contratos->getId() ?></p>
                 </section>
                 <section>
-                    <h3>CÓDIGO CARGO: </h3> 
-                    <p> <?= $cargo->getCodigocargo() ?></p>
+                    <h3>CÓDIGO CONTRATO: </h3> 
+                    <p> <?= $contratos->getCodigocontratos() ?></p>
                 </section>
                 <section>
-                    <h3>NOMBRE CARGO: </h3> 
-                    <p> <?= $cargo->getNombrecargo () ?></p>
+                    <h3>NOMBRE CONTRATO: </h3> 
+                    <p> <?= $contratos->getNombrecontratos () ?></p>
                 </section>
                 <section>
                     <h3>DETALLE: </h3> 
-                    <p> <?= $cargo->getDetalle() ?></p>
+                    <p> <?= $contratos->getDetalle() ?></p>
                 </section>
             </fieldset>
         </div>
@@ -119,29 +119,29 @@ if ($id == 1 && $permisos) {
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
-                <label style="font-size: 1em; " >Manuales y documentos <br> CARGO DFP – Dirección de Formación Profesional<br><br></label> 
+                <label style="font-size: 1em; " >Manuales y documentos <br> CONTRATOS DFP – Dirección de Formación Profesional<br><br></label> 
             </div>
         </div>
     </div>
     <div id="conte_seccion" class="conte_seccion_icon tableIntT">
         <section>
             <div>
-                <p>MANUAL CREACIÓN Y MODIFICACIÓN DE CARGOS</p><a href="Archivos/Ejemplos/MANUAL_VIRTUAL.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
+                <p>MANUAL CREACIÓN Y MODIFICACIÓN DE CONTRATOS</p><a href="Archivos/Ejemplos/MANUAL_VIRTUAL.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
             </div>
             <div>
-                <p>MANUAL INFORMACIÓN Y BLOQUEO DE CARGOS</p><a href="Archivos/Ejemplos/MANUAL_PRESENCIAL.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
+                <p>MANUAL INFORMACIÓN Y BLOQUEO DE CONTRATOS</p><a href="Archivos/Ejemplos/MANUAL_PRESENCIAL.pdf" target="_blank"><img src="img/icon/pdf.png" class="zoom" width=70" height=70"/></a>
             </div>
         </section>
     </div>
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
-                <label style="font-size: 1em; " >Video de ayuda cargo/administrador DFP – Dirección de Formación Profesional<br><br></label> 
+                <label style="font-size: 1em; " >Video de ayuda contratos/administrador DFP – Dirección de Formación Profesional<br><br></label> 
             </div>
         </div>
         <div style="width: auto">
             <fieldset>
-                <legend title='PASO A PASO CARGO '>PASO A PASO OPCIONES CARGO</legend>
+                <legend title='PASO A PASO CONTRATOS '>PASO A PASO OPCIONES CONTRATOS</legend>
                 <iframe width="560" height="315" src="https://sena4-my.sharepoint.com/:v:/g/personal/cfavella_sena_edu_co/EdbTJGz46ldFpiyTOV9ewocB26ZeVpQUqFxcY9_-pb7WhA?e=yZDY9D" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>            
             </fieldset>
         </div>
@@ -154,13 +154,13 @@ if ($id == 1 && $permisos) {
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
                 <img src="img/icon/riesgo.png"/>
                 <lablel>
-                                    Se realizara la accion de "<?= $accion ?>" al cargo <?= $cargo->getNombrecargo() ?> de los módulos de adminitración de la Dirección de Formación Profesional.
+                                    Se realizara la accion de "<?= $accion ?>" al contrato <?= $contratos->getNombrecontratos() ?> de los módulos de adminitración de la Dirección de Formación Profesional.
                     </label>
             </div><br><br>
             <label style="font-size: 1em; " id="aviso"></label>  
         </div>  
         <div>        
-            <input type="hidden" value="<?= $cargo->getId() ?>" name="id" id="id">
+            <input type="hidden" value="<?= $contratos->getId() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
             <input type="submit" title="ACEPTA <?= $accion ?> EL ITEM ELEGIDO"  value="<?= $accion ?>" name="accionU" id="accionU" onclick="eliminar('aviso')">
         </div>

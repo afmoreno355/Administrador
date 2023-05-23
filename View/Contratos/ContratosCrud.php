@@ -37,46 +37,46 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
             $v1_A = null;
             $v2_A = null;
         }
-        $cargo = new cargo($v1_A, $v2_A);
+        $contratos = new Contratos($v1_A, $v2_A);
         //print_r($accion);
         //Print_r("+**+");
 
         if ($accion == "ADICIONAR" || $accion == "MODIFICAR") {
-            if (Select::validar($codigocargo, 'TEXT', 3, 'CODIGOCARGO') &&
-                    Select::validar($nombrecargo, 'TEXT', 200, 'NOMBRECARGO') &&
+            if (Select::validar($codigocontratos, 'TEXT', 3, 'CODIGOCONTRATOS') &&
+                    Select::validar($nombrecargos, 'TEXT', 200, 'NOMBRECONTRATOS') &&
                     Select::validar($detalle, 'TEXT', 250, 'DETALLE')
             ) {
-                $cargo->setCodigocargo(str_replace($nombreTilde, $nombreSinTilde, strtoupper($codigocargo)));
-                $cargo->setNombrecargo(str_replace($nombreTilde, $nombreSinTilde, strtoupper($nombrecargo)));
-                $cargo->setDetalle(str_replace($nombreTilde, $nombreSinTilde, strtoupper($detalle)));
+                $contratos->setCodigocontratos(str_replace($nombreTilde, $nombreSinTilde, strtoupper($codigocontratos)));
+                $contratos->setNombrecontratos(str_replace($nombreTilde, $nombreSinTilde, strtoupper($nombrecontratos)));
+                $contratos->setDetalle(str_replace($nombreTilde, $nombreSinTilde, strtoupper($detalle)));
                 if ($accion == "ADICIONAR") {
-                    if ($cargo->Adicionar()) {
-                        $id = ConectorBD::ejecutarQuery("select id from cargo where codigocargo = '{$cargo->getCodigocargo()}'; ", null)[0][0];
-                        print_r("** Se ha creado el cargo con el id: $id **");
+                    if ($contratos->Adicionar()) {
+                        $id = ConectorBD::ejecutarQuery("select id from contratos where codigocargo = '{$contratos->getCodigocontratos()}'; ", null)[0][0];
+                        print_r("** Se ha creado el contrato con el id: $id **");
                     } else {
-                        print_r("** EL CÓDIGO DEL CARGO SE ENCUENTRA YA REGISTRADO **");
+                        print_r("** EL CÓDIGO DEL CONTRATO SE ENCUENTRA YA REGISTRADO **");
                     }
                 } elseif ($accion == "MODIFICAR") {
-                    if ($cargo->modificar($id)) {
-                        print_r("** Se ha modificado el cargo con el id: $id **");
+                    if ($contratos->modificar($id)) {
+                        print_r("** Se ha modificado el contrato con el id: $id **");
                     } else {
                         print_r("** ERROR INESPERADO VUELVE A INTENTAR. **");
                     }
                 }
             }
         } elseif ($accion == "ELIMINAR") {
-            $cargo->setId($id);
-            if ($cargo->borrar()) {
-                print_r("** El cargo fue eliminado. **");
+            $contratos->setId($id);
+            if ($contratos->borrar()) {
+                print_r("** El contrato fue eliminado. **");
             } else {
-                print_r("** EL CARGO NO PUDO SER ELIMINADO, EXISTE ALGUNA PERSONA CON ESTE CARGO. **");
+                print_r("** EL CONTRATO NO PUDO SER ELIMINADO, EXISTE ALGUN REGISTRO CON ESTE CONTRATO. **");
             }
         } elseif ($accion == "BLOQUEAR"){
-            $cargo->setId($id);
-            if ($cargo->bloqueo()) {
-                print_r("** El cargo fue bloqueado. **");
+            $contratos->setId($id);
+            if ($contratos->bloqueo()) {
+                print_r("** El contrato fue bloqueado. **");
             } else {
-                print_r("** EL CARGO NO PUDO SER BLOQUEADO, EXISTE ALGUNA RESTRICCIÓN DE LA BASE DE DATOS CON ESTE CARGO. **");
+                print_r("** EL CONTRATO NO PUDO SER BLOQUEADO, EXISTE ALGUNA RESTRICCIÓN DE LA BASE DE DATOS CON ESTE CONTRATO. **");
             }
         }
     }
