@@ -63,10 +63,14 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
     <table id="tableIntD" class="tableIntT sombra tableIntTa">
         <tr>
             <th>ID</th>
-            <th>PNOMBRE</th>
-            <th>NOMBRES</th>
-            <th>ICONO</th>
-            <th></th>           
+            <th>AREA</th>
+            <th>ABOGADO</th>
+            <th>TÉCNICO EXPERTO</th>
+            <th>TÉCNICO ECONÓMICO</th>
+            <th>MES</th>
+            <th>ESTADO</th> 
+            <th>ACCIONES</th>
+            <th></th>       
         </tr>
 <?PHP
     for ($i = 0; $i < count($convenio); $i++) {
@@ -80,6 +84,9 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
                 <td><?= $objet->getId() ?></td>
                 <td> <?= $objet->getArea() ?></td>
                 <td> <?= $objet->getAbogado() ?></td>
+                <td> <?= $objet->getTecnicoExperto() ?> </td>
+                <td> <?= $objet->getTecnicoEconomico() ?> </td>
+                <td> <?= $objet->getMes() ?> </td>
                 <td> <?= $objet->getEstado() ?></td>
                 <td>
 <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="INFORMACION">
