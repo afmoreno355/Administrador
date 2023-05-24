@@ -55,9 +55,9 @@ $ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "MI USUATI
     <div style=" width : 100% ; height : 250px ; overflow: hidden ">
         <div id="buscar" class="buscar"><br>
             <div id="fecha" class="fecha"><?= $_SESSION['ultima_sesion']?></div><br>
-            <!--form method="post" id="formBuscar">
+            <form method="post" id="formBuscar">
                 <input type="serch" name="bucarPalabraClave" onkeyup="BuscarElementos()" id="bucarPalabraClave" class="bucarPalabraClave" placeholder=" BUSCADOR" />
-            </form-->     
+            </form>     
         </div>
         <img src="<?=$_SESSION['banner']?>" style=" width : 100% ; height : 800px ; margin-top: -400px ; "/>
     </div>
@@ -67,10 +67,7 @@ $ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "MI USUATI
             <div>SIS-<?= $_SESSION['MiEmpresa']?></div><br> 
             <label>MODULO :: MODULO ADMINISTRATIVO </label>  
             <div>ROL :: <?= !empty( ( $_rol = ConectorBD::ejecutarQuery( " select nombrecargo from cargo where nombrecargo <> '' and codigocargo = '{$permisos->getIdTipo()}' " , null ) ) ) ? $_rol[0][0] : 'SUPER ADMIN' ?></div><br> 
-            <label style="color: white"><b>MODULO > <?= $_SESSION['MiEmpresa']?> > <span id="sections" ></span> </b></label>
-            <form method="post" id="formBuscar">
-                <input type="serch" name="bucarPalabraClave" onkeyup="BuscarElementos()" id="bucarPalabraClave" class="bucarPalabraClave" placeholder=" BUSCADOR" />
-            </form>   
+            <label style="color: white"><b>MODULO > <?= $_SESSION['MiEmpresa']?> > <span id="sections" ></span> </b></label>  
         </div>
         <table class="tableIntT c">   
             <tr>
