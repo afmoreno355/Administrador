@@ -40,7 +40,9 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
        
     // evalua si existe bucarPalabraClave y nos crea la cadena de busqueda
     if ($bucarPalabraClave != "") {
-       $filtro.=" (id like '%". strtoupper($bucarPalabraClave)."%' or  area like '%". strtoupper($bucarPalabraClave)."%' )";
+       $filtro.=" (id = ". strtoupper($bucarPalabraClave)." or
+                   nombre like '%". strtoupper($bucarPalabraClave)."%' or
+                   mes like '%". strtoupper($bucarPalabraClave)."%')";
     }
 
         // obj para llenar las tablas
@@ -104,7 +106,7 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
 <?PHP
     }
 ?>
-        <input type="hidden" id="donde" value="Menu">
+        <input type="hidden" id="donde" value="Convenio">
         <input type="hidden" id="id_espe" value="">
         <input type="hidden" id="numeroPaginas" value="<?= $numeroPaginas ?>">
         <input type="hidden" id="sedeGestion" value="">

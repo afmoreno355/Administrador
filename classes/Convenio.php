@@ -98,14 +98,6 @@ class Convenio {
         $this->tecnicoExperto = $variable;
     }
 
-    function getTecnicoEconomico() {
-        return $this->tecnicoEconomico;
-    }
-
-    function setTecnicoEconomico($variable) {
-        $this->tecnicoEconomico = $variable;
-    }
-
     function getMes() {
         return $this->mes;
     }
