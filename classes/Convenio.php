@@ -15,10 +15,10 @@
 class Convenio {
 
     private $id;
+    private $nombre;
     private $area;
     private $abogado;
     private $tecnicoExperto;
-    private $tecnicoEconomico;
     private $mes;
     private $estado;
 
@@ -29,13 +29,13 @@ class Convenio {
                 $this->cargarObjetoDeVector($campo);
             } else {
                 $cadenaSQL = "select id,
+                                     nombre,
                                      area,
                                      abogado,
                                      tecnico_experto,
-                                     tecnico_economico,
                                      mes,
                                      estado
-                                     from convenios where $campo = $valor";
+                              from convenios where $campo = $valor";
                 $resultado = ConectorBD::ejecutarQuery($cadenaSQL, ' convenios ');
                 if ( !empty($resultado) && count($resultado) > 0) {
                     $this->cargarObjetoDeVector($resultado[0]);
@@ -47,10 +47,10 @@ class Convenio {
     //organiza el array que recibe el constructor  pero se debe colocar la posicion de la columna en el vector 
     private function cargarObjetoDeVector($vector) {
         $this->id = $vector[0];
-        $this->area = $vector[1];
-        $this->abogado = $vector[2];
-        $this->tecnicoExperto = $vector[3];
-        $this->tecnicoEconomico = $vector[4];
+        $this->nombre = $vector[1];
+        $this->area = $vector[2];
+        $this->abogado = $vector[3];
+        $this->tecnicoExperto = $vector[4];
         $this->mes = $vector[5];
         $this->estado = $vector[6];
     }
@@ -64,6 +64,14 @@ class Convenio {
 
     function setId($variable) {
         $this->id= $variable;
+    }
+
+    function getNombre() {
+        return $this->nombre;
+    }
+
+    function setNombre($variable) {
+        $this->nombre= $variable;
     }
 
     function getArea() {
@@ -117,13 +125,13 @@ class Convenio {
     //datos hace la consulta sql.
     public static function datos($filtro, $pagina, $limit) {
         $cadenaSQL = "select id,
-                            area,
-                            abogado,
-                            tecnico_experto,
-                            tecnico_economico,
-                            mes,
-                            estado
-                            from convenios ";
+                             nombre,
+                             area,
+                             abogado,
+                             tecnico_experto,
+                             mes,
+                             estado
+                      from convenios ";
         if ($filtro != null) {
             $cadenaSQL .= " where " . $filtro;
         }
@@ -155,11 +163,20 @@ class Convenio {
 
 
     public function Adicionar() {
-        $sql="insert into menu (nombre, pnombre, icono) values (
-                '$this->nombre',
-                '$this->pnombre',
-                '$this->icono'
-             )";
+        $sqlSolicitud="insert into solicitudes 
+                                    (area_competente,
+                                     abogado,
+                                     tecnico_experto,
+                                     tecnico_economico,
+                                     mes,
+                                     estado)
+                           values ('$this->id',
+                                   '$this->area',
+                                   '$this->abogado',
+                                   '$this->tecnico_experto',
+                                   '$this->tecnico_economico',
+                                   '$this->mes',
+                                   '$this->estado')";
         //print_r($sql);
         if (ConectorBD::ejecutarQuery($sql, null)) {
             //Historico de las acciones en el sistemas de informacion

@@ -50,23 +50,23 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
     // ecrypt codifica lo que enviamos por javascript
 
     // Encripta la información para enviarla
-    $var_add = Http::encryptIt("id=1&llave_Primaria=&user={$_SESSION["user"]}&accion=ADICIONAR");
-    $var_ayu = Http::encryptIt("id=4&llave_Primaria=&user={$_SESSION["user"]}&accion=AYUDA");
+    $http_add = Http::encryptIt("id=1&llave_Primaria=&user={$_SESSION["user"]}&accion=ADICIONAR");
+    $http_ayu = Http::encryptIt("id=4&llave_Primaria=&user={$_SESSION["user"]}&accion=AYUDA");
     
 ?> 
 <!-- Código para los botones-->
     <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
-<button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>MENU</button>
-<button type='button' id='button' class="ele" title='Ayuda'  onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
+<button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $http_add ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>CONVENIO</button>
+<button type='button' id='button' class="ele" title='Ayuda'  onclick="validarDatos(``, `I=<?= $http_ayu ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MÓDULO</button>
 </div>
     <!-- Inicio de html tablas -->
     <table id="tableIntD" class="tableIntT sombra tableIntTa">
         <tr>
             <th>ID</th>
+            <th>NOMBRE</th>
             <th>AREA</th>
             <th>ABOGADO</th>
             <th>TÉCNICO EXPERTO</th>
-            <th>TÉCNICO ECONÓMICO</th>
             <th>MES</th>
             <th>ESTADO</th> 
             <th>ACCIÓN</th>
@@ -87,14 +87,14 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
             $accion = "COMPLETAR";
             $name = 1;
         }
-        $http = Http::encryptIt("id=1&llave_Primaria={$object->getId()}&user={$_SESSION["user"]}&accion=$accion");
+        $http = Http::encryptIt("id=2&llave_Primaria={$object->getId()}&user={$_SESSION["user"]}&accion=$accion");
 ?> 
             <tr>
                 <td> <?= $object->getId() ?></td>
+                <td> <?= $object->getNombre() ?></td>
                 <td> <?= $object->getArea() ?></td>
                 <td> <?= $object->getAbogado() ?></td>
                 <td> <?= $object->getTecnicoExperto() ?> </td>
-                <td> <?= $object->getTecnicoEconomico() ?> </td>
                 <td> <?= $object->getMes() ?> </td>
                 <td> <?= $object->getEstado() ?></td>
                 <td>
