@@ -166,9 +166,9 @@ class Menu {
     }
 
     public function CopiarImagen() {
+
         $cargarImagen = isset( $this->imagen ) && $this->imagen['name'] != '';
-        $destino = __DIR__.'/../img/icon/'.$this->icono.'.png';
-        print_r($this->imagen['name']);
+        $destino = __DIR__.'/../img/icon/'.$this->icono.'.png'; // La carpeta debe tener permisos
 
         if ( $cargarImagen ) {
             if (
