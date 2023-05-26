@@ -18,6 +18,7 @@ class Menu {
     private $id;
     private $nombre;
     private $pnombre;
+    private $imagen;
 
     // constructor multifuncional segun el tipo de elemento que recibe realiza una busqueda, funciona como constructor vacio o recibe un array.
     function __construct($campo, $valor) {
@@ -76,6 +77,14 @@ class Menu {
         $this->pnombre = $variable;
     }
 
+    function getImagen() {
+        return $this->imagen;
+    }
+
+    function setImagen($variable) {
+        $this->imagen = $variable;
+    }
+
     //datos hace la consulta sql.
     public static function datos($filtro, $pagina, $limit) {
         $cadenaSQL = "select icono,id,nombre,pnombre from  menu  ";
@@ -108,7 +117,6 @@ class Menu {
         return ConectorBD::ejecutarQuery($cadena, null);
     }
 
-
     public function Adicionar() {
         $sql="insert into menu (nombre, pnombre, icono) values (
                 '$this->nombre',
@@ -126,6 +134,7 @@ class Menu {
             $historico->setFecha("now()");
             $historico->setTabla("MENU");
             $historico->grabar();
+            $this->CopiarImagen();
             return true;
         } else {
             return false;
@@ -137,7 +146,7 @@ class Menu {
              nombre = '$this->nombre',
              pnombre = '$this->pnombre',
              icono = '$this->icono'
-               where id = '$id' ";
+             where id = '$id' ";
         //print_r($sql);
         if (ConectorBD::ejecutarQuery($sql, null)) {
             //Historico de las acciones en el sistemas de informacion
@@ -149,9 +158,32 @@ class Menu {
             $historico->setFecha("now()");
             $historico->setTabla("MENU");
             $historico->grabar();
+            $this->CopiarImagen();
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function CopiarImagen() {
+        $cargarImagen = isset( $this->imagen ) && $this->imagen['name'] != '';
+        $destino = __DIR__.'/../img/icon/'.$this->icono.'.png';
+        print_r($this->imagen['name']);
+
+        if ( $cargarImagen ) {
+            if (
+                Select::validar( $this->imagen, 'FILE', null, 'IMAGEN', 'PNG' ) &&
+                copy($this->imagen['tmp_name'], $destino)
+               )
+               {
+                $historico = new Historico(null, null);
+                $historico->setIdentificacion($_SESSION["user"]);
+                $historico->setTipo_historico("AGREGAR_IMAGEN_ÍCONO_MENÚ");
+                $historico->setFecha("now()");
+                $historico->grabar();
+               } else {
+                print_r(" No se ha cargado la imagen correctamente. ");
+               }
         }
     }
 
