@@ -12,7 +12,7 @@ require_once dirname(__FILE__) . "/../../autoload.php";
 date_default_timezone_set('America/Bogota');
 // bucarPalabraClave palabra clave que se busca asociada a ajax
 $bucarPalabraClave = "";
-$URL = "View/Municipio/MunicipioModales.php" ;
+$URL = "View/Municipio/MunicipioModales.php";
 $numeroPaginas = 0 ;
 $id_espe  = "" ;
 $filtro  = " departamento.id = municipio.id_departamento and municipio.id not in (0,1) " ;
@@ -46,13 +46,16 @@ if ( $ingreso === false && $permisos->getIdTipo() !== "SA" ) {
     // numero de paginas para la paginacion
     $numeroPaginas = ceil(Municipio::count($filtro)[0][0] / 20);
     $var_add = Http::encryptIt("id=1&llave_Primaria=&user={$_SESSION["user"]}&accion=ADICIONAR");
-    $var_pla = Http::encryptIt("id=3&llave_Primaria=&user={$_SESSION["user"]}&accion=SUBIR ARCHIVO");
-    $var_ayu = Http::encryptIt("id=6&llave_Primaria=&user={$_SESSION["user"]}&accion=AYUDA");
+    $var_des = Http::encryptIt("id=6&llave_Primaria=&user={$_SESSION["user"]}&accion=DESCARGAR ARCHIVO");
+    $var_car = Http::encryptIt("id=3&llave_Primaria=&user={$_SESSION["user"]}&accion=CARGAR ARCHIVO");
+    $var_ayu = Http::encryptIt("id=7&llave_Primaria=&user={$_SESSION["user"]}&accion=AYUDA");
 ?> 
     <!-- Inicio de html tablas -->
     <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
         <button type='button' id='button' class="ele" title='Adicionar municipio' title="Adicionar" value="ADICIONAR" onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>MUNICIPIO</button>
-        <button type='button' id='button' class="ele" title='Ayuda del sistema' onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
+        <button type='button' id='button' class="ele" title='Archivo plano' onclick="reporte(`` , `I=<?= $var_des ?>`, `formDetalle`, `<?= $URL ?>`, event, 'ele' , 'MUNICIPIOS EN SISTEMA')"><img src="img/icon/excel.png"/> DESCARGAR<br>MUNICIPIOS</button>
+        <button type='button' id='button' class="ele" title='Archivo plano' onclick="validarDatos(``, `I=<?= $var_car ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/excel.png"/> CARGAR<br>MUNICIPIO</button>      
+        <button type='button' id='button' class="ele" title='Ayuda del sistema' onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MÓDULO</button>
     </div>  
          <table id="tableIntD" class="tableIntT sombra tableIntTa">
             <tr>
@@ -60,11 +63,11 @@ if ( $ingreso === false && $permisos->getIdTipo() !== "SA" ) {
                 <th>NOMBRE DEL MUNICIPIO</th>
                 <th>ID REGIONAL</th>
                 <th>NOMBRE REGIONAL</th>
-                <th class="noDisplay">CODIGO DEL MUNICIPIO</th>
+                <th class="noDisplay">CÓDIGO DEL MUNICIPIO</th>
                 <th class="noDisplay">DANE</th>
-                <th>CODIGO REGIONAL MUNICIPIO</th>
+                <th>CÓDIGO REGIONAL MUNICIPIO</th>
                 <th>ESTADO</th>
-                <th colspan="2" >ACCION</th> 
+                <th colspan="2" >ACCIÓN</th> 
             </tr> 
 <?PHP            
     for ($j = 0; $j < count($municipio); $j++) 
@@ -96,7 +99,7 @@ if ( $ingreso === false && $permisos->getIdTipo() !== "SA" ) {
                 <td class='noDisplay' ><?= $objetos->getCod_dpto_mpio() ?></td>
                 <td><?= $_estado ?></td>
                 <td>
-                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="INFORMACION">
+                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="INFORMACIÓN">
                     <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="BLOQUEAR">
                 </td>
                 <td>

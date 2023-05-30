@@ -52,8 +52,8 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
             if (
                  Select::validar( $id, 'NUMERIC', null, 'ID') &&
                  Select::validar( $nombre , 'TEXT' , 250 , 'NOMBRE' ) &&
-                 Select::validar( $pnombre , 'TEXT' , 250 , 'PNOMBRE' ) &&
-                 Select::validar( $icono, 'TEXT' , 250 , 'ÍCONO' )
+                 Select::validar( $pnombre , 'TEXT' , 250 , 'RUTA' ) &&
+                 Select::validar( $_FILES['imagen'], 'FILE', null, 'IMAGEN', 'PNG' )
                 )
             {
                 $menu->setNombre( $nombre ) ;

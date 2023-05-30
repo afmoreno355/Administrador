@@ -63,7 +63,14 @@ function espacioObligatorio(ID)
     document.getElementById('aviso1').innerHTML="***ESPACIO SIN MARCAR "+ID+"***";
 }
 
-  
+function validarDatos(id, postcad, donde, accion, eve = null, tab = null){
+    if(id !== null && postcad !== null && donde !== null && accion !== null ){
+        idexistentesReCa(id, postcad, donde, accion, eve, tab);
+    } 
+    document.getElementById("modales").style.transform='translateX(0%)';      
+    document.getElementById("modales").style.transition="1s"; 
+    document.getElementById("formularioDiv").style.width=""; 
+}  
 
 window.addEventListener('keydown', function(ev) {            
     if (ev.keyCode==27) {

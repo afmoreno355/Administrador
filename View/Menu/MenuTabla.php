@@ -67,7 +67,7 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
             <th>PNOMBRE</th>
             <th>NOMBRES</th>
             <th>ICONO</th>
-            <th></th>           
+            <th colspan="2">ACCIÓN</th>           
         </tr>
 <?PHP
     for ($i = 0; $i < count($menu); $i++) {
@@ -83,13 +83,13 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
                 <td> <?= $objet->getPNombre() ?></td>
                 <td> <?= $objet->getIcono() ?></td>
                 <td>
-<input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="INFORMACION">
-<!--input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `<?= $URL ?>`)" title="Bloquear Elemento" value="BLOQUEAR"-->
-</td>
-<td>
-<input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `<?= $URL ?>`)" title="Modificar Elemento" value="MODIFICAR">
-<input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_eli ?>`, `modalVentana`, `<?= $URL ?>`)" title="Eliminar" value="ELIMINAR">
-</td>
+                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="INFORMACION">
+                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `<?= $URL ?>`)" title="Bloquear Elemento" value="BLOQUEAR">
+                </td>
+                <td>
+                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `<?= $URL ?>`)" title="Modificar Elemento" value="MODIFICAR">
+                    <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_eli ?>`, `modalVentana`, `<?= $URL ?>`)" title="Eliminar" value="ELIMINAR">
+                </td>
             </tr>
 <?PHP
     }

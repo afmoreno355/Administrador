@@ -26,9 +26,14 @@ class Http {
         $menu[] = array('URL' => "inicio#REGIONAL", 'DONDE' => 'View/Regional/RegionalTabla.php', 'NOMBRE' => 'REGIONAL');
         $menu[] = array('URL' => "inicio#USUARIOS", 'DONDE' => 'View/Persona/PersonaTabla.php', 'NOMBRE' => 'USUARIOS');
         $menu[] = array('URL' => "inicio#CARGO", 'DONDE' => 'View/Cargo/CargoTabla.php', 'NOMBRE' => 'CARGO');
+<<<<<<< HEAD
         $menu[] = array('URL' => "inicio#MENU", 'DONDE' => 'View/Menu/MenuTabla.php', 'NOMBRE' => 'MENU');
         $menu[] = array('URL' => "inicio#MUNICIPIO", 'DONDE' => 'View/Municipio/MunicipioTabla.php', 'NOMBRE' => 'MUNICIPIO');
         $menu[] = array('URL' => "inicio#CONVENIO", 'DONDE' => 'View/Convenio/ConvenioTabla.php', 'NOMBRE' => 'CONVENIO');
+=======
+        $menu[] = array('URL' => "inicio#MENU", 'DONDE' => 'View/Menu/MenuTabla', 'NOMBRE' => 'MENU');
+        $menu[] = array('URL' => "inicio#MUNICIPIO", 'DONDE' => 'View/Municipio/MunicipioTabla', 'NOMBRE' => 'MUNICIPIO');
+>>>>>>> master
         return json_encode($menu);  
     }
 

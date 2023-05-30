@@ -18,7 +18,7 @@
                 <tr>
                     
                     <td>
-                        ¿Esta seguro de Cerrar Sesión'?<br><br>
+                        ¿Esta seguro de Cerrar Sesión?<br><br>
                     </td>
                 </tr>
                               

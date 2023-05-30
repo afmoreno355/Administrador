@@ -24,6 +24,7 @@ class Programa {
     private $modalidad;
     private $fic;
     private $activo;
+    private $identificacion;
     
 
     function __construct($campo, $valor) {
@@ -33,7 +34,7 @@ class Programa {
             }else{
                 $cadenaSQL="select * from programas where $campo = $valor ";
                 //print_r($cadenaSQL);
-                $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, null);
+                $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin');
                 if ( count($respuesta) > 0 )
                 {
                     $this->objeto($respuesta[0]);
@@ -54,8 +55,17 @@ class Programa {
         $this->modalidad=$vector[8];
         $this->fic=$vector[9];
         $this->activo=$vector[10];
+        $this->identificacion=$vector[11];
     }
     
+    public function getIdentificacion() {
+        return $this->identificacion;
+    }
+
+    public function setIdentificacion($identificacion): void {
+        $this->identificacion = $identificacion;
+    }
+
     public function getId_programa() {
         return $this->id_programa;
     }
@@ -151,20 +161,20 @@ class Programa {
         {
             $cadenaSQL .= " where $filtro ";
         }
-        $cadenaSQL .= " order by id_programa desc ";
+        $cadenaSQL .= " order by id_programa asc ";
         if ($pagina != null && $limit != null) 
         {
             $cadenaSQL .= " offset $pagina limit $limit ";
         }
         //print_r($cadenaSQL);
-        return ConectorBD::ejecutarQuery( $cadenaSQL, null );
+        return ConectorBD::ejecutarQuery( $cadenaSQL, 'eagle_admin' );
     }
     
      public static function count($filtro)
     {
         $cadena='select count(*) from programas where' . $filtro ; 
         //print_r($cadena);
-        return ConectorBD::ejecutarQuery($cadena, null);        
+        return ConectorBD::ejecutarQuery($cadena, 'eagle_admin');        
     }
 
     //convierte los array de datos en objetos enviando las posiciones al constructor 
@@ -177,23 +187,11 @@ class Programa {
         }
         return $listas;
     }
-
-    public static function listaopciones() 
-    {
-        $lista = "";
-        $si = self::datosobjetos(null, null, null);
-        for ($i = 0; $i < count($si); $i++) 
-        {
-            $obj = $si[$i];
-            $lista .= "<option value='{$obj->getId_programa()}'> {$obj->getId_programa()} {$obj->getNombre_programa()} </option>";
-        }
-        return $lista;
-    }
     
     public function Adicionar() {
         $sql="insert into programas( id_programa ,     nombre_programa,     nivel_formacion ,    
                                     duracion ,     red_conocimiento ,     linea_tecnologica ,     
-                                    tipo_esp ,     segmento ,     modalidad,     fic,     activo  ) values(
+                                    tipo_esp ,     segmento ,     modalidad,     fic,     activo , identificacion  ) values(
                 '$this->id_programa',
                 '$this->nombre_programa',
                 '$this->nivel_formacion',
@@ -204,10 +202,11 @@ class Programa {
                 '$this->segmento',
                 '$this->modalidad',
                 '$this->fic',
-                '$this->activo'
+                '$this->activo',
+                '$this->identificacion'
              )";
         //print_r($sql);
-    if (ConectorBD::ejecutarQuery($sql, null)) {
+    if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
             //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "|", $sql);
             $historico = new Historico(null, null);
@@ -234,10 +233,12 @@ class Programa {
               , id_programa = '$this->id_programa'
               , modalidad = '$this->modalidad'
               , fic = '$this->fic'
+              , tipo_esp = '$this->tipo_esp'
               , activo = '$this->activo'
+              , identificacion = '$this->identificacion'
                where id_programa = '$id' ";
         //print_r($sql);
-        if (ConectorBD::ejecutarQuery($sql, null)) {
+        if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
             //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "|", $sql);
             $historico = new Historico(null, null);
@@ -253,9 +254,28 @@ class Programa {
         }
     }
     
+    public function ActivarDesactivar() {
+        $sql="update programas set activo = '$this->activo' where id_programa = '$this->id_programa' ";
+        //print_r($sql);
+        if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
+            //Historico de las acciones en el sistemas de informacion
+            $nuevo_query = str_replace("'", "|", $sql);
+            $historico = new Historico(null, null);
+            $historico->setIdentificacion($_SESSION["user"]);
+            $historico->setTipo_historico("BLOQUEAR");
+            $historico->setHistorico(strtoupper($nuevo_query));
+            $historico->setFecha("now()");
+            $historico->setTabla("PROGRAMA");
+            $historico->grabar();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     public function Borrar() {
         $sql="delete from programas where id_programa = '$this->id_programa' ";
-        if (ConectorBD::ejecutarQuery($sql, null)) {
+        if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
             //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "|", $sql);
             $historico = new Historico(null, null);

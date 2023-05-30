@@ -150,11 +150,11 @@ function reloadInfo( respuesta , form = null )
             if (document.getElementById(respuesta).innerHTML !== '')
             {
                 clearInterval(ids);
-                if (document.getElementById(respuesta).innerHTML.includes("Se ha cargado en el modulo"))
+                if (document.getElementById(respuesta).innerHTML.includes("Se ha cargado en el módulo"))
                 {
                     if( form !== null )
                     {
-                        form.reset();
+                        //form.reset();
                     }
                     
                     reload();

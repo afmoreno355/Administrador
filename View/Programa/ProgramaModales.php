@@ -46,15 +46,15 @@ if ($id == 1 && $permisos)
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
-                <img src="img/icon/gestionar.png"/><label class="where">Modulo Indicativa – Dirección de Formación Profesional</label></div>
+                <img src="img/icon/gestionar.png"/><label class="where">Módulo Indicativa – Dirección de Formación Profesional</label></div>
             <br><br>
-            <label style="font-size: 1em; " >Tabla Programas Virtual</label>  
+            <label style="font-size: 1em; " >Tabla Programas</label>  
             <label style="font-size: 1em; " id="aviso" class="aviso" ></label> 
             <label style="font-size: 1em; " id="aviso2" class="aviso" ><?= $programa->getId_programa() ?></label> 
         </div> 
         <div>
             <fieldset>
-                <legend title='CODIGO DE PROGRAMA'>CODIGO DE PROGRAMA</legend>
+                <legend title='CÓDIGO DE PROGRAMA'>CÓDIGO DE PROGRAMA</legend>
                 <input type="number" value='<?= $programa->getId_programa() ?>' required name='id_programa' id="id_programa">
             </fieldset>
         </div>
@@ -66,7 +66,7 @@ if ($id == 1 && $permisos)
         </div>
         <div>
             <fieldset>
-                <legend title='NIVEL DE FORMACION'>NIVEL DE FORMACION</legend>
+                <legend title='NIVEL DE FORMACIÓN'>NIVEL DE FORMACIÓN</legend>
                 <select  required name='nivel_formacion' id="nivel_formacion">
                     <?= Select::listaopciones( 2 , $programa->getNivel_formacion() , "select nivel_formacion , nivel_formacion from programas group by nivel_formacion ;" )?>
                 </select>
@@ -74,7 +74,7 @@ if ($id == 1 && $permisos)
         </div>
         <div>
             <fieldset>
-                <legend title='DURACION DEL PROGRAMA'>DURACION DEL PROGRAMA</legend>
+                <legend title='DURACIÓN DEL PROGRAMA'>DURACIÓN DEL PROGRAMA</legend>
                 <input type="number" value='<?= $programa->getDuracion() ?>' required name='duracion' id="duracion">
             </fieldset>
         </div>
@@ -83,13 +83,13 @@ if ($id == 1 && $permisos)
                 <legend title='RED DE CONOCIMIENTO'>RED DE CONOCIMIENTO</legend>
                 <input list="red_conocimientos" value='<?= $programa->getRed_conocimiento() ?>' required name='red_conocimiento' id="red_conocimiento">
                 <datalist id="red_conocimientos">
-                    <?= Select::listaopciones( 9 , $programa->getRed_conocimiento() , "select id_red , (id_red , red) from red_conocimiento ;" )?>
+                    <?= Select::listaopciones( 9 , $programa->getRed_conocimiento() , "select id_red , concat(id_red , ' ' , red) from red_conocimiento ;" )?>
                 </datalist>
             </fieldset>
         </div>
         <div>
             <fieldset>
-                <legend title='LINEA TECNOLOGICA'>LINEA TECNOLOGICA</legend>
+                <legend title='LINEA TECNOLÓGICA'>LINEA TECNOLÓGICA</legend>
                 <select required name='linea_tecnologica' id="linea_tecnologica">
                     <?= Select::listaopciones( 9 , $programa->getLinea_tecnologica() , "select id , ( id , nombre )  from  linea_tecnologica ;" )?>
                 </select>
@@ -103,36 +103,22 @@ if ($id == 1 && $permisos)
                 </select>
             </fieldset>
         </div>
-<?PHP 
-         if( $permisos->getIdTipo( )== 'AV' )
-         {
-?>
-            <input type="hidden" value="no"required name='fic' id='fic'>
-            <input type="hidden" value="VIRTUAL" required name='modalidad' id='modalidad'>
-<?PHP 
-         }
-         else
-         {
-?>
-            <div>
-                <fieldset>
-                    <legend title='MODALIDAD'>MODALIDAD</legend>
-                    <select required name='modalidad' id='modalidad'>
-                        <?= Select::listaopciones( 2 , $programa->getModalidad() , "select modalidad , modalidad from programas where modalidad is not null and modalidad <> '' group by modalidad ;" )?>
-                    </select>
-                </fieldset>
-            </div>
-            <div>
-                <fieldset>
-                    <legend title='FIC'>FIC</legend>
-                    <select required name='fic' id='fic'>
-                        <?= Select::listaopciones( 10 , $programa->getFic()  )?>
-                    </select>
-                </fieldset>
-            </div>
-<?PHP   
-         }
-?>
+        <div>
+            <fieldset>
+                <legend title='MODALIDAD'>MODALIDAD</legend>
+                <select required name='modalidad' id='modalidad'>
+                    <?= Select::listaopciones( 2 , $programa->getModalidad() , "select modalidad , modalidad from programas where modalidad is not null and modalidad <> '' group by modalidad ;" )?>
+                </select>
+            </fieldset>
+        </div>
+        <div>
+            <fieldset>
+                <legend title='FIC'>FIC</legend>
+                <select required name='fic' id='fic'>
+                    <?= Select::listaopciones( 10 , $programa->getFic()  )?>
+                </select>
+            </fieldset>
+        </div>
         <div>
             <fieldset>
                 <legend title='ACTIVO'>ACTIVO</legend>
@@ -159,7 +145,7 @@ if ($id == 2 && $permisos)
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
                 <img src="<?PHP if($accion == 'ELIMINAR'){  print_r('img/icon/borrar.png'); } else { print_r('img/icon/estado.png'); }?>"/>
                 <lablel>
-                    Se realizara la accion "<?= $accion ?>" a Indicativa Virtual <?=$llave_Primaria?> cargado en el modulo de la Dirección de Formación Profesional.
+                    Se realizará la acción "<?= $accion ?>" a Indicativa <?=$llave_Primaria?> cargado en el módulo de la Dirección de Formación Profesional.
                 </label>
             </div><br><br>
             <label style="font-size: 1em; " id="aviso"></label>  
@@ -178,9 +164,9 @@ elseif ($id == 3 && $permisos)
 <div class="carga_Documento">
          <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
-                <img src="img/icon/excel.png"/><label class="where">Módulo Indicativa Virtual Centros de Formación –  Dirección de Formación Profesional</div>
+                <img src="img/icon/excel.png"/><label class="where">Módulo Indicativa Centros de Formación –  Dirección de Formación Profesional</div>
             </label><br><br>
-            <label style="font-size: 1em; " >Archivos Planos para carga de programas virtual</label>   
+            <label style="font-size: 1em; " >Archivos Planos para carga de programas </label>   
             <label style="font-size: 1em; " id="aviso"></label>   
         </div>
         <div>
@@ -207,7 +193,7 @@ elseif ($id == 4 && $permisos)
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
                 <img src="img/icon/estado.png"/>
                 <lablel>
-                    Indicativa Programas Virtual – Dirección de Formación Profesional
+                    Indicativa Programas – Dirección de Formación Profesional
                 </label>
             </div><br><br>
             <label style="font-size: 1em; " id="aviso"></label>  
@@ -215,7 +201,7 @@ elseif ($id == 4 && $permisos)
         <div class="nuevaseccion" >
             <fieldset>
                 <section>
-                    <h3>CODIGO DEL PROGRAMA: </h3> 
+                    <h3>CÓDIGO DEL PROGRAMA: </h3> 
                     <p> <?= $programa->getId_programa() ?></p>
                 </section>
                 <section>
@@ -223,7 +209,7 @@ elseif ($id == 4 && $permisos)
                     <p> <?= $programa->getNombre_programa() ?></p>
                 </section>
                 <section>
-                    <h3>DURACION PROGRAMA: </h3> 
+                    <h3>DURACIÓN PROGRAMA: </h3> 
                     <p> <?= $programa->getDuracion() ?></p>
                 </section>                
                 <section>
@@ -249,11 +235,19 @@ elseif ($id == 5 && $permisos)
 <div class="carga_Documento">
          <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
-                <img src="img/icon/excel.png"/><label class="where">Módulo Indicativa Virtual Centros de Formación –  Dirección de Formación Profesional</div>
+                <img src="img/icon/excel.png"/><label class="where">Módulo Indicativa Centros de Formación –  Dirección de Formación Profesional</div>
             </label><br><br>
-            <label style="font-size: 1em; " >Bloqueo de programa virtual</label>   
+            <label style="font-size: 1em; " >Bloqueo de programa</label>   
             <label style="font-size: 1em; " id="aviso"></label>   
-        </div>         
+        </div>   
+        <div>   
+            <fieldset>
+                <legend title='ACTIVO'>ACTIVO</legend>
+                <select required name='activo' id='activo'>
+                    <?= Select::listaopciones( 10 , $programa->getActivo()  )?>
+                </select>
+            </fieldset>
+        </div>   
         <div>        
             <input type="hidden" value="<?= $programa->getId_programa() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
@@ -263,4 +257,68 @@ elseif ($id == 5 && $permisos)
         </div>
 </div>   
 <?PHP 
+}
+elseif ($id == 6 && $permisos)
+{
+    if  ( !empty($resultadosReporte=ConectorBD::ejecutarQuery( 
+                "
+                    SELECT 
+                        id_programa  ,     
+                        nombre_programa ,                      
+                        nivel_formacion ,
+                        t1.red ,                                         
+                        t2.nombre ,   
+                        segmento , 
+                        duracion , 
+                        case
+                            when  tipo_esp = 'T' then 'TITULADA'
+                            when  tipo_esp = 'C' then 'COMPLEMENTARIA'                                        
+                        else
+                            ''
+                        end 
+                            as 
+                                tipo_esp , 
+                            modalidad ,                                  
+                        lower(fic) ,                                           
+                        lower(activo)
+                    from
+                        programas,
+                        dblink('dbname=registro port=5432 user=felipe password=utilizar' , 
+                               'select  id_red , red from red_conocimiento') 
+                            as 
+                                t1  ( id_red int , red  text ),	
+                         dblink('dbname=registro port=5432 user=felipe password=utilizar' , 
+                               'select  id , nombre from linea_tecnologica') 
+                            as 
+                                t2  ( id int , nombre  text )
+                    where
+                            programas.red_conocimiento = t1.id_red
+                        and   
+                            programas.linea_tecnologica = t2.id
+                    order by
+                        tipo_esp
+                    desc    
+                    ;         
+                " , 
+                'eagle_admin' )
+               )
+        )
+    {    
+        $lista = "CODIGO PROGRAMA ; NOMBRE DEL PROGRAMA ; NIVEL DE FORMACION ; RED DE CONOCIMIENTO ; LINEA TECNOLOGICA ; SEGMENTO ; DURACION ; TIPO DE FORMACION ; MODALIDAD ; FIC ; PROGRAMA ACTIVO " ; 
+        for ($j = 0; $j < count($resultadosReporte); $j++) 
+        {
+            $lista .= "\n{$resultadosReporte[$j][0]};" ;
+            $lista .= str_replace(['&Aacute;','&Eacute;','&Iacute;','&Oacute;','&Uacute;','Á','É','Í','Ó','Ú','Ñ'], ['A','E','I','O','U','A','E','I','O','U','N'], $resultadosReporte[$j][1] ) . ";" ; 
+            $lista .= "{$resultadosReporte[$j][2]};" ;
+            $lista .= "{$resultadosReporte[$j][3]};" ;
+            $lista .= "{$resultadosReporte[$j][4]};" ;
+            $lista .= "{$resultadosReporte[$j][5]};" ;
+            $lista .= "{$resultadosReporte[$j][6]};" ;
+            $lista .= "{$resultadosReporte[$j][7]};" ;
+            $lista .= "{$resultadosReporte[$j][8]};" ;
+            $lista .= "{$resultadosReporte[$j][9]};" ;
+            $lista .= "{$resultadosReporte[$j][10]};" ;
+        }
+    }
+    print_r( strtoupper( $lista ) ) ;
 }

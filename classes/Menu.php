@@ -95,6 +95,7 @@ class Menu {
         if ($pagina != null && $limit != null) {
             $cadenaSQL .= " offset $pagina limit $limit ";
         }
+        //print_r($cadenaSQL);
         return ConectorBD::ejecutarQuery($cadenaSQL, null);
     }
 
@@ -215,5 +216,4 @@ class Menu {
 
 
 }
-
 

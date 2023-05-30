@@ -51,7 +51,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
         if ($accion == "ADICIONAR" || $accion == "MODIFICAR") 
         {
             if ( Select::validar( $municipios, 'TEXT' , 100 , 'CAMPO NOMBRE DE MUNICIPIO' ) &&
-                 Select::validar( $id_departamento , 'ARRAY' , null , 'CAMPO REGIONAL' ,  " id = '$id_departamento' " , null , 'departamento' ) &&
+                 Select::validar( $id_departamento , 'ARRAY' , null , 'CAMPO REGIONAL' ,  " id = '$id_departamento' " , 'eagle_admin' , 'departamento' ) &&
                  Select::validar( $activo , 'ARRAY' , NULL , 'CAMPO ACTIVO' , 11 ) &&
                  Select::validar( $codigo_municipio , 'NUMERIC' , null , 'CAMPO CODIGO MUNICIPIO' ) &&
                  Select::validar( $dane , 'NUMERIC' , null , 'CAMPO CODIGO DANE' ) &&
@@ -69,8 +69,8 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 {
                     if ($municipio->Adicionar()) 
                     {
-                        $_id_municipio = ConectorBD::ejecutarQuery( " select id from municipio where municipio = '{$municipio->getMunicipio()}' and id_departamento= '{$municipio->getId_departamento()}' and codigo_municipio = '{$municipio->getCodigo_municipio()}' and cod_dpto_mpio = '{$municipio->getCod_dpto_mpio()}' and dane = '{$municipio->getDane()}' " , null ) ;
-                        print_r("Se ha cargado en el modulo , Municipio Creada <|> id {$_id_municipio[0][0]} " ) ;
+                        $_id_municipio = ConectorBD::ejecutarQuery( " select id from municipio where municipio = '{$municipio->getMunicipio()}' and id_departamento= '{$municipio->getId_departamento()}' and codigo_municipio = '{$municipio->getCodigo_municipio()}' and cod_dpto_mpio = '{$municipio->getCod_dpto_mpio()}' and dane = '{$municipio->getDane()}' " , 'eagle_admin' ) ;
+                        print_r("Se ha cargado en el módulo , Municipio Creada <|> id {$_id_municipio[0][0]}  " ) ;
                     } 
                     else 
                     {
@@ -81,7 +81,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 {
                     if ($municipio->Modificar($id)) 
                     {
-                        print_r("Se ha cargado en el modulo , Municipio Modificada");
+                        print_r("Se ha cargado en el módulo , Municipio Modificada");
                     }
                     else 
                     {
@@ -102,11 +102,27 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 print_r("** EL MUNICIPIO NO SE PUDO ELIMINAR **");
             }
         }
-        elseif ( $accion == "SUBIR ARCHIVO" )
+        elseif ( $accion == "BLOQUEAR MUNICIPIO" )
+        {
+            if( Select::validar( $activo , 'ARRAY' , NULL , 'CAMPO ACTIVO' , 11 ) )
+            {
+                $municipio->setId($id);
+                $municipio->setEstado( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $activo ) ) ) ;
+                if ( $municipio->ActivarDesactivar() ) 
+                {
+                    print_r("Se ha cargado en el módulo , Programa Municipio");
+                } 
+                else 
+                {
+                    print_r("** EL MUNICIPIO NO SE PUDO BLOQUEAR **");
+                }
+            }
+        }   
+        elseif ( $accion == "CARGAR ARCHIVO" )
         {
             if(  Select::validar( $_FILES['archivo'] , 'FILE' , null , 'ARCHIVO' , 'CSV' ) )
             {
-               if ( copy( $_FILES['archivo']['tmp_name'] , $ruta_Plano = "F:/wamp64/www/Virtual/Archivos/" . "Registro" . "_"  . $_SESSION['user'] . "_" . $fecha . "." . pathinfo( strtolower( $_FILES['archivo']['name'] ) , PATHINFO_EXTENSION ) ) )
+               if ( copy( $_FILES['archivo']['tmp_name'] , $ruta_Plano = "F:/wamp64/www/Virtual/Archivos/" . "Registro_municipio" . "_"  . $_SESSION['user'] . "_" . $fecha . "." . pathinfo( strtolower( $_FILES['archivo']['name'] ) , PATHINFO_EXTENSION ) ) )
                {
                     if ( ( $gestor = fopen( $ruta_Plano , "r" ) ) !== FALSE )
                     {
@@ -115,35 +131,43 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                         {
                             if ( $contador >= 2 )
                             {
-                                if ( Select::validar( $id_programa , 'NUMERIC' , null , 'CAMPO PROGRAMA' ) &&
-                                    Select::validar( $nombre_programa , 'TEXT' , 500 , 'CAMPO NOMBRE DE PROGRAMA' ) &&
-                                    Select::validar( $nivel_formacion , 'ARRAY' , null , 'CAMPO NIVEL DE FORMACION' ,  " nivel_formacion = '$nivel_formacion' " , null , 'programas' ) &&
-                                    Select::validar( $red_conocimiento , 'ARRAY' , null , 'CAMPO RED DE CONOCIMIENTO' ,  " id_red = '$red_conocimiento' " , 'registro' , 'red_conocimiento' ) &&
-                                    Select::validar( $linea_tecnologica , 'ARRAY' , null , 'CAMPO LINEA TECNOLOGICA' ,  " id = '$linea_tecnologica' " , 'registro' , 'linea_tecnologica' ) &&
-                                    Select::validar( $segmento , 'ARRAY' , null , 'CAMPO SEGMENTO' ,  " segmento = '$segmento' " , null , 'programas' ) &&
-                                    Select::validar( $modalidad , 'ARRAY' , null , 'CAMPO MODALIDAD' ,  " modalidad = '$modalidad' " , null , 'programas' ) &&
-                                    Select::validar( $fic , 'ARRAY' , NULL , 'CAMPO FIC' , 10 ) &&
-                                    Select::validar( $activo , 'ARRAY' , NULL , 'CAMPO ACTIVO' , 10 ) &&
-                                    Select::validar( $duracion , 'NUMERIC' , null , 'CAMPO DURACION' )
+                                if( strtoupper( $nuevoNombre3[6] ) == 'ACTIVO' ) 
+                                {
+                                    $nuevoNombre3[6] = 'A' ;
+                                }
+                                else if( strtoupper( $nuevoNombre3[6] ) == 'INACTIVO' ) 
+                                {
+                                    $nuevoNombre3[6] = 'I' ;
+                                }
+                                if( Select::validar( $nuevoNombre3[1] , 'TEXT' , 100 , 'CAMPO NOMBRE DE MUNICIPIO' ) &&
+                                    Select::validar( $nuevoNombre3[2] , 'ARRAY' , null , 'CAMPO REGIONAL' ,  " id = '$nuevoNombre3[2]' " , 'eagle_admin' , 'departamento' ) &&
+                                    Select::validar( $nuevoNombre3[6] , 'ARRAY' , NULL , 'CAMPO ACTIVO' , 11 ) &&
+                                    Select::validar( $nuevoNombre3[3] , 'NUMERIC' , null , 'CAMPO CODIGO MUNICIPIO' ) &&
+                                    Select::validar( $nuevoNombre3[4] , 'NUMERIC' , null , 'CAMPO CODIGO DANE' ) &&
+                                    Select::validar( $nuevoNombre3[5] , 'NUMERIC' , null , 'CAMPO CODIGO REGIONAL MUNICIPIO' ) 
                                     )
                                 {                                
-                                    $programa->setId_programa( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $id_programa ) ) ) ;
-                                    $programa->setNombre_programa( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $nombre_programa) ) ) ;
-                                    $programa->setNivel_formacion(str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $nivel_formacion) ) ) ;
-                                    $programa->setRed_conocimiento( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $red_conocimiento) ) ) ;
-                                    $programa->setLinea_tecnologica( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $linea_tecnologica) ) ) ;
-                                    $programa->setSegmento( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $segmento ) ) ) ;
-                                    $programa->setDuracion( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $duracion) ) );
-                                    $programa->setFic($fic);
-                                    $programa->setActivo($activo);
-                                    $programa->setModalidad( str_replace( $nombreTilde , $nombreSinTilde , strtoupper ( $modalidad) ) ) ;
-                                    $programa->setTipo_esp('T');                                   
+                                    $municipio->setId( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $nuevoNombre3[0] ) ) ) ;
+                                    $municipio->setMunicipio( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $nuevoNombre3[1] ) ) ) ;
+                                    $municipio->setId_departamento( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $nuevoNombre3[2] ) ) ) ;
+                                    $municipio->setEstado( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $nuevoNombre3[6] ) ) ) ;
+                                    $municipio->setCodigo_municipio( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $nuevoNombre3[3] ) ) ) ;
+                                    $municipio->setDane( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $nuevoNombre3[4] ) ) ) ;
+                                    $municipio->setCod_dpto_mpio( str_replace( $nombreTilde , $nombreSinTilde , strtoupper( $nuevoNombre3[5] ) ) ) ;
+                                    if( Select::validar( $nuevoNombre3[0] , 'ARRAY' , null , 'CAMPO IDENTIFICADOR EN SISTEMA' ,  " id = '$nuevoNombre3[0]' " , 'eagle_admin' , 'municipio' ) )
+                                    {
+                                        $municipio->Modificar( $nuevoNombre3[0] ) ;
+                                    }
+                                    else 
+                                    {
+                                        $municipio->Adicionar() ;
+                                    }
                                 }
                             }
                             $contador += 1;
                         }
                     }   
-                    print_r("Se ha cargado en el modulo");
+                    print_r("Se ha cargado en el módulo");
                     unlink( $ruta_Plano );
                }
                else
@@ -151,7 +175,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                     print_r(strtoupper( "  ERROR EN EL CAMPO ARCHIVO PROBLEMA CARGADO AL SERVIDOR " ) );
                }
             }
-            print_r("Se ha cargado en el modulo , indicativa Creada " ) ;
+            print_r("Se ha cargado en el módulo , indicativa Creada " ) ;
         }
     }
 }

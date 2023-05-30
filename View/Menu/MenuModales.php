@@ -60,7 +60,7 @@ if ($id == 1 && $permisos)
         </div>
         <div>
             <fieldset>
-                <legend title='PNOMBRE DEL MENÚ'>PNOMBRE DEL MENÚ</legend>
+                <legend title='REDIRECCIÓN DEL MENÚ'>REDIRECCIÓN DEL MENÚ</legend>
                 <input type="text" value='<?= $menu->getPnombre() ?>' required name='pnombre' id="pnombre">
             </fieldset>
         </div>

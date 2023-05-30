@@ -113,7 +113,7 @@ class Historico {
         {
             $cadenaSQL .= " offset $pagina limit $limit ";
         }      
-        return ConectorBD::ejecutarQuery($cadenaSQL, null); 
+        return ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin'); 
     }
 
     //convierte los array de datos en objetos enviando las posiciones al constructor 
@@ -130,13 +130,13 @@ class Historico {
     // nos debuelve la cantidad de filas que existen en la tabla para hacer la paginacion.
     public static function count($filtro) {
         $filtro = ( $filtro != "") ? " where $filtro " : "";
-        return ConectorBD::ejecutarQuery("select count(*) from  historico  $filtro", null);
+        return ConectorBD::ejecutarQuery("select count(*) from  historico  $filtro", 'eagle_admin');
     }
 
     // guardar elementos en la base de datos
     public function grabar() {
         $cadenaSQL = "insert into historico(historico,identificacion,tabla,tipo_historico,fecha)  values('".strtoupper($this->historico)."','$this->identificacion','".strtoupper($this->tabla)."','$this->tipo_historico','now()')";
-        if (ConectorBD::ejecutarQuery($cadenaSQL,null)) {
+        if (ConectorBD::ejecutarQuery($cadenaSQL,'eagle_admin')) {
             return true;
         } else {
             return false;
@@ -146,7 +146,7 @@ class Historico {
     // borrar elementos en la base de datos
     public function borrar() {
         $cadenaSQL = "delete from  historico  where id_historico = '$this->id_historico'";
-        if (ConectorBD::ejecutarQuery($cadenaSQL, null)) {
+        if (ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin')) {
 
             return true;
         } else {
@@ -157,7 +157,7 @@ class Historico {
     // modificar elementos en la base de datos, identificador es el codigo o llave primaria a modificar 
     public function modificar($identificador) {
         $cadenaSQL = "update  historico  set historico = '$this->historico',id_historico = '$this->id_historico',identificacion = '$this->identificacion',tabla = '$this->tabla',tipo_historico = '$this->tipo_historico', fecha='now()' where id_historico = '$this->id_historico'";
-        if (ConectorBD::ejecutarQuery($cadenaSQL, null)) {
+        if (ConectorBD::ejecutarQuery($cadenaSQL, 'eagle_admin')) {
             return true;
         } else {
             return false;

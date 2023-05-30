@@ -37,7 +37,7 @@ class Select {
                 return ConectorBD::ejecutarQuery( $query , null ) ;
             break; 
             case 2 :
-                return ConectorBD::ejecutarQuery( $query , 'otra db' ) ; //tenía eagle_admin
+                return ConectorBD::ejecutarQuery( $query , 'eagle_admin' ) ;
             break; 
             case 3 :
                 return array( array('1' , 'A DISTANCIA') ,
@@ -58,12 +58,31 @@ class Select {
                 return $tipo;
             break; 
             case 5 :
-                return array( array('15' , '15 APREDICES') ,
-                              array('20' , '20 APREDICES') ,
-                              array('25' , '25 APREDICES') ,
-                              array('30' , '30 APREDICES') ,
-                              array('35' , '35 APREDICES') 
-                    ) ;
+            
+                if( $query != null && $query != '' )
+                {
+                    list( $especial , $programa ) = explode( '<|°|>' , $query );
+                    $cadenaSQL = " select nivel_formacion from programas where id_programa  = '$programa' ; " ;
+                    $type = ConectorBD::ejecutarQuery( $cadenaSQL , 'eagle_admin' )[0][0];
+                }
+
+                $_numeric = array() ;
+                
+                if( !isset( $type ) || ( isset( $type ) && ( $type == 'OPERARIO' || $type == 'AUXILIAR' ) ) )
+                {
+                    array_push( $_numeric , array('15' , '15 APREDICES') ) ;
+                }
+                
+                array_push( $_numeric , array('20' , '20 APREDICES') ) ;
+                array_push( $_numeric , array('25' , '25 APREDICES') ) ;
+                array_push( $_numeric , array('30' , '30 APREDICES') ) ;
+                array_push( $_numeric , array('35' , '35 APREDICES') ) ;
+               
+                if( !isset( $especial ) || ( isset( $especial ) && $type == 'TECNICO' && ( $especial == 2 || $especial == 3 || $especial == 4  )  ) ) 
+                {
+                    array_push( $_numeric , array('40' , '40 APREDICES') ) ;
+                }
+                return $_numeric;
             break; 
             case 6 :
                 return array( array('s' , 'SI') ,
@@ -145,14 +164,13 @@ class Select {
         switch (strtoupper( $tipo ) )
         {
             case 'TEXT' ;
-               
-                if ( $variable != '' && strlen( $variable ) <= $tamanio )
+                if( $variable  != '' && strlen( $variable ) <= $tamanio )
                 {
                     return true;
                 }
                 else
                 {
-                    print_r(strtoupper( "  ERROR EN EL CAMPO $nombre NO DEBE ESTAR VACIO Y MÁXIMO DE CARACTERES $tamanio " ) );
+                    print_r(strtoupper( "  ERROR EN $nombre NO DEBE ESTAR VACIO Y MINIMO DE CARACTERES $tamanio<br> " ) );
                     return false;
                 }
             break;    
@@ -163,7 +181,7 @@ class Select {
                 }
                 else
                 {
-                    print_r(strtoupper( "  ERROR EN EL CAMPO $nombre DEBE SER NUMERICO " ) );
+                    print_r(strtoupper( "  ERROR EN $nombre DEBE SER NUMERICO<br> " ) );
                     return false;
                 }
             break;    
@@ -172,7 +190,7 @@ class Select {
                 {
                     if( $variable != '' && !is_array( $variable ) && $bd === '' ) 
                     {
-                        $lista = self::listas( $array ) ;
+                        $lista = self::listas( $array , $tabla ) ;
                         for ($i = 0; $i < count($lista); $i++) 
                         {
                             if( $lista[$i][0] == $variable )
@@ -180,23 +198,25 @@ class Select {
                                 return true;
                             }
                         }
+                        print_r(strtoupper( "  ERROR EN $nombre NO VALIDO<br> " ) );
                     }
                     elseif( $variable != '' && !is_array( $variable ) && $bd !== '' )
                     {
-                        if ( !empty( ConectorBD::ejecutarQuery( " select  * from $tabla where $array" , $bd ) ) )
+                        //print_r(" select  * from $tabla where $array ");
+                        if ( !empty( ConectorBD::ejecutarQuery( " select  * from $tabla where $array " , $bd ) ) )
                         {
                             return true ;
                         }
                         else 
                         {
-                            print_r(strtoupper( "  ERROR EN EL CAMPO $nombre NO EXISTE " ) );
+                            print_r(strtoupper( "  ERROR EN $nombre NO EXISTE<br> " ) );
                             return false ;
                         }       
                     }
                 }
                 else
                 {
-                    print_r(strtoupper( "  ERROR EN EL CAMPO $nombre VALIDAR INFORMACION " ) );
+                    print_r(strtoupper( "  ERROR EN $nombre VALIDAR INFORMACION<br> " ) );
                     return false;
                 }
             break;    
@@ -214,25 +234,25 @@ class Select {
                             }
                             else  
                             {
-                                print_r(strtoupper( "  ERROR EN EL CAMPO $nombre VALIDAR INFORMACION " ) );
+                                print_r(strtoupper( "  ERROR EN $nombre VALIDAR INFORMACION<br> " ) );
                                 return false;
                             }
                         }
                         else  
                         {
-                            print_r(strtoupper( "  ERROR EN EL CAMPO $nombre VALIDAR INFORMACION " ) );
+                            print_r(strtoupper( "  ERROR EN $nombre VALIDAR INFORMACION<br> " ) );
                             return false;
                         }
                     }
                     catch ( Exception $exc ) 
                     {
-                        print_r(strtoupper( "  ERROR EN EL CAMPO $nombre VALIDAR INFORMACION " ) );
+                        print_r(strtoupper( "  ERROR EN $nombre VALIDAR INFORMACION<br> " ) );
                         return false;
                     }
                 }
                 else  
                 {
-                    print_r(strtoupper( "  ERROR EN EL CAMPO $nombre VALIDAR INFORMACION " ) );
+                    print_r(strtoupper( "  ERROR EN $nombre VALIDAR INFORMACION<br> " ) );
                     return false;
                 }
             break;    
@@ -245,13 +265,13 @@ class Select {
                     }
                     else 
                     {
-                        print_r(strtoupper( "  ERROR EN EL CAMPO $nombre EXTENCION DEL ARCHIVO NO CORRESPONDE " ) );
+                        print_r(strtoupper( "  ERROR EN $nombre EXTENCION DEL ARCHIVO NO CORRESPONDE<br> " ) );
                         return false;
                     }
                 }
                 else
                 {
-                    print_r(strtoupper( "  ERROR EN EL CAMPO $nombre SE ENCIUENTRA SIN INFORMACION" ) );
+                    print_r(strtoupper( "  ERROR EN $nombre SE ENCIUENTRA SIN INFORMACION<br>" ) );
                     return false ;
                 }    
             break;    
