@@ -42,17 +42,13 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
         }
         else
         {
+           $id = 0;
            $campo = null ;
            $valor = null ; 
         }
         $menu = new Menu( $campo, $valor ) ;
         if ($accion == "ADICIONAR" || $accion == "MODIFICAR") 
         {
-            if ($accion == "ADICIONAR")
-            {
-                $id = 0;
-            }
-
             if (
                  Select::validar( $id, 'NUMERIC', null, 'ID') &&
                  Select::validar( $nombre , 'TEXT' , 250 , 'NOMBRE' ) &&
@@ -63,49 +59,14 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 $menu->setNombre( $nombre ) ;
                 $menu->setPnombre( $pnombre ) ;
                 $menu->setIcono( $icono ) ;
-
-                $imagen = $_FILES['imagen'] ;
-                $cargarImagen = isset( $imagen ) && $imagen['name'] != '' ;
-                $imagen_destino = __DIR__.'/../../img/icon/'.$icono.'.png';
-
-                if ($cargarImagen)
+                $menu->setImagen( $_FILES['imagen'] );
+                
+                if ( $menu ->AdicionarModificar( $id ) )
                 {
-                    if ( Select::validar( $imagen, 'FILE', null, 'IMAGEN', 'PNG' ) )
-                    {
-                        if ( $menu->AdicionarModificar( $id ) )
-                        {
-                            if ( !copy($imagen['tmp_name'], $imagen_destino) )
-                            {
-                                print_r(" No se ha cargado la imagen correctamente. ");
-                            }
-
-                            if ( $id == 0 )
-                            {
-                                $menuNuevo = new Menu(' nombre ', "'$nombre'");
-                                $id = $menuNuevo->getId();
-                            }
-
-                            print_r(" Se ha cargado menú en el módulo <|> id $id ");
-
-                        } else
-                        {
-                            print_r( " ERROR INESPERADO, VUELVA A INTENTAR. " );
-                        }
-                    }
+                    print_r( "Se ha cargado menú en el módulo <|> menú $nombre " );
                 } else {
-                    if ( $menu->AdicionarModificar( $id ) )
-                    {
-                        if ( $id == 0)
-                        {
-                            $menuNuevo = new Menu(' nombre ', "'$nombre'");
-                            $id = $menuNuevo->getId();
-                        }
-
-                        print_r(" Se ha cargado menú en el módulo <|> id $id ");
-                    } else {
-                        print_r( " ERROR INESPERADO, VUELVA A INTENTAR. " );
-                    }
-                }   
+                    print_r( " ERROR INESPERADO, VUELVA A INTENTAR. " );
+                }/** */
             }
         }
         elseif ($accion == "ELIMINAR")
