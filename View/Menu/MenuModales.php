@@ -57,14 +57,20 @@ if ($id == 1 && $permisos)
                 <legend title='NOMBRE DEL MENÚ'>NOMBRE DEL MENÚ</legend>
                 <input type="text" value='<?= $menu->getNombre() ?>' required name='nombre' id="nombre">
             </fieldset>
+        </div>
+        <div>
             <fieldset>
                 <legend title='PNOMBRE DEL MENÚ'>PNOMBRE DEL MENÚ</legend>
                 <input type="text" value='<?= $menu->getPnombre() ?>' required name='pnombre' id="pnombre">
             </fieldset>
+        </div>
+        <div>
             <fieldset>
                 <legend title='NOMBRE ÍCONO'>NOMBRE ÍCONO</legend>
                 <input type="text" value='<?= $menu->getIcono() ?>' required name='icono' id="icono">
             </fieldset>
+        </div>
+        <div>
             <fieldset>
                 <legend title='IMAGEN ÍCONO PNG'>IMAGEN ÍCONO PNG</legend>
                 <input type='file'  value=''  name='imagen' id='imagen' >
