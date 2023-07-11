@@ -55,7 +55,6 @@ if ( $ingreso === false && $permisos->getIdTipo() !== "SA" ) {
         <button type='button' id='button' class="ele" title='Adicionar programa' title="Adicionar" value="ADICIONAR" onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>PROGRAMA</button>
         <button type='button' id='button' class="ele" title='Archivo de desacarga' onclick="reporte(`` , `I=<?= $var_des ?>`, `formDetalle`, `<?= $URL ?>`, event, 'ele' , 'PROGRAMAS EN SISTEMA')"><img src="img/icon/excel.png"/> DESCARGAR<br>PROGRAMAS</button>
         <button type='button' id='button' class="ele" title='Archivo de cargue de programas' onclick="validarDatos(``, `I=<?= $var_car ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/excel.png"/> CARGAR<br>PROGRAMAS</button>
-        <button type='button' id='button' class="ele" title='Ayuda del sistema' onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MÓDULO</button>
     </div>  
          <table id="tableIntD" class="tableIntT sombra tableIntTa">
             <tr>

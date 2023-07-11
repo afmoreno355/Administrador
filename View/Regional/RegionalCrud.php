@@ -18,14 +18,14 @@ if( !isset($_SESSION["user"]) )
 
 date_default_timezone_set("America/Bogota");
 $fecha = date("YmdHis");
-$fecha_documento = date("Y-m-d H:i:s");
-$anio_documento = date("Y");
-$mes_documento = date("m");
 
 // variable variable trae las variables que trae POST
 foreach ($_POST as $key => $value)
     ${$key} = $value;
 
+$nombreTilde = array("á", "é", "í", "ó", "ú", "ñ", ".", "", "Á", "É", "Í", "Ó", "Ú", "Ñ", ".", "");
+$nombreSinTilde = array("&Aacute;", "&Eacute;", "&Iacute;", "&Oacute;", "&Uacute;", "&Ntilde;", "", "", "&Aacute;", "&Eacute;", "&Iacute;", "&Oacute;", "&Uacute;", "&Ntilde;", "", "");
+$nombreSinTilde_Nuevo = array("A", "E", "I", "O", "U", "N", "", "", "A", "E", "I", "O", "U", "N", "", "");
 
 $session = new Sesion(" identificacion ", "'{$_SESSION["user"]}'");
 $persona = new Persona( " identificacion ", "'{$_SESSION["user"]}'" );
@@ -37,51 +37,61 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
     //header("Location: index");
 } elseif ($_SESSION["token1"] === $_COOKIE["token1"] && $_SESSION["token2"] === $_COOKIE["token2"] && password_verify(md5($token1 . $token2), $session->getToken3())) {
     if (isset($accion)) {
-        if ($accion == "ELIMINAR")
+        if( $id != '' )
         {
-            $documento->setId_documento($id);
-            if ($documento->borrar()) 
-            {
-                print_r("** EL DOCUMENTO FUE ELIMINADA **");
-            } 
-            else 
-            {
-                print_r("** EL DOCUMENTO NO SE PUDO ELIMINAR **");
-            }
+            $v1_A = ' id ' ;
+            $v2_A = "'$id'" ;
         }
-        elseif ($accion == "CARGAR PDF")
+        else
         {
-            if (!isset($_FILES['documento']) || pathinfo(strtoupper($_FILES['documento']['name']), PATHINFO_EXTENSION) == 'PDF')
+           $v1_A = null ;
+           $v2_A = null ; 
+        }
+        $Regional = new Regional($v1_A, $v2_A );
+        if ($accion == "ADICIONAR" || $accion == "MODIFICAR") 
+        {
+            if ( Select::validar( $codigo , 'NUMERIC' , null , 'CAMPO CODIGO DEL PROGRAMA' ) &&
+                 Select::validar( $nom_departamento , 'TEXT' , 100 , 'CAMPO NOMBRE DE REGIONAL' )
+                )
             {
-                if (!isset($_FILES['documento']) || copy( $_FILES['documento']['tmp_name'], "F:/wamp64/www/Virtual/Archivos/pdf/" . $id . "_" . $mes_documento . "_" . $anio_documento . "." . pathinfo( strtolower($_FILES['documento']['name']), PATHINFO_EXTENSION ) ) ) ;
+                $Regional->setCod( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $codigo ) ) ) ;
+                $Regional->setNombre( str_replace( $nombreTilde , $nombreSinTilde , strtoupper(  $nom_departamento ) ) ) ;
+                
+                if ($accion == "ADICIONAR") 
                 {
-                    if (isset($_FILES['documento'])) 
+                    if ($Regional->Adicionar()) 
                     {
-                        //print_r( " insert into evidencia values( '$id' , '$anio_documento' , 'Archivos/" . $id . "_" . $mes_documento . "_" . $anio_documento . "." . pathinfo( strtolower($_FILES['documento']['name']), PATHINFO_EXTENSION )."' ) ;" );
-                        if ( ConectorBD::ejecutarQuery( " insert into evidencia values( '$id' , '$anio_documento' , 'Archivos/pdf/" . $id . "_" . $mes_documento . "_" . $anio_documento . "." . pathinfo( strtolower($_FILES['documento']['name']), PATHINFO_EXTENSION )."' ) ;" ,  null ) ) 
-                        {
-                           print_r("Se ha cargado en el modulo , Documento cargado "  ) ;
-                        } 
-                        else 
-                        {
-                            print_r("** EL ARCHIVO NO PUDO SER CARGADO  **");
-                        }
-                    }   
+                        print_r("Se ha cargado en el módulo , Programa Creada <|> código Regional $codigo" ) ;
+                    } 
+                    else 
+                    {
+                        print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                    }
                 }
+                elseif ($accion == "MODIFICAR") 
+                {
+                    if ($Regional->Modificar($id)) 
+                    {
+                        print_r("Se ha cargado en el módulo , Regional Modificado");
+                    }
+                    else 
+                    {
+                        print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                    }
+                }   
             }
         }
-        elseif ($accion == "APROBAR")
+        elseif ($accion == "ELIMINAR")
         {
-            $regional = new Regional( null , null ) ;
-            $regional->setCod($id);
-            if ( $regional->estado( $modalidad ) ) 
+            $Regional->setCod($id);
+            if ($Regional->borrar()) 
             {
-                print_r("** EL ESTADO DE LA INDICATIVA A CAMBIADO **");
+                print_r("** LA REGIONAL FUE ELIMINADA **");
             } 
             else 
             {
-                print_r("** EL ESTADO DE LA INDICATIVA NO PUDO SER CAMBIADO **");
+                print_r("** LA REGIONAL NO SE PUDO ELIMINAR **");
             }
-        }        
+        }
     }
 }

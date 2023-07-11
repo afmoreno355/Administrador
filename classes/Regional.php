@@ -85,12 +85,65 @@ class Regional {
         return ConectorBD::ejecutarQuery($cadena, 'eagle_admin');        
     }
     
-    public static function listaopciones(){ 
-        $lista='';
-        $si= ConectorBD::ejecutarQuery("select codigosede,nombresede,bd,imagen,nom_departamento from  sede, departamento where departamento.id=sede.departamento", null);
-        for ($i = 0; $i < count($si); $i++) {
-            $lista.="<option value='{$si[$i][0]}'> {$si[$i][4]} {$si[$i][0]} {$si[$i][1]}</option>";
+     public function Adicionar() {
+        $sql="insert into departamento( id , nom_departamento  ) values(
+                '$this->cod',
+                '$this->nombre'
+             )";
+        //print_r($sql);
+    if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
+            //Historico de las acciones en el sistemas de informacion
+            $nuevo_query = str_replace("'", "|", $sql);
+            $historico = new Historico(null, null);
+            $historico->setIdentificacion($_SESSION["user"]);
+            $historico->setTipo_historico("ADICIONAR");
+            $historico->setHistorico(strtoupper($nuevo_query));
+            $historico->setFecha("now()");
+            $historico->setTabla("REGIONAL");
+            $historico->grabar();
+            return true;
+        } else {
+            return false;
         }
-    return $lista;
-    } 
+    }
+    
+    public function Modificar( $id ) {
+        $sql="update departamento set
+                id = '$this->cod'
+              , nom_departamento = '$this->nombre'
+               where id = '$id' ";
+        //print_r($sql);
+        if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
+            //Historico de las acciones en el sistemas de informacion
+            $nuevo_query = str_replace("'", "|", $sql);
+            $historico = new Historico(null, null);
+            $historico->setIdentificacion($_SESSION["user"]);
+            $historico->setTipo_historico("MODIFICAR");
+            $historico->setHistorico(strtoupper($nuevo_query));
+            $historico->setFecha("now()");
+            $historico->setTabla("REGIONAL");
+            $historico->grabar();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function Borrar() {
+        $sql="delete from departamento where id = '$this->cod' ";
+        if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
+            //Historico de las acciones en el sistemas de informacion
+            $nuevo_query = str_replace("'", "|", $sql);
+            $historico = new Historico(null, null);
+            $historico->setIdentificacion($_SESSION["user"]);
+            $historico->setTipo_historico("ELIMINAR");
+            $historico->setHistorico(strtoupper($nuevo_query));
+            $historico->setFecha("now()");
+            $historico->setTabla("REGIONAL");
+            $historico->grabar();
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -56,7 +56,7 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
     <table id="tableIntD" class="tableIntT sombra tableIntTa">
         <tr>
             <th>CÓDIGO CENTRO</th>
-            <th>NOMBRES SEDE</th>
+            <th>NOMBRES REGIONAL</th>
             <th>NOMBRES CENTRO</th> 
             <th colspan="2">ACCION</th>           
         </tr>

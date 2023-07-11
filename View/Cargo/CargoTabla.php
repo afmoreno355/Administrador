@@ -54,10 +54,10 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA") {
     <!-- Inicio de html tablas -->
     <table id="tableIntD" class="tableIntT sombra tableIntTa">
         <tr>
-            <th>ID</th>
-            <th>CÓDIGO CARGO</th>
-            <th>NOMBRE CARGO</th> 
-            <th>DETALLE</th>   
+            <th>ID DEL ROL</th>
+            <th>CÓDIGO DEL ROL</th>
+            <th>NOMBRE DEL ROL</th> 
+            <th>DETALLE DEL ROL</th>   
             <th colspan="2">ACCION</th>        
         </tr>
         <?PHP

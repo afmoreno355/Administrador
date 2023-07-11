@@ -53,6 +53,12 @@ if ($id == 1 && $permisos)
         </div> 
         <div>
             <fieldset>
+                <legend title='IDENTIFICADOR DE LA REGIONAL'>IDENTIFICADOR DE LA REGIONAL</legend>
+                <input type="text" value='<?= $regional->getCod() ?>' required name='codigo' id="codigo">
+            </fieldset>
+        </div>
+        <div>
+            <fieldset>
                 <legend title='NOMBRE DE LA REGIONAL'>NOMBRE DE LA REGIONAL</legend>
                 <input type="text" value='<?= $regional->getNombre() ?>' required name='nom_departamento' id="nom_departamento">
             </fieldset>
