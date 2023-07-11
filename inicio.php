@@ -9,7 +9,7 @@ foreach ($_POST as $key => $value) ${$key}=  $value;
 require_once dirname(__FILE__).'/autoload.php';
  
 $permisos = new Persona(' identificacion ', "'".$_SESSION['user']."'");
-$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "MI USUATIO");
+$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "MI USUARIO");
  
 ?>
  <head>
@@ -48,9 +48,9 @@ $ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "MI USUATI
     <div class="cargar_load" id="cargar_load" style="margin-top: 150px; margin-left: 45%;background: transparent; position: fixed; width: auto; height: auto;"></div>
     <!-- menu de inicio --> 
     
-    <?php include_once './View/Menu/MenuNormal.php'; ?>
+    <?php ''//include_once './View/Menu/MenuNormal.php'; ?>
     <?php ''//include_once './Controller/Menu/MenuTop.php'; ?>
-    <?php ''//include_once './Controller/Menu/MenuLeft.php'; ?>
+    <?php include_once './View/Menu/MenuLeft.php';?>
     
     <div style=" width : 100% ; height : 250px ; overflow: hidden ">
         <div id="buscar" class="buscar"><br>
@@ -96,3 +96,4 @@ $ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "MI USUATI
 <script src="js/Eliminar.js"> </script>
 <script src="js/Boton.js"> </script>
 <script src="js/Validar.js"> </script>
+<script src="js/Reporte.js"> </script>

@@ -107,19 +107,27 @@ function menudes(){
     }    
 }
 window.addEventListener('resize', function (ev){
-    if( parseInt(window.innerWidth) <= 1050){
-        document.getElementById('nav').style.transform='translateY(-110%)';
-        document.getElementById('nav').style.transition='0s';
-        document.getElementById('divmenu').style.height='40px';
-        document.getElementById('divmenu').style.minHeight='40px';
-        menu=0;
-    }
-    else
+    if( document.getElementById('divmenu1') !== null )
     {
-        document.getElementById('nav').style.transform='translateY(-0%)';
-        document.getElementById('divmenu').style.minHeight='45px';
-        document.getElementById('divmenu').style.height='auto';
-        menu=0;
+        if( parseInt(window.innerWidth) <= 1050){
+           document.getElementById('nav').style.transform='translateY(-110%)';
+           document.getElementById('nav').style.transition='0s';
+           document.getElementById('divmenu1').style.height='40px';
+           document.getElementById('divmenu1').style.minHeight='40px';
+           menu=0;
+       }
+       else
+       {
+           document.getElementById('nav').style.transform='translateY(-0%)';
+           document.getElementById('divmenu1').style.minHeight='45px';
+           document.getElementById('divmenu1').style.height='auto';
+           menu=0;
+       }
+    }
+    else if( document.getElementById('divmenu2') !== null )
+    {
+        document.getElementById("cont_menu").style.transform = "translateX(-100%)";
+        document.getElementById("cont_menu").style.transition = "0.5s";
     }
 });
 
@@ -128,4 +136,53 @@ function cerrar(donde){
         var dondeVamos=document.querySelector('#modalesV');
         dondeVamos.setAttribute('action', donde);
         document.getElementById('accionU').type='submit';
+}
+
+function menuDesplegableIzq()
+{
+    if (document.getElementById("cont_menu").style.transform == "" || document.getElementById("cont_menu").style.transform == "translateX(-100%)")
+    {
+        document.getElementById("cont_menu").style.transform = "translateX(-76%)";
+        document.getElementById("cont_menu").style.transition = "0.5s";
+    } 
+    else if (document.getElementById("cont_menu").style.transform == "translateX(-76%)")
+    {
+        document.getElementById("cont_menu").style.transform = "translateX(0%)"
+        document.getElementById("cont_menu").style.transition = "0.5s";
+    }
+    else if (document.getElementById("cont_menu").style.transform == "translateX(0%)")
+    {
+        document.getElementById("cont_menu").style.transform = "translateX(-100%)"
+        document.getElementById("cont_menu").style.transition = "0.5s";
+    }
+}
+
+function hover(event)
+{
+    if( document.getElementById('divmenu2') !== null )
+    {
+        if (document.getElementById("cont_menu").style.transform == "" || document.getElementById("cont_menu").style.transform == "translateX(-76%)")
+        {
+            event.currentTarget.style.transform = 'translateX(76%)';
+        }
+    }
+    else 
+    {
+        return 
+    }
+
+}
+function nohover(event)
+{
+    if( document.getElementById('divmenu2') !== null )
+    {
+        if (document.getElementById("cont_menu").style.transform == "" || document.getElementById("cont_menu").style.transform == "translateX(-76%)")
+        {
+            event.currentTarget.style.transform = 'translateX(0%)';
+        }
+    }
+    else 
+    {
+        return 
+    }
 }

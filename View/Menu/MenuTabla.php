@@ -57,9 +57,8 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
 ?> 
 <!-- Código para los botones-->
     <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
-<button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>MENU</button>
-<button type='button' id='button' class="ele" title='Ayuda'  onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
-</div>
+        <button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `<?= $URL ?>`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>MENU</button>
+    </div>
     <!-- Inicio de html tablas -->
     <table id="tableIntD" class="tableIntT sombra tableIntTa">
         <tr>
@@ -81,10 +80,9 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
                 <td><?= $objet->getId() ?></td>
                 <td> <?= $objet->getNombre() ?></td>
                 <td> <?= $objet->getPNombre() ?></td>
-                <td> <?= $objet->getIcono() ?></td>
+                <td> <img src=<?= $objet->getIcono() ?> width="50" height="50"> </td>
                 <td>
                     <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `<?= $URL ?>`)" title="Información Elemento" value="INFORMACION">
-                    <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `<?= $URL ?>`)" title="Bloquear Elemento" value="BLOQUEAR">
                 </td>
                 <td>
                     <input type="button" id="button" name="3" onclick="validarDatos(``, `I=<?= $var_mod ?>`, `modalVentana`, `<?= $URL ?>`)" title="Modificar Elemento" value="MODIFICAR">

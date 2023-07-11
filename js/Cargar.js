@@ -168,6 +168,11 @@ function reloadInfo( respuesta , form = null )
                 else if (document.getElementById(respuesta).innerHTML.includes("ERROR"))
                 {
                     clearInterval(ids);
+                     window.document.getElementById('modales').scroll({
+                        top: 20,
+                        behavior: 'smooth'
+                    });
+                    redireccion( respuesta );
                 }
             }
         }, 60);

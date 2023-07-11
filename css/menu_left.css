@@ -1,0 +1,108 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29/09/2020, 06:55:36 PM
+    Author     : FELIP
+*/
+
+:root
+{
+    --background : linear-gradient( 135deg , #FF99337e 0% , #FF800098 100% ) ;
+    --color-primary : #667eea ;
+    --color-secundary : #764ba2 ;    
+    --botton-padding : 20px 40px ;    
+}
+
+.estado{
+    top: 0;
+    height: 50px;
+    position: fixed;
+    z-index: 1000;
+    background: #39a900;
+    width: 56px;
+}
+.estado .la2{
+    position: absolute;
+    color: white;
+    margin-left: 45%; 
+    margin-top: -70px;
+}
+.estado .la1{
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 2em;
+    position: relative
+}
+.estado img{
+    width: 50px;
+    height: 40px;
+    position: relative;
+    float: right;
+}
+.cont_menu{
+    position: fixed;
+    top: 50px;
+    min-width: 0px;
+    width: 220px;
+    max-height: 90%;
+    background: #39a900;
+    transform: translateX(-100%);
+    z-index: 1000;
+    padding: 7px;
+    overflow-x: hidden;
+    overflow-y: scroll
+}
+.cont_menu::-webkit-scrollbar  {
+    width: 12px;
+}
+
+.cont_menu::-webkit-scrollbar-thumb  {
+    background: orange;
+    border-radius: 5px;
+}
+.cont_menu label{
+    position: relative;
+    margin-left: 45px;
+    top: 200px;  
+    color: white;
+}
+.cont_menu img{
+    margin: 30px; 
+    margin-left: 15px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+}
+.cont_menu a.color {
+    background: #ffffff; 
+    color: black
+}
+.cont_menu a{
+    display: inline-block;
+    height: 40px;
+    width: 220px;            
+    color: white;
+    background: #00000099;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: 1s;
+    margin-top: 1px;
+    cursor: pointer;
+}
+.cont_menu a pre{
+    text-align: right;
+}
+.cont_menu a:hover{
+    box-shadow: inset 0 0 30px rgb(33,169,89);   
+}  
+.cont_menu a i{
+    font-size: 1.1em;
+    margin-left: 15px;
+}

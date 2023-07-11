@@ -1,45 +1,55 @@
 .menu{
-        position: fixed ; 
-        width:  100%;
-        background: #39a900; 
-        min-height: 45px;
-        height: auto;
-        color: white;
-        top: 0px;
-        z-index: 10;
-        transition: 1s;
-        overflow: hidden;
-        font-size: 0.9rem;
+    position: fixed ; 
+    width:  100%;
+    background: #00000060;
+    height: auto;
+    color: white;
+    top: 0px;
+    z-index: 10;
+    transition: 1s;
+    overflow: hidden;
+    font-size: 0.9rem;
 } 
 .menu nav{
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    text-align: center;
-    align-content: center;
+    overflow-y: hidden;
+    width: 100%;
+    align-items: center;
+    min-height: 45px;    
 }
-.menu nav a{
-        width: 200px;
-        text-decoration: none;
-        cursor: pointer;
-        padding: 6px;
-        height: 27px;
-        margin-top: 1px;
-        font-weight: bolder;
-        background: transparent; 
-        color: white;
+.menu nav::-webkit-scrollbar  {
+    height: 10px;
+}
+
+.menu nav::-webkit-scrollbar-thumb  {
+    background: rgb(33,169,89,1);
+    border-radius: 5px;
 }
 .menu nav a:hover{
-      border-bottom: 5px solid white;
+    box-shadow: inset 0 0 30px rgb(33,169,89);   
+}
+.menu nav a{
+    min-width: 200px;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px 15px 20px 25px;
+    height: 35px;
+    margin-top: 5px;
+    margin-left:10px;
+    font-weight: bolder;
+    background: transparent; 
+    color: white;
+    padding: 0 5px;
 }
 
 .menu nav a.color {
-    background: rgba( 245, 176, 65 , 1); 
     border-bottom: 5px solid white;
+}
+.menuI{
+    display: none;
 }
 @media (max-width : 1050px){
     .menuI{
-        display: none;
         z-index: 1000;
         position: fixed ; 
         top: -1px;
@@ -65,7 +75,7 @@
         justify-content: center;
         text-align: left;
         align-content: center;
-        background: #39a900; 
+        background: #00000099; 
     }
     .menu nav a{
         height: 50px;

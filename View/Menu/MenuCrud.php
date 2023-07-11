@@ -49,35 +49,42 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
         if ($accion == "ADICIONAR" || $accion == "MODIFICAR") 
         {
             if (
-                 Select::validar( $nombre , 'TEXT' , 250 , 'NOMBRE' ) &&
-                 Select::validar( $pnombre , 'TEXT' , 250 , 'RUTA' ) &&
-                 Select::validar( $_FILES['imagen'], 'FILE', null, 'IMAGEN', 'PNG' )
+                Select::validar( $nombre , 'TEXT' , 250 , 'NOMBRE' ) &&
+                Select::validar( $pnombre , 'TEXT' , 250 , 'RUTA' ) &&
+                Select::validar( $_FILES['imagen'], 'FILE', null, 'IMAGEN', 'PNG' )
                 )
             {
-                $menu->setNombre( str_replace($nombreTilde, $nombreSinTilde, strtoupper( $nombre ) ) ) ;
-                $menu->setPnombre( str_replace($nombreTilde, $nombreSinTilde, strtoupper( $pnombre ) ) ) ;
-                $menu->setIcono( $_FILES['imagen']['name'] ) ;
+                $ruta_Icon = "img/enlace/" . "_"  . $_SESSION['user'] . "_" . $fecha . "." . pathinfo( strtolower( $_FILES['imagen']['name'] ) , PATHINFO_EXTENSION ) ;
+                if ( copy( $_FILES['imagen']['tmp_name'] , dirname(__FILE__)."/../../".$ruta_Icon) )
+                {
+                    $menu->setNombre( str_replace($nombreTilde, $nombreSinTilde, strtoupper( $nombre ) ) ) ;
+                    $menu->setPnombre( str_replace($nombreTilde, $nombreSinTilde, strtoupper( $pnombre ) ) ) ;
+                    $menu->setIcono( $ruta_Icon ) ;
 
-                if ($accion == "ADICIONAR") 
-                {
-                    if ( $menu->Adicionar() ) {
-                        $id = ConectorBD::ejecutarQuery("select id from menu where nombre = '{$menu->getNombre()}' and pnombre = '{$menu->getPnombre()}' and icono = '{$menu->getIcono()}' ; ", null)[0][0];
-                        print_r("Se ha cargado en el módulo, Menú adicionado <|> id menú $id");
-                    } else {
-                        print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                    if ($accion == "ADICIONAR") 
+                    {
+                        if ( $menu->Adicionar() )
+                        {
+                            $id = ConectorBD::ejecutarQuery("select id from menu where nombre = '{$menu->getNombre()}' and pnombre = '{$menu->getPnombre()}' and icono = '{$menu->getIcono()}' ; ", null)[0][0];
+                            print_r("Se ha cargado en el módulo, Menú adicionado <|> id menú $id");
+                        }
+                        else
+                        {
+                            print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                        }
                     }
+                    elseif ($accion == "MODIFICAR") 
+                    {
+                        if ( $menu->Modificar( $id ) )
+                        {
+                            print_r("Se ha cargado en el módulo, Menú modificado ");
+                        }
+                        else
+                        {
+                            print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                        }
+                    }   
                 }
-                elseif ($accion == "MODIFICAR") 
-                {
-                    if ( $menu->Modificar( $id ) )
-                    {
-                        print_r("Se ha cargado en el módulo, Menú modificado <|> id menú $id");
-                    }
-                    else
-                    {
-                        print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
-                    }
-                }   
             }
         }
         elseif ($accion == "ELIMINAR")
