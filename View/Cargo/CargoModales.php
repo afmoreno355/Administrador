@@ -47,7 +47,7 @@ if ($id == 1 && $permisos) {
         <div>
             <fieldset>
                 <legend title='DETALLE DEL CARGO'>DETALLE DEL CARGO</legend>
-                <input type="text" value='<?= $cargo->getDetalle() ?>' required name='detalle' id="detalle">
+                <textarea required name='detalle' id="detalle"><?= $cargo->getDetalle() ?></textarea>
             </fieldset>
         </div>
         <div>        

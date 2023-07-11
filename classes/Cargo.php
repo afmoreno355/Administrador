@@ -106,16 +106,6 @@ class Cargo {
         return ConectorBD::ejecutarQuery($cadena, null);
     }
 
-    public static function listaopciones() {
-        $lista = "";
-        $si = self::datosobjetos(null, null, null);
-        for ($i = 0; $i < count($si); $i++) {
-            $obj = $si[$i];
-            $lista .= "<option value='{$obj->getId()}'> {$obj->getId()} {$obj->getNombrecargo()} </option>";
-        }
-        return $lista;
-    }
-
     public function Adicionar() {
         $sql = "insert into cargo( codigocargo,     nombrecargo , detalle  ) values(
                 '$this->codigocargo',
@@ -154,7 +144,6 @@ class Cargo {
     }
 
     public function borrar() {
-        //console.log(":D");
         $sql = "delete from cargo where id = '$this->id' ";
         try {
             if (ConectorBD::ejecutarQuery($sql, null)) {
