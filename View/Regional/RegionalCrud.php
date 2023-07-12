@@ -50,7 +50,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
         $Regional = new Regional($v1_A, $v2_A );
         if ($accion == "ADICIONAR" || $accion == "MODIFICAR") 
         {
-            if ( Select::validar( $codigo , 'NUMERIC' , null , 'CAMPO CODIGO DEL PROGRAMA' ) &&
+            if ( Select::validar( $codigo , 'NUMERIC' , null , 'CAMPO CODIGO DEL REGIONAL' ) &&
                  Select::validar( $nom_departamento , 'TEXT' , 100 , 'CAMPO NOMBRE DE REGIONAL' )
                 )
             {
@@ -61,7 +61,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 {
                     if ($Regional->Adicionar()) 
                     {
-                        print_r("Se ha cargado en el módulo , Programa Creada <|> código Regional $codigo" ) ;
+                        print_r("Se ha cargado en el módulo , Regional Creada <|> código Regional $codigo" ) ;
                     } 
                     else 
                     {

@@ -37,7 +37,7 @@ and open the template in the editor.
     font-size: 2em;
     position: relative
 }
-.estado img{
+.estado #mi_foto{
     width: 50px;
     height: 40px;
     position: relative;
@@ -70,7 +70,7 @@ and open the template in the editor.
     top: 200px;  
     color: white;
 }
-.cont_menu img{
+.cont_menu #mi_foto{
     margin: 30px; 
     margin-left: 15px;
     width: 150px;

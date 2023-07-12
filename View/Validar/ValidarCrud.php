@@ -71,7 +71,7 @@ if (isset($accion) && $accion == 'INICIAR') {
                     for ($j = 0; $j < count($datosM); $j++) {
                         $objet = $datosM[$j];
                         $menu1 .= "<a id='" . str_replace(' ', '_', strtoupper($objet->getNombre() ) ) . "' onclick='action( event , `menua` )' class='menua' href='#" .  str_replace( ' ' , '_' , ucfirst( strtolower( $objet->getNombre() ) ) ) . "' ><i class='{$objet->getIcono()}'>_</i> {$objet->getNombre()}</a>";    
-                        $menu2 .= "<a onclick='action( event , `menua` )' href='" .  str_replace( ' ' , '_' , ucfirst( strtolower( $objet->getPnombre() ) ) ) . "' title='" . strtoupper($objet->getNombre()) . "' id='" . str_replace(' ', '_', strtoupper($objet->getNombre() ) ) . "' onmouseover='hover(event)' onmouseout='nohover(event)' class='menua' ><pre>" . strtoupper($objet->getNombre()) . "  <i class='{$objet->getIcono()}'></i>  </pre></a>";
+                        $menu2 .= "<a onclick='action( event , `menua` )' href='" .  str_replace( ' ' , '_' , ucfirst( strtolower( $objet->getPnombre() ) ) ) . "' title='" . strtoupper($objet->getNombre()) . "' id='" . str_replace(' ', '_', strtoupper($objet->getNombre() ) ) . "' onmouseover='hover(event)' onmouseout='nohover(event)' class='menua' ><pre>" . strtoupper($objet->getNombre()) . "  <img src='{$objet->getIcono()}' style = 'width : 20px ; height : 20px'/>  </pre></a>";
                     }
                     $_SESSION['sede'] = '';
                     $_SESSION['banner'] = 'http://dfp.senaedu.edu.co/modulos_gestion/img/banner2.jpg';
@@ -93,7 +93,7 @@ if (isset($accion) && $accion == 'INICIAR') {
                     for ($l = 0; $l < count($cadenaCorte)-1; $l++) {
                         $objet = new Menu('id', $cadenaCorte[$l]);
                         $menu1 .= "<a id='" . str_replace(' ', '_', strtoupper($objet->getNombre() ) ) . "'  onclick='action( event , `menua` )' class='menua' href='#". str_replace( ' ' , '_' , ucfirst( strtolower( $objet->getNombre() ) ) ) . "' ><i class='{$objet->getIcono()}'>_</i> {$objet->getNombre()}</a>";    
-                        $menu2 .= "<a onclick='action( event , `menua` )' href='". str_replace( ' ' , '_' , ucfirst( strtolower( $objet->getPnombre() ) ) ) . "' title='" . strtoupper($objet->getNombre()) . "' id='" . str_replace(' ', '_', strtoupper($objet->getNombre() ) ) . "' onmouseover='hover(event)' onmouseout='nohover(event)' class='menua' ><pre>" . strtoupper($objet->getNombre()) . "  <i class='{$objet->getIcono()}'></i>  </pre></a>";
+                        $menu2 .= "<a onclick='action( event , `menua` )' href='". str_replace( ' ' , '_' , ucfirst( strtolower( $objet->getPnombre() ) ) ) . "' title='" . strtoupper($objet->getNombre()) . "' id='" . str_replace(' ', '_', strtoupper($objet->getNombre() ) ) . "' onmouseover='hover(event)' onmouseout='nohover(event)' class='menua' ><pre>" . strtoupper($objet->getNombre()) . "  <img src='{$objet->getIcono()}' style = 'width : 20px ; height : 20px'/>   </pre></a>";
                     }
                     $_SESSION['miMenu1'] = $menu1;
                     $_SESSION['miMenu2'] = $menu1;

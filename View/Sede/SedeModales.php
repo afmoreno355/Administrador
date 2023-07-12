@@ -53,6 +53,12 @@ if ($id == 1 && $permisos)
         </div> 
         <div>
             <fieldset>
+                <legend title='CODIGO DEL CENTRO'>CODIGO DEL CENTRO</legend>
+                <input type="text" value='<?= $sede->getCod() ?>' required name='codsede' id="codsede">
+            </fieldset>
+        </div>
+        <div>
+            <fieldset>
                 <legend title='NOMBRE DEL CENTRO'>NOMBRE DEL CENTRO</legend>
                 <input type="text" value='<?= $sede->getNombre() ?>' required name='nombresede' id="nombresede">
             </fieldset>

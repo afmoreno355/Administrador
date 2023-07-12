@@ -125,6 +125,69 @@ class Sede {
         return ConectorBD::ejecutarQuery($cadena, 'eagle_admin');        
     }
     
+     public function Adicionar() {
+        $sql="insert into sede( codigosede , nombresede , departamento  ) values(
+                '$this->cod',
+                '$this->nombre',
+                '$this->id_departamento'
+             )";
+        //print_r($sql);
+    if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
+            //Historico de las acciones en el sistemas de informacion
+            $nuevo_query = str_replace("'", "|", $sql);
+            $historico = new Historico(null, null);
+            $historico->setIdentificacion($_SESSION["user"]);
+            $historico->setTipo_historico("ADICIONAR");
+            $historico->setHistorico(strtoupper($nuevo_query));
+            $historico->setFecha("now()");
+            $historico->setTabla("SEDE");
+            $historico->grabar();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function Modificar( $id ) {
+        $sql="update sede set
+                codigosede = '$this->cod'
+              , nombresede = '$this->nombre'
+              , departamento = '$this->id_departamento'
+               where codigosede = '$id' ";
+        //print_r($sql);
+        if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
+            //Historico de las acciones en el sistemas de informacion
+            $nuevo_query = str_replace("'", "|", $sql);
+            $historico = new Historico(null, null);
+            $historico->setIdentificacion($_SESSION["user"]);
+            $historico->setTipo_historico("MODIFICAR");
+            $historico->setHistorico(strtoupper($nuevo_query));
+            $historico->setFecha("now()");
+            $historico->setTabla("SEDE");
+            $historico->grabar();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function Borrar() {
+        $sql="delete from sede where codigosede = '$this->cod' ";
+        if (ConectorBD::ejecutarQuery($sql, 'eagle_admin')) {
+            //Historico de las acciones en el sistemas de informacion
+            $nuevo_query = str_replace("'", "|", $sql);
+            $historico = new Historico(null, null);
+            $historico->setIdentificacion($_SESSION["user"]);
+            $historico->setTipo_historico("ELIMINAR");
+            $historico->setHistorico(strtoupper($nuevo_query));
+            $historico->setFecha("now()");
+            $historico->setTabla("SEDE");
+            $historico->grabar();
+            return true;
+        } else {
+            return false;
+        }
+    }  
 }
 
   
