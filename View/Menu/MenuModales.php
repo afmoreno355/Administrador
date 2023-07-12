@@ -82,7 +82,6 @@ if ($id == 1 && $permisos)
 if ($id == 2 && $permisos)
 {
 ?>
-<h1>2</h1>
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
@@ -104,7 +103,6 @@ if ($id == 2 && $permisos)
 elseif ($id == 3 && $permisos)
 {
 ?>
-<h1>3</h1>
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
@@ -131,7 +129,7 @@ elseif ($id == 3 && $permisos)
                 </section>
                 <section>
                     <h3>ÍCONO DE MENÚ: </h3> 
-                    <p> <?= $menu->getIcono() ?></p>
+                    <p> <img src='<?= $menu->getIcono() ?>' style = 'width : 60px ; height : 60px'/>   </p>
                 </section>
             </fieldset>
         </div>
@@ -140,7 +138,6 @@ elseif ($id == 3 && $permisos)
 }
 elseif ($id == 4 && $permisos ) {
     ?>
-    <h1>4</h1>
     <div class="carga_Documento">
          <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
@@ -198,7 +195,6 @@ elseif ($id == 4 && $permisos ) {
 }
 elseif ($id == 5 && $permisos ) {
     ?>
-    <h1>5</h1>
     <div class="carga_Documento">
          <div class="contenido">  
             <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">

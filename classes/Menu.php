@@ -158,7 +158,7 @@ class Menu {
     
     public function Borrar() {
         $sql="delete from menu where id = '$this->id' ";
-        print_r($sql);
+        //print_r($sql);
         if (ConectorBD::ejecutarQuery($sql, null)) {
             
             //Historico de las acciones en el sistemas de informacion

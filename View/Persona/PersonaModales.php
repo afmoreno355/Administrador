@@ -41,6 +41,16 @@ $llave_Primaria_Contructor = ( $llave_Primaria == "" ) ? "null" : "'$llave_Prima
 $persona = new Persona( ' identificacion ' , $llave_Primaria_Contructor);
 if ($id == 1 && $permisos)
 {
+    if( $persona->getId() != '' )
+    {
+        $_pernosa = "'{$persona->getId()}'" ;
+    }
+    else
+    {
+        $_pernosa = 'null' ; 
+    }
+    $_menu_Persona = ( new PersonaMenu( ' identificacion ' , $_pernosa ) )->getMenu();
+    $_menu = Menu::datosobjetos( null , null , null );
 ?>
     <div class="carga_Documento">
         <div class="contenido">  
@@ -89,10 +99,19 @@ if ($id == 1 && $permisos)
         </div>
         <div>
             <fieldset>
+                <legend title='CENTRO O DIRECCIÓN'>CENTRO O DIRECCIÓN</legend>
+                <input list="centroUser" required name='centro' id="centro" value='<?= $persona->getidsede() ?>'>
+                <datalist id="centroUser" >
+                    <?= Select::listaopciones( 2 , $persona->getIdTipo() , "select codigosede , concat( nombresede , ' ' , codigosede ) from sede ;" )?>
+                </datalist>
+            </fieldset>
+        </div>
+        <div>
+            <fieldset>
                 <legend title='ROL EN SISTEMA'>ROL EN SISTEMA</legend>
                 <input list="rolUser" required name='idtipo' id="idtipo" value='<?= $persona->getIdTipo() ?>'>
                 <datalist id="rolUser" >
-                    <?= Select::listaopciones( 2 , $persona->getIdTipo() , "select id , nombrecargo from cargo WHERE  codigocargo <> 'SA' ;" )?>
+                    <?= Select::listaopciones( 2 , $persona->getIdTipo() , "select codigocargo , nombrecargo from cargo WHERE  codigocargo <> 'SA' ;" )?>
                 </datalist>
             </fieldset>
         </div>
@@ -104,6 +123,37 @@ if ($id == 1 && $permisos)
                 </select>
             </fieldset>
         </div>
+        <div class="contenido">  
+            <div class="where_title where_modal tamanio" style="width: 100%; height: auto; margin-left: 0px;">
+                <img src="img/icon/gestionar.png"/><label class="where">Administrador DFP – Dirección de Formación Profesional</label></div>
+            <br><br>
+            <label style="font-size: 1em; " >Permisos de Usuario</label>  
+        </div> 
+<?PHP
+        for ($l = 0; $l < count($_menu); $l++) 
+        {
+            $_checked = '' ;
+            $objet = $_menu[$l] ;
+            $_array_Menu = explode( '<|' , $_menu_Persona ) ;
+            for ($h = 0; $h < count( $_array_Menu ); $h++)
+            {
+                if( $objet->getId() == $_array_Menu[$h] )
+                {
+                    $_checked = 'checked' ;
+                    $h = count( $_array_Menu ) ;
+                }
+            }
+            
+?>        
+            <div>
+                <fieldset>
+                    <legend title='CHECK DE PERMISO A MENU <?= $objet->getNombre() ?>'><?= $objet->getNombre() ?> <img src='<?= $objet->getIcono() ?>' style = 'width : 20px ; height : 20px'/>   </legend>
+                    <input type="checkbox" <?= $_checked ?> id="<?= str_replace( ' ' , '_' , $objet->getNombre() ) ?>" required name="menu[]" >
+                </fieldset>
+            </div>
+<?PHP
+        }
+?>         
         <div>        
             <input type="hidden" value="<?= $persona->getId() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
@@ -141,7 +191,7 @@ elseif ($id == 3 && $permisos)
     <div class="carga_Documento">
         <div class="contenido">  
             <div class="where_title where_modal" style="width: 100%; height: auto; margin-left: 0px;">
-                <img src="img/icon/estado.png"/>
+                <img src="<?= $persona->getImagen() ?>"/>
                 <lablel>
                     Administrador DFP – Dirección de Formación Profesional
                 </label>

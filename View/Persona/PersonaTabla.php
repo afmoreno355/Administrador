@@ -36,7 +36,7 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA") {
 
     // evalua si existe bucarPalabraClave y nos crea la cadena de busqueda
     if ($bucarPalabraClave != "") {
-        $filtro .= " ( identificacion like '%" . strtoupper($bucarPalabraClave) . "%' or correoinstitucional like '%" . strtoupper($bucarPalabraClave) . "%' )";
+        $filtro .= " ( identificacion like '%" . strtoupper($bucarPalabraClave) . "%' or correoinstitucional like '%" . strtoupper($bucarPalabraClave) . "%' or nombres like '%" . strtoupper($bucarPalabraClave) . "%' or apellidos like '%" . strtoupper($bucarPalabraClave) . "%')";
     }
 
     // obj para llenar las tablas

@@ -193,7 +193,7 @@ class Persona {
     }
     
      public function borrar() {
-        $cadenaSQL = "delete from persona where identificacion ='" . $this->id . "'";
+        $cadenaSQL = "delete from persona where identificacion ='{$this->id}'";
         if (ConectorBD::ejecutarQuery($cadenaSQL, null)) {
              //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "/", $cadenaSQL);
@@ -209,22 +209,34 @@ class Persona {
         }
     }
 
-    public function grabar() {
-        $persona = '';
-        $dependencias = '';
-        $value = '';
-        $value2 = '';
-        if ( $this->idsede != '' ) {
-            $persona = ' idsede, ';
-            $value = "'$this->idsede',";
-        }
-        if ( $this->dependencia != '0' ) {
-            $dependencias = ' dependencia, ';
-            $value2 = "'$this->dependencia',";
-        }
-        $cadenaSQL = "insert into persona(identificacion,nombres,apellidos,telefono,correoinstitucional,celular,$persona $dependencias"
-                . "idtipo,jefeacargo,password,imagen) values('{$this->id}','{$this->nombre}','{$this->apellido}','{$this->tel}','{$this->correo}',"
-                . "'{$this->celular}', $value $value2 '{$this->idTipo}','{$this->jefeACargo}','{$this->password}','{$this->imagen}')";
+    public function Adicionar() {
+        $cadenaSQL = "insert into persona("
+                . "      identificacion , "
+                . "      nombres , "
+                . "      apellidos , "
+                . "      telefono , "
+                . "      correoinstitucional ,"
+                . "      celular , "
+                . "      dependencia , "
+                . "      idsede , "
+                . "      idtipo , "
+                . "      jefeacargo , "
+                . "      password , "
+                . "      imagen  ) "
+                . "   values("
+                . "      '{$this->id}' , "
+                . "      '{$this->nombre}' , "
+                . "      '{$this->apellido}' , "
+                . "      '{$this->tel}' , "
+                . "      '{$this->correo}' , "
+                . "      '{$this->celular}' , "
+                . "      '{$this->dependencia}' , "
+                . "      '{$this->idsede}' , "
+                . "      '{$this->idTipo}' , "
+                . "      '{$this->jefeACargo}' , "
+                . "      '{$this->password}' , "
+                . "      '{$this->imagen}' ) ";
+        //print_r($cadenaSQL);
         if (ConectorBD::ejecutarQuery($cadenaSQL, null)) {
             //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "/", $cadenaSQL);
@@ -240,10 +252,20 @@ class Persona {
         }
     }
 
-    public function modificar($id) {
-        $cadenaSQL = "update persona set identificacion ='{$this->id}',  nombres ='{$this->nombre}', apellidos ='{$this->apellido}', telefono ='{$this->tel}', "
-                . "correoinstitucional='{$this->correo}', celular ='{$this->celular}', dependencia ='{$this->dependencia}', idsede ='{$this->idsede}', "
-                . "idtipo ='{$this->idTipo}', jefeacargo ='{$this->jefeACargo}' where identificacion ='" . $id . "'";
+    public function Modificar($id) {
+        $cadenaSQL = "update persona set "
+                . "       identificacion ='{$this->id}' ,"
+                . "       nombres ='{$this->nombre}' ,"
+                . "       apellidos ='{$this->apellido}' ,"
+                . "       telefono ='{$this->tel}' ,"
+                . "       correoinstitucional='{$this->correo}' ,"
+                . "       celular ='{$this->celular}' ,"
+                . "       dependencia ='{$this->dependencia}' ,"
+                . "       idsede ='{$this->idsede}' , "
+                . "       idtipo ='{$this->idTipo}' ,"
+                . "       jefeacargo ='{$this->jefeACargo}' "
+                . "   where identificacion ='$id'";
+        //print_r($cadenaSQL);
         if (ConectorBD::ejecutarQuery($cadenaSQL, null)) {
             //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "/", $cadenaSQL);

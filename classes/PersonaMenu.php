@@ -25,7 +25,7 @@ class PersonaMenu {
                 $cadenaSQL="select * from personamenu where $campo = $valor";
                 //print_r($cadenaSQL);
                 $respuesta= ConectorBD::ejecutarQuery($cadenaSQL, null);
-                if ($respuesta>0) $this->objeto ($respuesta[0]);
+                if (count($respuesta)>0) $this->objeto($respuesta[0]);
             }
         }
     }
