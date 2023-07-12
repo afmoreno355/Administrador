@@ -45,11 +45,11 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA") {
     $numeroPaginas = ceil(Persona::count($filtro)[0][0] / 20);
     // ecrypt codifica lo que enviamos por javascript   
     $var_add = Http::encryptIt("id=1&llave_Primaria=&user={$_SESSION["user"]}&accion=ADICIONAR");
-    $var_ayu = Http::encryptIt("id=4&llave_Primaria=&user={$_SESSION["user"]}&accion=AYUDA");
+    $var_pla = Http::encryptIt("id=6&llave_Primaria=&user={$_SESSION["user"]}&accion=CARGAR PLANO");
     ?> 
     <div class="botonMenu" style="font-weight: bolder; font-size: 2em; ">
         <button type='button' id='button' class="ele" title='Adicionar nuevo'  onclick="validarDatos(``, `I=<?= $var_add ?>`, `modalVentana`, `View/Persona/PersonaModales.php`, event, 'ele')"><img src="img/icon/adds.png"/> ADICIONAR<br>USUARIO</button>
-        <button type='button' id='button' class="ele" title='Ayuda'  onclick="validarDatos(``, `I=<?= $var_ayu ?>`, `modalVentana`, `View/Persona/PersonaModales.php`, event, 'ele')"><img src="img/icon/ayu.png"/> AYUDA<br>MODULO</button>
+        <button type='button' id='button' class="ele" title='Cargar archivo plano'  onclick="validarDatos(``, `I=<?= $var_pla ?>`, `modalVentana`, `View/Persona/PersonaModales.php`, event, 'ele')"><img src="img/icon/excel.png"/> ARCHIVO<br>PLANO</button>
     </div>  
     <!-- Inicio de html tablas -->
     <table id="tableIntD" class="tableIntT sombra tableIntTa">
@@ -76,7 +76,7 @@ if ($ingreso === false && $permisos->getIdTipo() !== "SA") {
                 <td> <?= $objet->getApellido() ?></td>
                 <td> <?= $objet->getCorreo() ?></td>
                 <td> <?= $objet->getidsede() ?></td>
-                <td> <?= $objet->getIdTipo() ?></td>
+                <td> <?= ConectorBD::ejecutarQuery( " select nombrecargo from cargo where codigocargo = '{$objet->getIdTipo()}' " , 'eagle_admin' )[0][0]   ?></td>
                 <td>
                     <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_inf ?>`, `modalVentana`, `View/Persona/PersonaModales.php`)" title="Información Elemento" value="INFORMACION">
                     <input type="button" id="button" name="1" onclick="validarDatos(``, `I=<?= $var_blo ?>`, `modalVentana`, `View/Persona/PersonaModales.php`)" title="Bloquear Elemento" value="BLOQUEAR">

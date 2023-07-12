@@ -96,6 +96,14 @@ if ($id == 1 && $permisos)
                 </datalist>
             </fieldset>
         </div>
+        <div>
+            <fieldset>
+                <legend title='DEPENDENCIA SI SE NECESITA'>DEPENDENCIA</legend>
+                <select required id="dependencia" name="dependencia" >
+                    <?= Select::listaopciones( 13 , $persona->getDependencia() ) ?>
+                </select>
+            </fieldset>
+        </div>
         <div>        
             <input type="hidden" value="<?= $persona->getId() ?>" name="id" id="id">
             <input type="hidden" value="<?= $accion ?>" name="accion" id="accion">
@@ -263,6 +271,58 @@ elseif ($id == 5 && $permisos)
             <input type="reset" name="limpiarU"  value="LIMPIAR"/>
         </div>
 </div>   
-<?PHP 
+<?php 
+}
+elseif ($id == 6) 
+{
+?>
+    <div class="carga_Documento">
+        <div class="contenido">  
+            <div class="where_title where_modal">
+                <img src="img/icon/excel.png"/><div class="where">ADICIONAR ARCHIVOS PLANOS DE PERSONA</div>
+            </div>
+            <label id="aviso"></label>  
+        </div>           
+        <div>     
+            <fieldset>
+                <legend title='PLANO DE USUARIOS A CARGAR '>A PLANO CARGAR</legend>
+                <input type='file' required  value='' name='personaplano' id='personaplano' onchange="PlanoPersona('View/Usuario/UsuarioModificar.php', `tablaRespuesta`)">
+            </fieldset>
+        </div>
+        <div  class="contenido" >     
+            <label class="label2"> -El sistema identifica para realizar el cargue de la información los siguientes separadores (signos) como coma ',', punto y coma ';', punto '.' y porcentaje '%' si es necesario puede igresar aqui un nuevo separador o palabra clave :) - </label>
+        </div>
+        <div>     
+            <fieldset>
+                <legend title='NUEVO SEPARADOR'>NUEVO SEPARADOR</legend>
+                <input type='text'  value='' name='separador' id='separador' onkeyup="PlanoPersona('View/Usuario/UsuarioModificar.php', `tablaRespuesta`)">
+            </fieldset>
+        </div>
+        <div>        
+            <input type="hidden" value="<?= $_SESSION['user'] ?>" name="id" id="id">
+            <input type="submit" title="ENVIAR LA INFORMACION PARA GUARDAR A LA BASE DE DATOS"  value="<?= $accion ?>" name="accionU" id="accionU" onclick="envio();">
+            <input type="reset" title="LIMPIAR LAS CASILLAS PARA VOLVER A HACER UN INTENTO DE ENVIO" name="limpiarU"  value="LIMPIAR"/>
+        </div>
+        <div class="contenido">  
+            <div class="contenido_check">
+                <div class="column_check" id="identificacion"><div>IDENTIFICACION</div></div>
+                <div class="column_check" id="nombres"><div>NOMBRES</div></div>
+                <div class="column_check" id="apellido"><div>APELLIDOS</div></div>
+                <div class="column_check" id="correo"><div>CORREO</div></div>
+                <div class="column_check" id="celular"><div>CELULAR</div></div>
+                <div class="column_check" id="telefono"><div>TELEFONO</div></div>
+                <div class="column_check" id="id_sede"><div>SEDE</div></div>
+                <div class="column_check" id="id_tipo"><div>ROL</div></div>
+                <div class="column_check" id="dependencia"><div>DEPENDENCIA</div></div>
+            </div>
+        </div>
+        <div class="contenido contenido_modal">  
+            <label id="aviso2"></label>  
+            <DIV style="overflow: scroll; width: auto; height: auto">
+                <div class="tableIntD" id="tablaRespuesta"></div> 
+            </DIV>
+        </div>
+    </div>
+<?php
 }
 ?>

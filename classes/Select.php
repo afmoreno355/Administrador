@@ -151,6 +151,21 @@ class Select {
                               array('5trimestre' , 'OFERTA ESPECIAL') 
                     ) ;
             break;
+            case 13 :
+                return array( array('0' , 'NINGUNA') ,
+                              array('ENI' , 'ENI') ,
+                              array('ADMIN. EDUCATIVA' , 'ADMIN. EDUCATIVA') ,
+                              array('GEST. ESTRATEGICA Y ADMINISTRATIVA' , 'GEST. ESTRATEGICA Y ADMINISTRATIVA') ,
+                              array('DESPACHO' , 'DESPACHO') ,
+                              array('SENNOVA' , 'SENNOVA') ,
+                              array('EJEC. DE LA FORM. PROF' , 'EJEC. DE LA FORM. PROF') ,
+                              array('BIENESTAR' , 'BIENESTAR') ,
+                              array('GEST. CURRICULAR' , 'GEST. CURRICULAR') ,
+                              array('COORDINACION NAL. DE EMPRENDIMIENTO' , 'COORDINACION NAL. DE EMPRENDIMIENTO') ,
+                              array('NAL. APE' , 'NAL. APE') ,
+                              array('EJEC. FORMACION VIRTUAL' , 'EJEC. FORMACION VIRTUAL') 
+                    ) ;
+            break;
         }
     } 
     public static function validar( $variable /*VARIABLE QUE LLEGA*/ ,
