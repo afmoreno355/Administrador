@@ -16,6 +16,14 @@ if( !isset($_SESSION["user"]) )
 $nombreTilde = array("á", "é", "í", "ó", "ú", "ñ", ".", "", "Á", "É", "Í", "Ó", "Ú", "Ñ", ".", "");
 $nombreSinTilde = array("&Aacute;", "&Eacute;", "&Iacute;", "&Oacute;", "&Uacute;", "&Ntilde;", "", "", "&Aacute;", "&Eacute;", "&Iacute;", "&Oacute;", "&Uacute;", "&Ntilde;", "", "");
 $nombreSinTilde_Nuevo = array("A", "E", "I", "O", "U", "N", "", "", "A", "E", "I", "O", "U", "N", "", "");
+$lista = '' ;
+$fecha_Campania = date('Y-m-d H:i:s');
+$filascount = 0;
+$arraycount = 0;
+$comodin = '';
+$lista_Titulo = '';
+$errores = '';
+$array_session = [];
 
 date_default_timezone_set("America/Bogota");
 $fecha = date("YmdHis");
@@ -54,7 +62,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 Select::validar( $telefono , 'NUMERIC' , NULL , 'CAMPO TELEFONO' ) &&
                 Select::validar( $celular , 'NUMERIC' , NULL , 'CAMPO CELULAR' ) &&
                 Select::validar( $correoinstitucional , 'TEXT' , 80 , 'CAMPO CORREO' ) &&
-                Select::validar( $idtipo , 'ARRAY' , null , 'CAMPO ROL' ,  " codigocargo = '$idtipo' " , 'eagle_admin' , 'cargo' ) &&
+                Select::validar( $idtipo , 'ARRAY' , null , 'CAMPO ROL' ,  " codigocargo = '$idtipo' where codigocargo <> 'SA' " , 'eagle_admin' , 'cargo' ) &&
                 Select::validar( $centro , 'ARRAY' , null , 'CAMPO CENTRO' ,  " codigosede = '$centro' " , 'eagle_admin' , 'sede' ) &&
                 Select::validar( $dependencia , 'ARRAY' , null , 'CAMPO DEPENDENCIA' , 13 ) 
                 )
@@ -108,6 +116,161 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
             else 
             {
                 print_r("** EL USUARIO NO SE PUDO ELIMINAR **");
+            }
+        }
+        elseif (!isset($accionU))
+        {
+            print_r('hola');
+            $cero = false;
+            $nombrefoto = dirname(__FILE__)."/../../Archivos/TMP/" . $fecha . $_FILES['personaplano']['name'];
+            $url_Foto = "Archivos/TMP/" . $_FILES['personaplano']['name'];
+            if (copy($_FILES['personaplano']['tmp_name'], $nombrefoto))
+            {
+                $filascount = 1;
+                if (pathinfo(strtoupper($_FILES['personaplano']['name']), PATHINFO_EXTENSION) == 'DOC')
+                {
+                    $fileHandle = fopen($nombrefoto, "r");
+                    $line = @fread($fileHandle, filesize($nombrefoto));
+                    $line = preg_replace("[\n|\r|\n\r]", "-_-" . chr(0x0D), $line);
+                    $lines = explode(chr(0x0D), $line);
+                    $outtext = "";
+                    foreach ($lines as $thisline)
+                    {
+                        $pos = strpos($thisline, chr(0x00));
+                        if (($pos !== FALSE) || (strlen($thisline) == 0)) 
+                        {
+
+                        } 
+                        else
+                        {
+                            $outtext .= $thisline . " ";
+                        }
+                    }
+                    $outtext = preg_replace("/[^a-zA-Z0-9\s\,\.\;\n\-\?\n\%\r\t@\/\_\(\)]/", "", $outtext);
+                    $nuevoNombre3 = explode("-_-", $outtext);
+                    if ($separador == '')
+                    {
+                        if (count(explode(';', $nuevoNombre3[0])) >= 5) 
+                        {
+                            $comodin = ';';
+                        } 
+                        elseif (count(explode(',', $nuevoNombre3[0])) >= 5) 
+                        {
+                            $comodin = ',';
+                        }
+                        elseif (count(explode('%', $nuevoNombre3[0])) >= 5) 
+                        {
+                            $comodin = '%';
+                        } 
+                        elseif (count(explode('.', $nuevoNombre3[0])) >= 5)
+                        {
+                            $comodin = '.';
+                        }
+                    } else 
+                    {
+                        $comodin = $separador;
+                    }
+
+                    if ($comodin != '') 
+                    {
+                        for ($i = 0; $i < count($nuevoNombre3); $i++)
+                        {
+                            $cortar[] = explode($comodin, $nuevoNombre3[$i]);
+                            $lista .= "<tr>";
+                            for ($j = 0; $j < count($cortar[$i]); $j++) 
+                            {
+                                if (count($cortar[$i]) > 3) {
+                                    if ($arraycount < count($cortar[$i])) 
+                                    {
+                                        $arraycount = count($cortar[$i]);
+                                    }
+                                    $lista .= "<td>";
+                                    $lista .= trim($cortar[$i][$j]);
+                                    $lista .= "</td>";
+                                    $array_session[$i][$j] = trim($cortar[$i][$j]);
+                                }
+                            }
+                            $lista .= "</tr>";
+                        }
+                        $_SESSION['archivo'] = $array_session;
+                    }
+                } 
+                elseif (pathinfo(strtoupper($_FILES['personaplano']['name']), PATHINFO_EXTENSION) == 'CSV') 
+                {
+                    if (($gestor = fopen($nombrefoto, "r")) !== FALSE) {
+                        if ($separador == '') 
+                        {
+                            if (count($nuevoNombre3 = fgetcsv($gestor, 0, ";")) >= 5) 
+                            {
+                                $comodin = ';';
+                            }
+                            elseif (count($nuevoNombre3 = fgetcsv($gestor, 0, ",")) >= 5) 
+                            {
+                                $comodin = ',';
+                            } 
+                            elseif (count($nuevoNombre3 = fgetcsv($gestor, 0, "%")) >= 5) 
+                            {
+                                $comodin = '%';
+                            } 
+                            elseif (count($nuevoNombre3 = fgetcsv($gestor, 0, ".")) >= 5) 
+                            {
+                                $comodin = '.';
+                            }
+                        } 
+                        else 
+                        {
+                            $comodin = $separador;
+                        }
+                    }
+                    fclose($gestor);
+                    if (($gestor = fopen($nombrefoto, "r")) !== FALSE) 
+                    {
+                        if ($comodin != '') 
+                        {
+                            while (($nuevoNombre3 = fgetcsv($gestor, 0, $comodin)) !== FALSE) 
+                            {
+                                $lista .= "<tr>";
+                                for ($j = 0; $j < count($nuevoNombre3); $j++) 
+                                {
+                                    if (count($nuevoNombre3) > 3) 
+                                    {
+                                        if ($arraycount < count($nuevoNombre3)) 
+                                        {
+                                            $arraycount = count($nuevoNombre3);
+                                        }
+                                        if ($cero === false) 
+                                        {
+                                            $cero = true;
+                                            $filascount = 0;
+                                        }
+                                        $lista .= "<td>";
+                                        $lista .= trim($nuevoNombre3[$j]);
+                                        $lista .= "</td>";
+                                        $array_session[$filascount][$j] = trim($nuevoNombre3[$j]);
+                                    }
+                                }
+                                $lista .= "</tr>";
+                                $filascount = $filascount + 1;
+                            }
+                        }
+                    }
+                    $_SESSION['archivo'] = $array_session;
+                    fclose($gestor);
+                }
+                $lista_Titulo .= "<tr>";
+                for ($k = 0; $k < $arraycount; $k++) 
+                {
+                    $lista_Titulo .= "<td>";
+                    $lista_Titulo .= "<input type='checkbox' value='$k' class='column' onclick='validarColumn(event)'/>";
+                    $lista_Titulo .= "</td>";
+                }
+                $lista_Titulo .= "</tr>";
+                $lista = '<table class="tableIntT sombra tableIntTa">' . $lista_Titulo . $lista;
+                $lista .= '</table>';
+               
+                unlink($nombrefoto);
+                print_r($lista);
+                ob_end_flush();
             }
         }
     }

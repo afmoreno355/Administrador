@@ -97,3 +97,4 @@ $ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "MI USUARI
 <script src="js/Boton.js"> </script>
 <script src="js/Validar.js"> </script>
 <script src="js/Reporte.js"> </script>
+<script src="js/Persona.js"> </script>

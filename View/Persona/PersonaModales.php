@@ -336,7 +336,7 @@ elseif ($id == 6)
         <div>     
             <fieldset>
                 <legend title='PLANO DE USUARIOS A CARGAR '>A PLANO CARGAR</legend>
-                <input type='file' required  value='' name='personaplano' id='personaplano' onchange="PlanoPersona('View/Usuario/UsuarioModificar.php', `tablaRespuesta`)">
+                <input type='file' required  value='' name='personaplano' id='personaplano' onchange="PlanoUsuarios('View/Persona/PersonaCrud.php', `tablaRespuesta`)">
             </fieldset>
         </div>
         <div  class="contenido" >     
@@ -345,12 +345,13 @@ elseif ($id == 6)
         <div>     
             <fieldset>
                 <legend title='NUEVO SEPARADOR'>NUEVO SEPARADOR</legend>
-                <input type='text'  value='' name='separador' id='separador' onkeyup="PlanoPersona('View/Usuario/UsuarioModificar.php', `tablaRespuesta`)">
+                <input type='text'  value='' name='separador' id='separador' onkeyup="PlanoUsuarios('View/Persona/PersonaCrud.php', `tablaRespuesta`)">
             </fieldset>
         </div>
         <div>        
             <input type="hidden" value="<?= $_SESSION['user'] ?>" name="id" id="id">
             <input type="submit" title="ENVIAR LA INFORMACION PARA GUARDAR A LA BASE DE DATOS"  value="<?= $accion ?>" name="accionU" id="accionU" onclick="envio();">
+            <input type="hidden" title="ENVIAR LA INFORMACION PARA GUARDAR A LA BASE DE DATOS"  value="<?= $accion ?>" name="accion" id="accion">
             <input type="reset" title="LIMPIAR LAS CASILLAS PARA VOLVER A HACER UN INTENTO DE ENVIO" name="limpiarU"  value="LIMPIAR"/>
         </div>
         <div class="contenido">  
