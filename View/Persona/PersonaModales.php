@@ -350,7 +350,7 @@ elseif ($id == 6)
         </div>
         <div>        
             <input type="hidden" value="<?= $_SESSION['user'] ?>" name="id" id="id">
-            <input type="submit" title="ENVIAR LA INFORMACION PARA GUARDAR A LA BASE DE DATOS"  value="<?= $accion ?>" name="accionU" id="accionU" onclick="envio();">
+            <input type="submit" title="ENVIAR LA INFORMACION PARA GUARDAR A LA BASE DE DATOS"  value="<?= $accion ?>" name="accionU" id="accionU" onclick="envio();" style="display : none" >
             <input type="hidden" title="ENVIAR LA INFORMACION PARA GUARDAR A LA BASE DE DATOS"  value="<?= $accion ?>" name="accion" id="accion">
             <input type="reset" title="LIMPIAR LAS CASILLAS PARA VOLVER A HACER UN INTENTO DE ENVIO" name="limpiarU"  value="LIMPIAR"/>
         </div>

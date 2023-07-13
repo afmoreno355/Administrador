@@ -67,8 +67,8 @@ function PlanoUsuarios(donde , hacer)
     }
     if(personaplano == true )
     {
-        
         formFotoDoc(donde, formData, hacer);
+        document.getElementById('accionU').style.display = 'block'  ;
     }
 }
 
@@ -193,4 +193,16 @@ function validarColumn(event)
         }
         event.currentTarget.id = '' ;
     }    
+}
+function envio()
+{
+    if(document.getElementById('personaplano').value !== '')
+    {
+        cargarLoad('aviso');
+        idexistentesReCa( ``, `id=&accion=A. PLANOS&column=SI&identificacion=${document.getElementById('IDENTIFICACION').value}&nombres=${document.getElementById('NOMBRES').value}&apellidos=${document.getElementById('APELLIDOS').value}&correo=${document.getElementById('CORREO').value}&celular=${document.getElementById('CELULAR').value}&telefono=${document.getElementById('TELEFONO').value}&sede=${document.getElementById('SEDE').value}&rol=${document.getElementById('ROLES').value}&dependencia=${document.getElementById('DEPENDENCIA').value}`, `aviso`, `View/Persona/PersonaCrud.php`, null , null ); 
+    }
+    else
+    {
+        document.getElementById('aviso').innerHTML = 'HAY CAMPOS REQUERIDOS POR LLENAR!!! ';
+    }
 }

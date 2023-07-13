@@ -118,9 +118,82 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 print_r("** EL USUARIO NO SE PUDO ELIMINAR **");
             }
         }
+        elseif ($accion == 'A. PLANOS') 
+        {
+            if ($column != '')
+            {
+                for ($i = 1; $i < count($_SESSION['archivo']); $i++) 
+                {
+                    if ($identificacion != '' && $identificacion != ' ' && isset($identificacion) && is_numeric($identificacion)) 
+                    {
+                        $persona->setId(trim(strtoupper($_SESSION['archivo'][$i][$identificacion])));
+                        $val0 = true;
+                    }
+                    if ($nombres != '' && isset($nombres) && is_numeric($nombres)) 
+                    {
+                        $persona->setNombre(trim(strtoupper($_SESSION['archivo'][$i][$nombres])));
+                        $val1 = true;
+                    }
+                    if ($apellidos != '' && isset($apellidos) && is_numeric($apellidos))
+                    {
+                        $persona->setApellido(trim(strtoupper($_SESSION['archivo'][$i][$apellidos])));
+                        $val2 = true;
+                    }
+                    if ($correo != '' && isset($correo) && is_numeric($correo)) {
+                        $persona->setCorreo(trim(strtoupper($_SESSION['archivo'][$i][$correo])));
+                        $val3 = true;
+                    }
+                    if ($celular != '' && isset($celular) && is_numeric($celular)) {
+                        $persona->setCelular(strtoupper($_SESSION['archivo'][$i][$celular]));
+                        $val4 = true;
+                    }
+                    if ($telefono != '' && isset($telefono) && is_numeric($telefono)) 
+                    {
+                        $persona->setTel(strtoupper($_SESSION['archivo'][$i][$telefono]));
+                        $val5 = true;
+                    }
+                    if ($sede != '' && isset($sede) && is_numeric($sede)) 
+                    {
+                        $persona->setidsede(trim(strtoupper($_SESSION['archivo'][$i][$sede])));
+                        $val6 = true;
+                    }
+                    if ($rol != '' && isset($rol) && is_numeric($rol)) 
+                    {
+                        $persona->setIdTipo(trim(strtoupper($_SESSION['archivo'][$i][$rol])));
+                        $val7 = true;
+                    }
+                    if (isset($dependencia) ) 
+                    {
+                        $persona->setDependencia(trim(strtoupper($_SESSION['archivo'][$i][$dependencia])));
+                        $val8 = true;
+                    }
+                    if (isset($val0) && isset($val1) && isset($val2) && isset($val3) && isset($val4) && isset($val5) && isset($val6) && isset($val7) && isset($val8)) 
+                    {
+                        $persona->setImagen('img/defecto/persona.jpg');
+                        $persona->setPassword(password_hash(md5(trim($persona->getId())), PASSWORD_DEFAULT, ['cost' => 12]));
+                        if ($persona->Adicionar()) 
+                        {
+                            $bn_todo = true;
+                            $menuAcc=new PersonaMenu(null,null);
+                        }
+                        else
+                        {
+                            $errores .= ' ERROR FILA ' . ($i + 1) . '<br>';
+                        }
+                    }
+                }
+            }
+            if (isset($bn_todo)) 
+            {
+                print_r("Todo salio bn <3 <br>Archivo guardado<br> $errores");
+            } 
+            else
+            {
+                print_r($errores);
+            }
+        }
         elseif (!isset($accionU))
         {
-            print_r('hola');
             $cero = false;
             $nombrefoto = dirname(__FILE__)."/../../Archivos/TMP/" . $fecha . $_FILES['personaplano']['name'];
             $url_Foto = "Archivos/TMP/" . $_FILES['personaplano']['name'];
