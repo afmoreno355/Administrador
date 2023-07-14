@@ -143,6 +143,7 @@ class Sesion {
     // guardar elementos en la base de datos
     public function grabar() {
         $cadenaSQL = "insert into  sesion(estado,fecha,identificacion,token1,token2,token3)  values('$this->estado','$this->fecha','$this->identificacion','$this->token1','$this->token2','$this->token3')";
+        //print_r($cadenaSQL);
         if (ConectorBD::ejecutarQuery($cadenaSQL, null)) {
             //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "|", $cadenaSQL);

@@ -24,6 +24,7 @@ $comodin = '';
 $lista_Titulo = '';
 $errores = '';
 $array_session = [];
+$_menu_nuevo = '' ;
 
 date_default_timezone_set("America/Bogota");
 $fecha = date("YmdHis");
@@ -34,6 +35,8 @@ foreach ($_POST as $key => $value)
 
 $session = new Sesion(" identificacion ", "'{$_SESSION["user"]}'");
 $persona = new Persona( " identificacion ", "'{$_SESSION["user"]}'" );
+$empresa = ConectorBD::ejecutarQuery( " select * from empresa; " , null ) ;
+
 $token1 = $session->getToken1();
 $token2 = $session->getToken2();
 
@@ -53,6 +56,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
            $valor = null ; 
         }
         $Persona = new Persona( $campo, $valor );
+        $PersonaMenu = new PersonaMenu( null , null );
         if ($accion == "ADICIONAR" || $accion == "MODIFICAR") 
         {
             if (
@@ -62,7 +66,7 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 Select::validar( $telefono , 'NUMERIC' , NULL , 'CAMPO TELEFONO' ) &&
                 Select::validar( $celular , 'NUMERIC' , NULL , 'CAMPO CELULAR' ) &&
                 Select::validar( $correoinstitucional , 'TEXT' , 80 , 'CAMPO CORREO' ) &&
-                Select::validar( $idtipo , 'ARRAY' , null , 'CAMPO ROL' ,  " codigocargo = '$idtipo' where codigocargo <> 'SA' " , 'eagle_admin' , 'cargo' ) &&
+                Select::validar( $idtipo , 'ARRAY' , null , 'CAMPO ROL' ,  " codigocargo = '$idtipo' " , 'eagle_admin' , 'cargo' ) &&
                 Select::validar( $centro , 'ARRAY' , null , 'CAMPO CENTRO' ,  " codigosede = '$centro' " , 'eagle_admin' , 'sede' ) &&
                 Select::validar( $dependencia , 'ARRAY' , null , 'CAMPO DEPENDENCIA' , 13 ) 
                 )
@@ -80,13 +84,50 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 $Persona->setDependencia($dependencia);  
                 $Persona->setPassword(password_hash(md5(trim($identificacion)), PASSWORD_DEFAULT, ['cost'=> 12]));
                 $Persona->setImagen('img/defecto/persona.jpg');
-
+                
+                for ($m = 0; $m < count( $menu ); $m++) 
+                {
+                    $_menu_nuevo .= "{$menu[$m]}<|" ;
+                }
+                $PersonaMenu->setIdentificacion( $identificacion ) ;
+                $PersonaMenu->setPersonamenu( $_menu_nuevo ) ;
                 if ($accion == "ADICIONAR") 
                 {
                     if ( $Persona->Adicionar() )
                     {
                         $id = ConectorBD::ejecutarQuery("select identificacion from Persona where identificacion = '{$Persona->getId()}'  ; ", null)[0][0];
-                        print_r("Se ha cargado en el módulo, Usuario adicionado <|> id Usuario $id");
+                        if( $PersonaMenu->Adicionar() )
+                        {
+                            print_r("Se ha cargado en el módulo, Usuario adicionado <|> id Usuario $id");
+                            require './../Mail/Mail.php'; 
+                            mailer("{$Persona->getCorreo()}",
+                                "<body style='width: 100%; height: auto; position: absolute;'>
+                                    <p style='width: 90%;height: auto;position: relative;padding: 5px;font-weight: bold; margin-left: 5%;'>
+                                            Estimado Usuario cordial saludo,
+                                    </p>
+                                    <br>
+                                    <p style='width: 90%;height: auto;position: relative;padding: 5px;margin-left: 5%;'>
+                                           La Direccion de Formacion Profesional le informa que ha creado un usuario en el Sistema de Gestion de Informacion de la DFP, por tanto lo invitamos a que ingrese en el siguiente enlace: http://dfp.senaedu.edu.co/modulos_gestion/ para que ingrese con su numero de Cedula o Correo Institucional, la contrase&ntilde;a por defecto será su numero de cedula. 
+                                    </p>
+
+                                    <div style='width: 90%;height: auto;position: relative;padding: 5px;margin-left: 5%;'>
+                                        <table style='border-collapse: collapse;'>
+                                            <tr>
+                                                <td rowspan='3' ><img src='{$empresa[0][2]}' width='100px' height='100px'></td><td style='border-right: 1px solid orange; color:  orange; font-weight: bold; font-size: 1.4em;'>Sistema de Gestion   </td><td> Direccion Formacion Profesional</td>
+                                            </tr>
+                                            <tr>
+                                                <td style='border-right: 1px solid orange'>De Informacion - DFP   </td><td style='color:  orange; font-weight: bold; font-size: 1.4em;'> www.sena.edu.co</td>
+                                            </tr>       
+                                        </table>        
+                                    </div>
+                                </body>", 
+                            "USUARIO CREADO {$empresa[0][1]}");
+                        }
+                        else 
+                        {
+                            $Persona->borrar( $identificacion ) ;
+                            print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                        }
                     }
                     else
                     {
@@ -97,7 +138,38 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 {
                     if ( $Persona->Modificar( $id ) )
                     {
-                        print_r("Se ha cargado en el módulo, Usuario modificado ");
+                        if( $PersonaMenu->Modificar( $identificacion ) )
+                        {
+                            print_r("Se ha cargado en el módulo, Usuario modificado ");
+                            require './../Mail/Mail.php';  
+                            mailer("{$Persona->getCorreo()}", 
+                                "<body style='width: 100%; height: auto; position: absolute;'>
+                                    <p style='width: 90%;height: auto;position: relative;padding: 5px;font-weight: bold; margin-left: 5%;'>
+                                            Estimado Usuario cordial saludo,
+                                    </p>
+                                    <br>
+                                    <p style='width: 90%;height: auto;position: relative;padding: 5px;margin-left: 5%;'>
+                                           La Direccion de Formacion Profesional le informa que ha modificado su usuario en el Sistema de Gestion de Informacion de la DFP, por tanto lo invitamos a que ingrese en el siguiente enlace: http://dfp.senaedu.edu.co/modulos_gestion/ para que ingrese con su numero de Cedula o Correo electronico y su Contrase&ntilde;a no ha sido modificada. 
+                                    </p>
+
+                                    <div style='width: 90%;height: auto;position: relative;padding: 5px;margin-left: 5%;'>
+                                        <table style='border-collapse: collapse;'>
+                                            <tr>
+                                                <td rowspan='3' ><img src='{$empresa[0][2]}' width='100px' height='100px'></td><td style='border-right: 1px solid orange; color:  orange; font-weight: bold; font-size: 1.4em;'>Sistema de Gestion   </td><td> Direccion Formacion Profesional</td>
+                                            </tr>
+                                            <tr>
+                                                <td style='border-right: 1px solid orange'>De Informacion - DFP   </td><td style='color:  orange; font-weight: bold; font-size: 1.4em;'> www.sena.edu.co</td>
+                                            </tr>       
+                                        </table>        
+                                    </div>
+                                </body>", 
+                            "USUARIO MODIFICADO {$empresa[0][1]}");
+                        }
+                        else 
+                        {
+                            $Persona->borrar( $identificacion ) ;
+                            print_r("** ERROR INESPERADO VUELVE A INTENTAR **");
+                        }
                     }
                     else
                     {

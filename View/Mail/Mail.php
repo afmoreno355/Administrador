@@ -23,6 +23,7 @@ require_once dirname(__FILE__) . "/../../Librerias/src/SMTP.php";
 
 function mailer($Mail = '' , $MESSAJE = '' , $TITULO = '' )
 {
+    $empresa = ConectorBD::ejecutarQuery( " select * from empresa; " , null ) ;
     $mail = new PHPMailer(true); 
     try {
       //Server settings
@@ -30,13 +31,31 @@ function mailer($Mail = '' , $MESSAJE = '' , $TITULO = '' )
         $mail->isSMTP();                                      // Set mailer to use SMTP
         $mail->Host = 'smtp.gmail.com';  // smtp.live.com  Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = "direcciondeformacion@misena.edu.co";                 // SMTP username
-        $mail->Password = 'Sen@2022*';                           // SMTP password
+        $mail->Username = "{$empresa[0][6]}";                 // SMTP username
+        $mail->Password = "{$empresa[0][7]}";                           // SMTP password
         $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587;                                      // TCP port to connect to
         //Recipients
-        $mail->setFrom('direcciondeformacion@misena.edu.co', ' SGI-DFP');
-        $mail->addAddress($Mail);
+        $mail->setFrom( "{$empresa[0][6]}" , " {$empresa[0][1]}");
+        if( is_array( $Mail ) )
+        {
+            //print_r($Mail);
+            for($l = 0; $l < count($Mail); $l++)
+            {
+                if( is_array( $Mail[$l] )  )
+                {
+                    $mail->addAddress( trim( $Mail[$l][0] ) );
+                }
+                else
+                {
+                    $mail->addAddress( trim( $Mail[$l] ) );
+                }
+            }
+        }
+        else 
+        {
+            $mail->addAddress("$Mail");
+        }
         //$mail->addAddress("afmoreno355@misena.edu.co");
         /* Attachments
           $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments

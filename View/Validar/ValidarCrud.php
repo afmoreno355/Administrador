@@ -37,7 +37,7 @@ if (isset($accion) && $accion == 'INICIAR') {
                 $session->setToken2('');
                 $session->setToken3('');
                 $session->setEstado('A');
-                $session->setIdentificacion($persona->getIdentificacion());
+                $session->setIdentificacion($persona->getId());
                 $session->grabar();
                 $activo = true;
                 $_SESSION['ultima_sesion'] = 'PRIMERA SESION '.$fecha_Validar;
@@ -63,21 +63,21 @@ if (isset($accion) && $accion == 'INICIAR') {
            if($activo == true )
            {
                 $_SESSION['sesion'] = $usuario . "-" . date('YmdHis');
-                if ($persona->getId() == '1085264709' || $persona->getIdTipo() == 'SA') {
+                if ( $persona->getIdTipo() == 'SA') {
                     $_SESSION['user'] = $persona->getId();
                     setcookie('user', $persona->getId(), $time, '/');
                     $_SESSION['foto'] = $persona->getImagen();
                     $datosM = Menu::datosobjetos(null, 0, 100);
                     for ($j = 0; $j < count($datosM); $j++) {
                         $objet = $datosM[$j];
-                        $menu1 .= "<a id='" . str_replace(' ', '_', strtoupper($objet->getNombre() ) ) . "' onclick='action( event , `menua` )' class='menua' href='#" .  str_replace( ' ' , '_' , ucfirst( strtolower( $objet->getNombre() ) ) ) . "' ><i class='{$objet->getIcono()}'>_</i> {$objet->getNombre()}</a>";    
+                        //$menu1 .= "<a id='" . str_replace(' ', '_', strtoupper($objet->getNombre() ) ) . "' onclick='action( event , `menua` )' class='menua' href='#" .  str_replace( ' ' , '_' , ucfirst( strtolower( $objet->getNombre() ) ) ) . "' ><i class='{$objet->getIcono()}'>_</i> {$objet->getNombre()}</a>";    
                         $menu2 .= "<a onclick='action( event , `menua` )' href='" .  str_replace( ' ' , '_' , ucfirst( strtolower( $objet->getPnombre() ) ) ) . "' title='" . strtoupper($objet->getNombre()) . "' id='" . str_replace(' ', '_', strtoupper($objet->getNombre() ) ) . "' onmouseover='hover(event)' onmouseout='nohover(event)' class='menua' ><pre>" . strtoupper($objet->getNombre()) . "  <img src='{$objet->getIcono()}' style = 'width : 20px ; height : 20px'/>  </pre></a>";
                     }
                     $_SESSION['sede'] = '';
                     $_SESSION['banner'] = 'http://dfp.senaedu.edu.co/modulos_gestion/img/banner2.jpg';
                     $_SESSION['rol'] = 'SA';
                     setcookie('rol', 'SA', $time, '/');
-                    $_SESSION['miMenu1'] = $menu1;
+                    //$_SESSION['miMenu1'] = $menu1;
                     $_SESSION['miMenu2'] = $menu2;
                     print_r(json_encode( array("user" => $persona->getId(), "correo" => "{$persona->getCorreo()}", "empresa" => "{$empresa[0][1]}", "token1" => "{$empresa[0][3]}", "token2" => "{$empresa[0][4]}" ) ) );
                 } else {
@@ -92,11 +92,11 @@ if (isset($accion) && $accion == 'INICIAR') {
                     $cadenaCorte = explode("<|", $cortarMenu[0][0]);
                     for ($l = 0; $l < count($cadenaCorte)-1; $l++) {
                         $objet = new Menu('id', $cadenaCorte[$l]);
-                        $menu1 .= "<a id='" . str_replace(' ', '_', strtoupper($objet->getNombre() ) ) . "'  onclick='action( event , `menua` )' class='menua' href='#". str_replace( ' ' , '_' , ucfirst( strtolower( $objet->getNombre() ) ) ) . "' ><i class='{$objet->getIcono()}'>_</i> {$objet->getNombre()}</a>";    
+                        //$menu1 .= "<a id='" . str_replace(' ', '_', strtoupper($objet->getNombre() ) ) . "'  onclick='action( event , `menua` )' class='menua' href='#". str_replace( ' ' , '_' , ucfirst( strtolower( $objet->getNombre() ) ) ) . "' ><i class='{$objet->getIcono()}'>_</i> {$objet->getNombre()}</a>";    
                         $menu2 .= "<a onclick='action( event , `menua` )' href='". str_replace( ' ' , '_' , ucfirst( strtolower( $objet->getPnombre() ) ) ) . "' title='" . strtoupper($objet->getNombre()) . "' id='" . str_replace(' ', '_', strtoupper($objet->getNombre() ) ) . "' onmouseover='hover(event)' onmouseout='nohover(event)' class='menua' ><pre>" . strtoupper($objet->getNombre()) . "  <img src='{$objet->getIcono()}' style = 'width : 20px ; height : 20px'/>   </pre></a>";
                     }
-                    $_SESSION['miMenu1'] = $menu1;
-                    $_SESSION['miMenu2'] = $menu1;
+                    //$_SESSION['miMenu1'] = $menu1;
+                    $_SESSION['miMenu2'] = $menu2;
                     print_r(json_encode( array("user" => $persona->getId(), "correo" => "{$persona->getCorreo()}", "empresa" => "{$empresa[0][1]}", "token1" => "{$empresa[0][3]}", "token2" => "{$empresa[0][4]}" ) ) );
                 }
             }

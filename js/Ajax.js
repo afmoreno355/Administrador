@@ -75,6 +75,7 @@ function formFotoDoc( donde , formData, hacer = 'aviso' ) {
         }
         else if ( respuesta.split(":").length >= 2 && respuesta.split("}").length >= 2 && respuesta.split("{").length >= 2)
         {
+            console.log(respuesta);
             jsonRespuesta = JSON.parse(respuesta);
             //alert(jsonRespuesta["empresa"].toLowerCase());
             if( jsonRespuesta["empresa"].toLowerCase() === 'sena sg-dfp' && window.location.toString().includes('adminV2') )
