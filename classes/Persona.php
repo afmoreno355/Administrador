@@ -194,6 +194,7 @@ class Persona {
     
      public function borrar() {
         $cadenaSQL = "delete from persona where identificacion ='{$this->id}'";
+        //print_r($cadenaSQL);
         if (ConectorBD::ejecutarQuery($cadenaSQL, null)) {
              //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "/", $cadenaSQL);

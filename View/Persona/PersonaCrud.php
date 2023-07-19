@@ -25,6 +25,7 @@ $lista_Titulo = '';
 $errores = '';
 $array_session = [];
 $_menu_nuevo = '' ;
+$_array_user = array() ; 
 
 date_default_timezone_set("America/Bogota");
 $fecha = date("YmdHis");
@@ -198,55 +199,97 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
                 {
                     if ($identificacion != '' && $identificacion != ' ' && isset($identificacion) && is_numeric($identificacion)) 
                     {
-                        $persona->setId(trim(strtoupper($_SESSION['archivo'][$i][$identificacion])));
+                        $Persona->setId(trim(strtoupper($_SESSION['archivo'][$i][$identificacion])));
                         $val0 = true;
                     }
                     if ($nombres != '' && isset($nombres) && is_numeric($nombres)) 
                     {
-                        $persona->setNombre(trim(strtoupper($_SESSION['archivo'][$i][$nombres])));
+                        $Persona->setNombre(trim(strtoupper($_SESSION['archivo'][$i][$nombres])));
                         $val1 = true;
                     }
                     if ($apellidos != '' && isset($apellidos) && is_numeric($apellidos))
                     {
-                        $persona->setApellido(trim(strtoupper($_SESSION['archivo'][$i][$apellidos])));
+                        $Persona->setApellido(trim(strtoupper($_SESSION['archivo'][$i][$apellidos])));
                         $val2 = true;
                     }
                     if ($correo != '' && isset($correo) && is_numeric($correo)) {
-                        $persona->setCorreo(trim(strtoupper($_SESSION['archivo'][$i][$correo])));
+                        $Persona->setCorreo(trim(strtoupper($_SESSION['archivo'][$i][$correo])));
                         $val3 = true;
                     }
                     if ($celular != '' && isset($celular) && is_numeric($celular)) {
-                        $persona->setCelular(strtoupper($_SESSION['archivo'][$i][$celular]));
+                        $Persona->setCelular(strtoupper($_SESSION['archivo'][$i][$celular]));
                         $val4 = true;
                     }
                     if ($telefono != '' && isset($telefono) && is_numeric($telefono)) 
                     {
-                        $persona->setTel(strtoupper($_SESSION['archivo'][$i][$telefono]));
+                        $Persona->setTel(strtoupper($_SESSION['archivo'][$i][$telefono]));
                         $val5 = true;
                     }
                     if ($sede != '' && isset($sede) && is_numeric($sede)) 
                     {
-                        $persona->setidsede(trim(strtoupper($_SESSION['archivo'][$i][$sede])));
+                        $Persona->setidsede(trim(strtoupper($_SESSION['archivo'][$i][$sede])));
                         $val6 = true;
                     }
                     if ($rol != '' && isset($rol) && is_numeric($rol)) 
                     {
-                        $persona->setIdTipo(trim(strtoupper($_SESSION['archivo'][$i][$rol])));
+                        $Persona->setIdTipo(trim(strtoupper($_SESSION['archivo'][$i][$rol])));
                         $val7 = true;
                     }
                     if (isset($dependencia) ) 
                     {
-                        $persona->setDependencia(trim(strtoupper($_SESSION['archivo'][$i][$dependencia])));
+                        $Persona->setDependencia(trim(strtoupper($_SESSION['archivo'][$i][$dependencia])));
                         $val8 = true;
                     }
                     if (isset($val0) && isset($val1) && isset($val2) && isset($val3) && isset($val4) && isset($val5) && isset($val6) && isset($val7) && isset($val8)) 
                     {
-                        $persona->setImagen('img/defecto/persona.jpg');
-                        $persona->setPassword(password_hash(md5(trim($persona->getId())), PASSWORD_DEFAULT, ['cost' => 12]));
-                        if ($persona->Adicionar()) 
+                        $Persona->setImagen('img/defecto/persona.jpg');
+                        $Persona->setPassword(password_hash(md5(trim($Persona->getId())), PASSWORD_DEFAULT, ['cost' => 12]));
+                        $string='';
+                        if ($Persona->Adicionar()) 
                         {
                             $bn_todo = true;
+                            array_push( $_array_user , $Persona->getCorreo() ) ;
                             $menuAcc=new PersonaMenu(null,null);
+                            if($Persona->getIdTipo()=='A'){  
+                                $string='1<|3<|4<|';    
+                            } elseif($Persona->getIdTipo()=='RC'){  
+                                $string='1<|2<|3<|';    
+                            } elseif ($Persona->getIdTipo()=='GR') {
+                                $string='1<|3<|';    
+                            } elseif ($Persona->getIdTipo()=='AI') {
+                                $string='1<|2<|3<|4<|';    
+                            } elseif ($Persona->getIdTipo()=='GI') {
+                                $string='1<|3<|4<|';    
+                            } elseif ($Persona->getIdTipo()=='IR') {
+                                $string='1<|3<|4<|';    
+                            } elseif ($Persona->getIdTipo()=='VI') {
+                                $string='1<|3<|4<|';    
+                            }  elseif ($Persona->getIdTipo()=='CO') {
+                                $string='1<|5<|';    
+                            }  elseif ($Persona->getIdTipo()=='SC') {
+                                $string='1<|2<|5<|';    
+                            }  elseif ($Persona->getIdTipo()=='AC') {
+                                $string='1<|6<|';    
+                            }  elseif ($Persona->getIdTipo()=='AA') {
+                                $string='1<|2<|6<|';    
+                            }  elseif ($Persona->getIdTipo()=='RJ' || $Persona->getIdTipo()=='RT' || $Persona->getIdTipo()=='VA' || $Persona->getIdTipo()=='AS') {
+                                $string='1<|6<|';    
+                            }  elseif ($Persona->getIdTipo()=='CA') {
+                                $string='1<|2<|9<|';    
+                            }  elseif ($Persona->getIdTipo()=='RA' || $Persona->getIdTipo()=='RS' || $Persona->getIdTipo()=='CD' || $Persona->getIdTipo()=='VC' || $Persona->getIdTipo()=='VB' || $Persona->getIdTipo()=='RM' ) {
+                                $string='1<|9<|';    
+                            }  elseif ($Persona->getIdTipo()=='AP' ) {
+                                $string='1<|10<|';    
+                            }  elseif ($Persona->getIdTipo()=='Cc' || $Persona->getIdTipo()=='Ca' ) {
+                                $string='1<|11<|';    
+                            }  elseif ($Persona->getIdTipo()=='Ua' || $Persona->getIdTipo()=='Aa' ) {
+                                $string='1<|12<|';    
+                            }    
+
+                            $menuAcc->setIdentificacion(trim($Persona->getId()));
+                            $menuAcc->setPersonamenu($string);        
+                            $menuAcc->Adicionar();
+                            $_SESSION['aviso']="EL USUARIO CON CEDULA Y CORREO ".trim($Persona->getId())."  ".strtoupper(trim($Persona->getCorreo()))." FUE CREADO CON EXITO"; 
                         }
                         else
                         {
@@ -258,6 +301,29 @@ if ($_SESSION["token1"] !== $_COOKIE["token1"] && $_SESSION["token2"] !== $_COOK
             if (isset($bn_todo)) 
             {
                 print_r("Todo salio bn <3 <br>Archivo guardado<br> $errores");
+                 require './../Mail/Mail.php'; 
+                            mailer($_array_user,
+                                "<body style='width: 100%; height: auto; position: absolute;'>
+                                    <p style='width: 90%;height: auto;position: relative;padding: 5px;font-weight: bold; margin-left: 5%;'>
+                                            Estimado Usuario cordial saludo,
+                                    </p>
+                                    <br>
+                                    <p style='width: 90%;height: auto;position: relative;padding: 5px;margin-left: 5%;'>
+                                           La Direccion de Formacion Profesional le informa que ha creado un usuario en el Sistema de Gestion de Informacion de la DFP, por tanto lo invitamos a que ingrese en el siguiente enlace: http://dfp.senaedu.edu.co/modulos_gestion/ para que ingrese con su numero de Cedula o Correo Institucional, la contrase&ntilde;a por defecto será su numero de cedula. 
+                                    </p>
+
+                                    <div style='width: 90%;height: auto;position: relative;padding: 5px;margin-left: 5%;'>
+                                        <table style='border-collapse: collapse;'>
+                                            <tr>
+                                                <td rowspan='3' ><img src='{$empresa[0][2]}' width='100px' height='100px'></td><td style='border-right: 1px solid orange; color:  orange; font-weight: bold; font-size: 1.4em;'>Sistema de Gestion   </td><td> Direccion Formacion Profesional</td>
+                                            </tr>
+                                            <tr>
+                                                <td style='border-right: 1px solid orange'>De Informacion - DFP   </td><td style='color:  orange; font-weight: bold; font-size: 1.4em;'> www.sena.edu.co</td>
+                                            </tr>       
+                                        </table>        
+                                    </div>
+                                </body>", 
+                            "USUARIO CREADO {$empresa[0][1]}");                
             } 
             else
             {
