@@ -23,7 +23,7 @@ $permisos = new Persona(" identificacion ", "'" . $_SESSION['user'] . "'");
 // permisos desde Http validando los permisos de un usuario segun la tabla personamenu
 
 
-$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), 'eagle');
+$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), 'MENU');
 
 
 if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {

@@ -7,6 +7,11 @@ date_default_timezone_set('America/Bogota');
 foreach ($_POST as $key => $value) ${$key}=  $value;
 
 require_once dirname(__FILE__).'/autoload.php';
+
+if( !isset( $_SESSION['user' ] ) )
+{
+           header("location: http://dfp.senaedu.edu.co/modulos_gestion/");
+}
  
 $permisos = new Persona(' identificacion ', "'".$_SESSION['user']."'");
 $ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "MI USUARIO");

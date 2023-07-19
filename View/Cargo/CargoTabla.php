@@ -21,7 +21,7 @@ $bucarPalabraClave = "";
 $permisos = new Persona(" identificacion ", "'" . $_SESSION['user'] . "'");
 
 // permisos desde Http validando los permisos de un usuario segun la tabla personamenu
-$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "Eagle_admin");
+$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "CARGO");
 if ($ingreso === false && $permisos->getIdTipo() !== "SA") {
     print_r("NO TIENE PERMISO PARA ESTE MENU");
     //header("Location: index");

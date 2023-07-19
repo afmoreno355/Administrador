@@ -29,7 +29,7 @@ foreach ($nuevo_POST as $key => $value)
 $permisos = new Persona(" identificacion ", "'" . $_SESSION['user'] . "'");
 
 // permisos desde Http validando los permisos de un usuario segun la tabla personamenu
-$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "Indicativa");
+$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "PROGRAMA");
 
 if ($ingreso === false && $permisos->getIdTipo() !== "SA" && $_SESSION["rol"] !== "SA") {
     $permisos = false;

@@ -24,7 +24,6 @@ $token2_cookie = sha1(uniqid($token2),true);
 $token1_bd = md5( bin2hex($token1.$user.$fecha_Empresa) );
 $token2_bd = md5( bin2hex($token2.$user.$fecha_Empresa) );
 $token3_bd = password_hash(md5(trim($token1_bd.$token2_bd)), PASSWORD_DEFAULT, ["cost"=> 12]);
-
 $empresa = ConectorBD::ejecutarQuery("select licencia from empresa", null)[0][0];
 if ( password_verify( md5( trim( $token1 ) . trim( $token2 ) )  , $empresa ) ) {
     setcookie("token1", $token1_cookie, $time, "/");
@@ -36,7 +35,11 @@ if ( password_verify( md5( trim( $token1 ) . trim( $token2 ) )  , $empresa ) ) {
     $session->setToken1( $token1_bd );
     $session->setToken2( $token2_bd );
     $session->setToken3($token3_bd);
-    $session->modificar($user);
+    if( $session->modificar($user) )
+    {
+       print_r('INFORMACION CORRECTA');  
+    }
+    
 } else {
     $list_Dir = scandir(dirname(__FILE__) . "../../../");
     /*for ($i = 0; $i < count($list_Dir); $i++) {

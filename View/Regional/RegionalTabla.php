@@ -20,7 +20,7 @@ $bucarPalabraClave = "";
 $permisos = new Persona(" identificacion ", "'" . $_SESSION['user'] . "'");
 
 // permisos desde Http validando los permisos de un usuario segun la tabla personamenu
-$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "Indicativa");
+$ingreso = Http::permisos($permisos->getId(), $permisos->getIdTipo(), "REGIONAL");
 
 if ($ingreso === false && $permisos->getIdTipo() !== "SA" ) {
     print_r("NO TIENE PERMISO PARA ESTE MENU");

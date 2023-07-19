@@ -182,6 +182,7 @@ class Sesion {
     // modificar elementos en la base de datos, identificador es el codigo o llave primaria a modificar 
     public function modificar($identificador) {
         $cadenaSQL = "update  sesion  set fecha = '$this->fecha',token1 = '$this->token1',token2 = '$this->token2',token3 = '$this->token3' where identificacion = '$identificador'";
+        //print_r($cadenaSQL);
         if (ConectorBD::ejecutarQuery($cadenaSQL, null)) {
             //Historico de las acciones en el sistemas de informacion
             $nuevo_query = str_replace("'", "|", $cadenaSQL);

@@ -27,6 +27,7 @@ if (isset($accion) && $accion == 'INICIAR') {
         $empresa = ConectorBD::ejecutarQuery("select id_empresa,nombre,icono,token1,token2 from empresa where nombre = '$MiEmpresa' ", null);
         if( count($empresa) == 1 && $empresa[0][0] == 1 )
         {
+            $_SESSION['user'] = $persona->getId();
             $_SESSION['MiEmpresa'] = $empresa[0][1];
             $_SESSION['Icon'] = $empresa[0][2];
             $session = new Sesion(' identificacion ', "'{$persona->getId()}'");
@@ -64,7 +65,6 @@ if (isset($accion) && $accion == 'INICIAR') {
            {
                 $_SESSION['sesion'] = $usuario . "-" . date('YmdHis');
                 if ( $persona->getIdTipo() == 'SA') {
-                    $_SESSION['user'] = $persona->getId();
                     setcookie('user', $persona->getId(), $time, '/');
                     $_SESSION['foto'] = $persona->getImagen();
                     $datosM = Menu::datosobjetos(null, 0, 100);
@@ -83,7 +83,6 @@ if (isset($accion) && $accion == 'INICIAR') {
                 } else {
                     $_SESSION['banner'] = 'http://dfp.senaedu.edu.co/modulos_gestion/img/banner2.jpg';
                     $_SESSION['foto'] = $persona->getImagen();
-                    $_SESSION['user'] = $persona->getId();
                     setcookie('user', $persona->getId(), $time, '/');
                     $_SESSION['rol'] = $persona->getIdTipo();
                     setcookie('rol', $persona->getIdTipo(), $time, '/');

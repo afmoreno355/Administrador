@@ -78,7 +78,7 @@ function formFotoDoc( donde , formData, hacer = 'aviso' ) {
             console.log(respuesta);
             jsonRespuesta = JSON.parse(respuesta);
             //alert(jsonRespuesta["empresa"].toLowerCase());
-            if( jsonRespuesta["empresa"].toLowerCase() === 'sena sg-dfp' && window.location.toString().includes('adminV2') )
+            if( jsonRespuesta["empresa"].toLowerCase() === 'sena sg-dfp' && window.location.toString().includes('adminv2') )
             {
                 const user = jsonRespuesta["user"];
                 const empresa = jsonRespuesta["empresa"];
@@ -86,8 +86,18 @@ function formFotoDoc( donde , formData, hacer = 'aviso' ) {
                 const token2 = jsonRespuesta["token2"];
                 if( token1 === 'e9a47b2d90858e078eddd1157959544e1' && token2 === '1d638cdf5c6d83588bf3216f3e2c3a881' )
                 {
+                    document.getElementById('aviso').innerHTML = '' ;
                     token(empresa,token1,token2,user);
-                    window.location.replace('inicio#MI_USUARIO');
+                    var ids = window.setInterval(() => {
+                        if (document.getElementById('aviso').innerHTML !== '')
+                        {
+                            clearInterval(ids);
+                            if (document.getElementById('aviso').innerHTML.includes("INFORMACION CORRECTA"))
+                            {
+                                window.location.replace('inicio#MI_USUARIO');
+                            }
+                        }
+                    }, 60);
                     return ; 
                 }
                 else
